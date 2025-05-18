@@ -1,0 +1,296 @@
+
+Importantly, this does not mean that the domain model learning algorithm must output a model in the same representation as the input trajectories. 
+
+
+while the learned model can be represented in a different representation.
+
+while the input trajectories are given in a specific domain representation, the learned model can be represented in a different representation. 
+The learned model is a planning domain model that can be given as input to a classical planner. 
+Lastly, the 
+
+
+
+
+
+
+Every action model learning algorithm can be viewed as a function that accepts a set of trajectories from the original domain and a learned domain. Therefore, we need to normalize the data of learned domains produced by different learning algorithms . 
+
+To mitigate this, we introduce an \textbf{encoder-decoder} mechanism: The \textbf{decoder} maps the components (i.e. object types, fluents, action naming, signature ordering of object and st.) in the learned model \( m \) back to the original domain language \( m^* \). The  \textbf{encoder} transforms the original domain \( m^* \) into the representation format of the learned model \( m \). This process ensures that comparisons are done in a normalized format, reducing discrepancies caused by syntactic variations. Let us formally describe the encode and decode functions:
+\begin{itemize}
+    \item ${encodeAction: A_{m^*}\rightarrow P(A_m)}$$\text{ and} \\ encodeAction(s,a,m^*,m)$=
+${\{a'\in m| a'\ is\ a\ proxy\ action\ of\ a\}}$
+    \item ${\mathit{decodeAction}: A_{m}\rightarrow  A_{m^*} }$ $\text{ and } {\mathit{decodeAction}(s,a',m^*,m)}$$  a^*\in A_{m^*}$ s.t. $a^*$ is a proxy of $a$. 
+\end{itemize}
+
+\begin{itemize}
+    \item $encodePlan: \{\pi_{m^*}\in \pi(A_{m^*})\}\rightarrow P(\pi_{m}\in \pi(A_{m}))$
+    \item $\mathit{decodePlan}:\{\pi_{m}\in \pi(A_{m})\} \rightarrow  \{\pi_{m^*}\in \pi(A_{m^*})\}$
+\end{itemize}
+
+\begin{itemize}
+    \item $encodePredicates:P( P_{m^*}) \rightarrow  P(P_m) \\$  and $encode{Predicates}(P'\subseteq P^*,m^*,m) = P''\subseteq P_m$
+    \item $\mathit{decodePredicates}: P( P_{m}) \rightarrow  P(P_{m^*}) $  and $\mathit{decodePredicates}(P'\subseteq P_{m^*},m^*,m) = P''\subseteq P_m$. 
+\end{itemize}
+
+using these functions, we can now describe and use the earlier mentioned evaluation metrics to systematically compare the learned action model \( m \) with the ground truth model \( m^* \).
+
+\subsubsection{semantic metric}
+\paragraph{True Positives (TP):}
+The set of instances where for every pre-state $s$ and action $a \in A_{m^*}$, if $a$ is applicable in $s$, then at least one learned action $a \in encode(s, a, m^*, m)$ is applicable in $s$.
+\paragraph{False Positives (FP):}
+The set of instances where there exists a learned action $a \in A_m$ that is applicable in a pre-state $s$, but there is no corresponding action $ a^* \in\ A_{m^*}\ $ $s.t.$ $a^*=decode(s,a',m^*,m) \ $ and $a^*$ is applicable in $s$.
+\paragraph{False Negatives (FN):}
+The set of instances where for some pre-state $s$ and action $a^* \in A_{m^*}$ $s.t.$ $a^*$ is applicable in $s$, but no learned action $a \in encode(s, a, m^*, m)$ is applicable in $s$.
+\paragraph{True Negatives (TN):}
+The set of instances where for every pre-state $s$, if a proxy action $a \in A_m$ is not applicable in $s$, then there is no corresponding action $a* \in A_{m^*}$ such that $a$ is applicable in $s$.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Action Applicability} & \textbf{Original Model \( m^* \)} & \textbf{Learned Model \( m \)} \\
+        \hline
+        True Positive (TP) & Applicable & Applicable \\
+        False Positive (FP) & Not Applicable & Applicable \\
+        True Negative (TN) & Not Applicable & Not Applicable \\
+        False Negative (FN) & Applicable & Not Applicable \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of action applicability in the original and learned models.}
+    \label{tab:action-model-comparison}
+\end{table}
+These metrics allow us to quantify the \emph{precision} and \emph{recall}, where \emph{precision} is $\frac{TP}{TP+FP}$ 
+and \emph{recall} is $\frac{TP}{TP+FN}$ This quantification will be useful when choosing the action model learning method based on restrictions and use cases of the learned model. These metrics provide a comprehensive evaluation of the learned model's ability to replicate the original model's behavior.
+% TODO: add illustration of encoder-decoder mechanism as described in SAM meeting.
+
+The \emph{semantic} precision and recall of the preconditions and effects are computed with respect to a set of trajectories that we call the \emph{test trajectories}. 
+A reasonable choice for how to create these test trajectories is by running a planner on a set of test problems with the real action model. Alternatively, one may run a random walk with real action model, starting from random start states. 
+To compute the defined above metrics, we compute the TP, TN, FP, and FN of every transition in the test trajectories. 
+
+\subsubsection{solving ratio metric}
+\subsubsection{syntactic metric}
+%% The file kr.bst is a bibliography style file for BibTeX 0.99c
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Measuring Model Effectiveness and Predictiveness}
+
+
+
+
+
+, one may argwe argue that it is the least important objective. 
+
+
+
+and effects designed to capture dis very similar to the real domain model but with different action names or object types.
+planning algorithms are often not able to handle large action models with many parameters due to grounding 
+
+
+e.g., by learning a model that is similar to the real domain model but with different action names or object types, yet not effective in solving problems in it.
+
+
+a learned domain model may focus on one objective and ignore the other. 
+For example, \roni{TODO: Given an example of a domain model that is not similar to the real domain model but 
+enables solving problems in it, while one that is very similar and do not}
+
+Therefore, effective domain models may use different representations of states and actions than of the real domain model. 
+This is implicitly done by model-free Reinforcement Learning (RL) algorithms, which learn a policy that maps states to actions without explicitly learning a domain model. Such ``domain models'' are not interpretable yet they are sometimes veyr good at solving problems in the same domain~\cite{rlforplanning-paper}. 
+
+
+
+and are not useful for planning.
+
+
+
+
+
+
+
+
+As noted above, we assume that the input to a domain model learning algorithm is a set of trajectories, which are sequences of observations and actions.
+
+All trajectories are collected by observing an agent acting in some domain from observations a real domain model, which we denote as $\realm$.
+We assume all the trajectories given to a domain there exists some ground truth domain model $\realm$ and a space of , 
+
+
+
+
+\subsection{Review of classical action model learning evaluation metrics}
+
+
+
+
+\section{Problem Definition}
+\omer{TBD , i think it was discussed earlier. Maybe I need to restructure the paper.}
+
+Input: 
+- State representation
+- Action representation
+- Trajectories
+- Planner
+- Action model learning algorithm
+
+
+How to compare performance of different algorithms?
+
+
+
+
+
+
+
+
+For the predicted applicability , 
+
+
+
+
+score to compute the applicability of actions in the learned model with respect to the real model. 
+
+ $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. Based on this notation, we define the following predicted action applicability metric as follows for some action $a$:
+
+\paragraph{Predicted applicability}
+\begin{itemize}
+    \item TP$_{\app}(a)=|\app_M(a,S)\cap \app_\realm(a,S)|$
+    \item FP$_{\app}(a)=|\app_M(a,S)\setminus \app_\realm(a,S)|$ 
+    \item TN$_{\app}(a)=|S\setminus (\app_M(a,S)\cup \app_\realm(a,S))|$
+    \item FN$_{\app}(a)=|\app_\realm(a,S)\setminus \app_M(a,S)|$
+\end{itemize}
+The rationale is ...
+\paragraph{Predicted effects}
+\begin{itemize}
+    \item TP$_{\eff}(s,a)=|(a_M(s)\setminus s)\cap (a_\realm(s)\setminus s)|$
+    \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
+    \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$
+    \item FN$_{\eff}(s,a)=|(a_\realm(s)\setminus s)\setminus a_\realm(s)|$
+\end{itemize}
+The rationale is ...
+
+
+
+Using these functions, we can now describe and use the earlier mentioned evaluation metrics to systematically compare the learned action model \( m \) with the ground truth model \( m^* \).
+
+\subsubsection{semantic metric}
+\paragraph{True Positives (TP):}
+The set of instances where for every pre-state $s$ and action $a \in A_{m^*}$, if $a$ is applicable in $s$, then at least one learned action $a \in encode(s, a, m^*, m)$ is applicable in $s$.
+\paragraph{False Positives (FP):}
+The set of instances where there exists a learned action $a \in A_m$ that is applicable in a pre-state $s$, but there is no corresponding action $ a^* \in\ A_{m^*}\ $ $s.t.$ $a^*=decode(s,a',m^*,m) \ $ and $a^*$ is applicable in $s$.
+\paragraph{False Negatives (FN):}
+The set of instances where for some pre-state $s$ and action $a^* \in A_{m^*}$ $s.t.$ $a^*$ is applicable in $s$, but no learned action $a \in encode(s, a, m^*, m)$ is applicable in $s$.
+\paragraph{True Negatives (TN):}
+The set of instances where for every pre-state $s$, if a proxy action $a \in A_m$ is not applicable in $s$, then there is no corresponding action $a* \in A_{m^*}$ such that $a$ is applicable in $s$.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Action Applicability} & \textbf{Original Model \( m^* \)} & \textbf{Learned Model \( m \)} \\
+        \hline
+        True Positive (TP) & Applicable & Applicable \\
+        False Positive (FP) & Not Applicable & Applicable \\
+        True Negative (TN) & Not Applicable & Not Applicable \\
+        False Negative (FN) & Applicable & Not Applicable \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of action applicability in the original and learned models.}
+    \label{tab:action-model-comparison}
+\end{table}
+These metrics allow us to quantify the \emph{precision} and \emph{recall}, where \emph{precision} is $\frac{TP}{TP+FP}$ 
+and \emph{recall} is $\frac{TP}{TP+FN}$ This quantification will be useful when choosing the action model learning method based on restrictions and use cases of the learned model. These metrics provide a comprehensive evaluation of the learned model's ability to replicate the original model's behavior.
+% TODO: add illustration of encoder-decoder mechanism as described in SAM meeting.
+
+The \emph{semantic} precision and recall of the preconditions and effects are computed with respect to a set of trajectories that we call the \emph{test trajectories}. 
+A reasonable choice for how to create these test trajectories is by running a planner on a set of test problems with the real action model. Alternatively, one may run a random walk with real action model, starting from random start states. 
+To compute the defined above metrics, we compute the TP, TN, FP, and FN of every transition in the test trajectories. 
+
+
+
+
+
+
+
+
+
+
+ Motivation: representation may be different learning
+Our main premise is that the input trajectories are given in a specific domain representation, and the agent for which we aim to generate plans is designed to accept actions specified in that domain representation. 
+Still, comparing action model learning algorithms is challenging because different algorithms may output models with varied syntactic structures, representations, or levels of abstraction, making direct comparisons difficult. 
+
+As noted above, computing the metrics defined above requires the learned domain model and the real domain model to be syntactically similar. This is not the case always the case. 
+Some action model learning algorithm modify the names of the actions, the ordering of the parameters, the object types, and the predicates in the action model. 
+Some algorithms even output action models that are not in the lifted representation, but rather in a grounded representation. 
+This makes it challenging to compare the output of different domain learning algorithms. 
+Next, we propose a simple and effective solution to this problem, which is based on the idea of using an encoder-decoder mechanism. 
+
+
+
+
+isApplicable(state, groundedAction, model, encode)
+possible-grounded-action-list=[]
+if encode:
+    possible-grounded-action-list = encode(groundedAction)  
+else:
+     possible-grounded-action-list = [groundedAction]
+
+if any(isApplicable, possible-grounded-action-list) return true
+else false
+
+
+compareApplicability(state, original-grounded-action, OriginalModel, LearnedModel)
+
+    
+get\_possible\_ecodings(real\_action, model) 
+/// return all actions in the model that my be decoded into real\_action
+/// This is a helper function, that may or may not be provided
+
+get\_all\_applicable(state, model)
+    applicable\_actions = []
+    for every action in model
+        if pre(action) in state
+            add action to applicable\_actions
+    return applicable\_actions
+    
+        
+IsApplicable(real\_state, real\_grounded\_action, model) 
+    state = encode(real\_state)
+    for grounded\_action in get\_all\_applicable(state, model)  
+        if decode(grounded\_action)=real\_grounded\_action 
+            return True
+    return False
+
+Metric:
+    TP,FP,FN,TN=0
+
+    for every (state,action) in data set    
+        If IsApplicable(state, grounded\_action, learned\_model)
+            If IsApplicable(state, grounded\_action, real\_model)
+                TP++
+            Else
+                FP++
+        Else
+            If IsApplicable(state, grounded\_action, real\_model)
+                FN++
+            Else
+                TN++
+    
+
+    

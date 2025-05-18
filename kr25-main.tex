@@ -1,0 +1,576 @@
+%%%% kr-instructions.tex -- version 1.3 (11-Jan-2021)
+
+\typeout{KR2025 Instructions for Authors}
+
+% These are the instructions for authors for KR-25.
+
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+\usepackage{kr}
+
+% Use the postscript times font!
+\usepackage{times}
+\usepackage{soul}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[small]{caption}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{acronym}
+\usepackage{natbib}
+\usepackage{xspace}
+\usepackage{xcolor}
+\urlstyle{same} 
+
+% the following package is optional:
+%\usepackage{latexsym}
+
+% See https://www.overleaf.com/learn/latex/theorems_and_proofs
+% for a nice explanation of how to define new theorems, but keep
+% in mind that the amsthm package is already included in this
+% template and that you must *not* alter the styling.
+\newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{observation}{Observation}
+
+
+
+
+
+
+
+
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\params}{\textit{params}}
+\newcommand{\actions}{\textit{actions}}
+\newcommand{\objects}{\textit{objects}}
+\newcommand{\lifted}{\textit{lifted}}
+\newcommand{\relevant}{\textit{relevant}}
+
+
+\newcommand{\actionname}{\textit{name}}
+\newcommand{\type}{\textit{type}}
+\newcommand{\cnf}{\textit{CNF}}
+\newcommand{\conj}{\textit{Conj}}
+\newcommand{\realm}{\ensuremath{M^*}\xspace}
+\newcommand{\liftf}{\mathsf{f}}
+% \newcommand{\liftl}{\mathsf{l}} RONI: This looks too much like "one"
+\newcommand{\liftl}{\ensuremath{\ell}} 
+\newcommand{\lifta}{\mathsf{\alpha}}
+\newcommand{\liftatag}{\mathsf{\alpha}'}
+\newcommand{\jointa}{\hat{a}}
+\newcommand{\esam}{\textit{ESAM}\xspace}
+\newcommand{\sgam}{\textit{SGAM}\xspace}
+\newcommand{\bindings}{\textit{bindings}}
+\newcommand{\iseff}{\text{IsEff}}
+\newcommand{\ispre}{\text{IsPre}}
+\newcommand{\domain}{\textit{Dom}}
+
+
+\newcommand{\pre}{\ensuremath{\textit{pre}}\xspace}
+\newcommand{\eff}{\ensuremath{\textit{eff}}\xspace}
+\newcommand{\app}{\ensuremath{\textit{app}}\xspace}
+
+\newcommand{\psynpre}{\ensuremath{P^\pre}\xspace}
+\newcommand{\psyneff}{\ensuremath{P^\eff}\xspace}
+\newcommand{\psempre}{\ensuremath{P^{sem}_\pre}\xspace}
+\newcommand{\psemeff}{\ensuremath{P^{sem}_\eff}\xspace}
+\newcommand{\rsynpre}{\ensuremath{R^\pre}\xspace}
+\newcommand{\rsyneff}{\ensuremath{R^\eff}\xspace}
+\newcommand{\rsempre}{\ensuremath{App}\xspace}
+\newcommand{\rsemeff}{\ensuremath{R^{sem}_\eff}\xspace}
+
+
+
+\acrodef{NO-OP}{No Operation}
+\acrodef{CMAP-BB}{CMAP with Black-Box Agents}
+\acrodef{MF-MAP}{Model-Free Multi-Agent Planning}
+\acrodef{MA-SAM}{Multi-Agent Safe Action Model Learning}
+\acrodef{SAM}{Safe Action Model Learning}
+\acrodef{JAT}{Joint Action Trajectory}
+\acrodef{LMA}{Lifted Macro Action}
+% \newcommand{\noop}{\ac{NO-OP}\xspace}
+\newcommand{\noop}{\textit{NO-OP}\xspace}
+\newcommand{\sam}{\ac{SAM}\xspace}
+\newcommand{\masam}{\ac{MA-SAM}\xspace}
+\newcommand{\cmasam}{\text{MA-SAM\ensuremath{^+}}\xspace}
+% \newcommand{\mfmap}{\ac{MF-MAP}\xspace}
+\newcommand{\jat}{\ac{JAT}\xspace}
+\newcommand{\blmaa}{\ac{LMA}\xspace}
+\newcommand{\blmaas}{LMAs\xspace}
+\newcommand{\pbl}{pb-literal\xspace}
+\newcommand{\pbls}{pb-literals\xspace}
+\newcommand{\learnblmaa}{Learn\blmaa}
+
+\newcommand{\roni}[1]{{\textcolor{red}{[Roni: #1]}}}
+\newcommand{\argaman}[1]{{\textcolor{blue}{[Argaman: #1]}}}
+\newcommand{\omer}[1]{{\textcolor{purple}{[Omer: #1]}}}
+
+% Following comment is from ijcai97-submit.tex:
+% The preparation of these files was supported by Schlumberger Palo Alto
+% Research, AT\&T Bell Laboratories, and Morgan Kaufmann Publishers.
+% Shirley Jowell, of Morgan Kaufmann Publishers, and Peter F.
+% Patel-Schneider, of AT\&T Bell Laboratories collaborated on their
+% preparation.
+
+% These instructions can be modified and used in other conferences as long
+% as credit to the authors and supporting agencies is retained, this notice
+% is not changed, and further modification or reuse is not restricted.
+% Neither Shirley Jowell nor Peter F. Patel-Schneider can be listed as
+% contacts for providing assistance without their prior permission.
+
+% To use for other conferences, change references to files and the
+% conference appropriate and use other authors, contacts, publishers, and
+% organizations.
+% Also change the deadline and address for returning papers and the length and
+% page charge instructions.
+% Put where the files are available in the appropriate places.
+%PDF Info Is REQUIRED.
+\pdfinfo{
+/TemplateVersion (KR.2022.0, KR.2023.0, KR.2024.0, KR.2025.0)
+}
+
+
+
+\title{Evaluating Planning Model Learning Algorithms \\ Across Different Representations}
+\author{Anonymous Authors}
+
+% % Single author syntax
+% \iffalse % (remove the multiple-author syntax below and \iffalse ... \fi here)
+% \author{%
+%     Author name
+%     \affiliations
+%     Affiliation
+%     \emails
+%     email@example.com    % email
+% }
+% \fi
+% % Multiple author syntax
+% \author{%
+% First Author$^1$\and
+% Second Author$^2$\and
+% Third Author$^{2,3}$\and
+% Fourth Author$^4$ \\
+% \affiliations
+% $^1$First Affiliation\\
+% $^2$Second Affiliation\\
+% $^3$Third Affiliation\\
+% $^4$Fourth Affiliation \\
+% \emails
+% \{first, second\}@example.com,
+% third@other.example.com,
+% fourth@example.com
+% }
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    Model-based planning is a fundamental approach to sequential decision-making in which a domain model is used to generate plans. 
+    A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
+    Obtaining domain models for planning is a challenging task, and various algorithms have been proposed to learn them from observations. 
+    However, evaluating learned domain models is challenging since there are no standardized evaluation metrics or benchmarks. 
+    In addition, domain model learning algorithms may output models with different representations of states and actions. 
+    To address this gap in the literature, we describe metrics designed to measure the syntactic similarity, predictive power, and problem-solving capabilities of learned domain models.
+    To bridge over representation gaps, we propose an encoder-decoder mechanism that maps the learned domain model to the original domain representation. 
+    We present an evaluation paradigm that leverages this encoder-decoder mechanism to systematically compare learned domain models and compute the proposed metrics for them. 
+    Finally , we provide a benchmark suite based on existing domain models from the International Planning Competition (IPC) to facilitate the evaluation of domain model learning algorithms.
+    We demonstrate our evaluation paradigm by applying it to several domain model learning algorithms, including SAM, ESAM, FAMA, and ROSAME. 
+\end{abstract}
+%% outline:
+
+\section{Introduction}
+
+\roni{TODO: What is automated planning. Focus: classical planning. }
+
+
+\roni{TODO: Creating an action model is hard. Learning action models algorithms exists.}
+
+\roni{TODO: Learning action models output action models that use different representations of states and actions.}
+
+
+\roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
+
+\roni{TODO: Key question: how to evaluate action model learning algorithms?}
+\roni{TODO: Syntactic metrics are not enough. We need semantic metrics.}
+
+
+\roni{TODO: We propose a new paradigm for evaluating action model learning algorithms. }
+
+\roni{TODO: Explain high-level Encoder-decoder mechanism}
+
+\roni{TODO: Proposed Metrics}
+
+\roni{TODO: Benchmarks, evaluation methodology}
+
+\roni{TODO: Case study results}
+
+\section{Background and Related Work}
+
+In this work, we focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
+A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{S, A, s_0, s_g}$, where $S$ is a finite set of states, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G$ is a set of goal states. 
+An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the precondition of $a$ and $\mathit{eff}(a)$ is the effect of $a$. 
+The precondition $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effect $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
+In classical planning, a state is defined by a set of propositions.  
+The precondition and effect of an action are defined as a set of literals, which are either positive or negative propositions. 
+A solution to a classical planning is a sequence of actions that transforms the initial state $s_0$ into a goal state $s_g\in G$.   
+
+
+% Discussion on lifted domain representation
+Planning domains are usually represented in a lifted representation, where the actions are defined with respect to a set of object types.
+The lifted representation of a planning domain is defined as a tuple $\mathcal{D} = \tuple{O, P, A}$, where $O$ is a set of object types, $P$ is a set of predicates, and $A$ is a set of actions. Actions and predicates are parameterized by objects, and preconditions and effects are defined accordingly. 
+Popular classical planning systems, such FastDownward~\citep{helmert2006fast}, support such a lifted representation. 
+
+% Action model learning algorithms
+Different algorithms have been proposed for learning domains for classical planning. 
+The input to these algorithms is a set of \emph{trajectories}. 
+A \emph{trajectory} is a sequence of observations and actions. 
+An \emph{observation} can be a state or some other information about the state, 
+such as a set of predicates that hold in the state or a visual representation of a state. 
+Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
+
+% Example of prominent domain learning algorithms. 
+\roni{Refine and add more algorithms to the following pargraphs}
+\paragraph{Action domain learning algorithms}
+The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
+The Simultaneous Learning and Filtering (SLAF)~\citep{amir2008learning} learns lifted action models from trajectories even if some of the states in them are not observed. 
+SLAF uses logical inference to filter inconsistent action models, and requires observing all actions in the trajectory.  
+FAMA~\citep{aineto2019learning} can also handle missing observations and outputs a lifted planning domain model. 
+It frames the task of learning an action model as a planning problem, ensuring that the returned action model is consistent with the provided observations.
+
+
+NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
+LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. 
+LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
+% None of the presented algorithms provide execution soundness guarantees, i.e., that plans created with the learned action model are applicable in the real action model. 
+The \sam learning algorithms~\citep{stern2017efficientAndSafe,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
+An action model having this property is referred to as \emph{safe action model}.
+% This property is commonly referred to as a \emph{safety} guarantee.
+The \sam family of algorithms addresses learning safe action models under different settings: 
+the action models are lifted~\citep{juba2021safe}, with stochastic~\citep{juba2022learning} or conditional effects~\citep{mordoch2024safe}, and even action models containing numeric preconditions and effects~\citep{mordoch2023learning}.
+\citet{le2024learning} extended their approach to support learning safe action models in a partially observable environment. 
+ESAM~\citep{juba2021safe} is an extension of the \sam algorithm that learns action models from domains in which there is ambiguity regarding the mapping of objects to parameters. To resolve this ambiguity, ESAM outputs a model with additional \emph{proxy actions} that impose additional preconditions and parameter changes on actions in which such ambiguity cannot be resolved. 
+I-ROSAME~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images. 
+They propose a neural network architecture that learns the action model in a lifted representation in tandem with a neural network that learns to map images to a given symbolic representation. 
+
+
+
+
+
+
+\section{Problem Setting and Objectives}
+\label{sec:problem-setting}
+
+For the majority of this work, we consider the following setup. 
+An agent is acting in a planning domain $\realm$, which can be represented as a classical planning domain. 
+The agent's actions are recorded in a set of trajectories, which are sequences of observations and actions. 
+The observations and actions in the trajectories are given in a specific representation, which we refer to as the \emph{input representation}. 
+An action model learning algorithm is given this set of trajectories, and is expected to output a domain model that is a classical planning domain. 
+That is, this domain model can be given as input to a classical planner, and the planner can generate plans with it. 
+
+
+In this setup, we consider the following desired objectives of a learned domain model. 
+\begin{itemize}
+    \item \textbf{Syntactic similarity.} Learn a domain model that is as similar as possible syntactically the real domain model. 
+    \item \textbf{Predictive power.} Learn a domain model that allows predicting the outcome of actions in the real domain model. 
+    \item \textbf{Problem-solving ability.} Learn a domain model that enables solving problems in the real domain model.      
+\end{itemize}
+While the real domain model satisfies all three objectives, 
+a key insight is that these objectives are in general not necessarily aligned. 
+A learned domain model may be very \emph{similar syntactically} to the real domain model but not effective in solving problems in it, 
+e.g., adding redundant preconditions or missing a crucial effect. 
+In contrast, a domain model may be very from the real domain model, e.g., adding many redundant preconditions to some actions, yet very \emph{effective} in solving problems in the real domain since these redundant preconditions are often true in the real domain. 
+Lastly, a domain model may be very \emph{predictive} of behavior of the agent in the real domain model, yet too complex to be used for solving problems by a planner. 
+For example, assume a learned domain model that has many copies of the same action in the real domain model, each with different parameters and preconditions, in order to capture different aspects of that action's behavior. 
+While this may be useful for predicting the applicability of actions in the real domain model, 
+it may hinder the ability of a planner to find plans for problems in the real domain with this model, due to its complexity (e.g., large branching factor). 
+
+\section{Evaluation Metrics}
+Next, we discuss possible metrics for evaluating these three objectives. 
+We begin by assuming that the learned domain model and the real domain model both use the same representation of states and actions, i.e., they are \emph{syntactically similar} in the sense that they have the same action names, object types, and parameter ordering.
+In Section~\ref{sec:bridging-gap}, we discuss how to extend the metrics to handle cases where the learned domain model and the real domain model use different representation. 
+
+
+% Existing metrics are syntectic
+\subsection{Syntactic Similarity Metrics}
+Prior work often focused on domain model metrics that aim for the first objective (similiarity), which are sometimes referred to as \emph{syntactic similarly} metrics~\citep{aineto2019learning,mordoch2023safe,xi2024neuro}.\roni{Others who have used, please add citations}
+These metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and real domain models. We define these common metrics below. 
+Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
+
+
+% Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ and $\eff_M(a)$ the preconditions and effects, respectively, of action $a$ according to domain $M$.
+ \begin{itemize}
+    \item True Positives: $TP_\pre(a)=|(\pre_M(a)\cap \pre_\realm(a)|$
+    \item False Positives: $FP_\pre(a)=|((\pre_M(a)\setminus \pre_\realm(a)|$
+    \item False Negatives: $FN_\pre(a)=|(\pre_\realm(a)\setminus \pre_M(a))|$
+    \item True Negatives: $TN_\pre(a)=|L_a \setminus(\pre_M(a)\cup \pre_\realm(a))|$, 
+    where $L_a$ is the set of all parameter-bound literals for an action $a$. 
+\end{itemize}
+The following standard metrics from statistical analysis can then computed based on these values for each action:
+\begin{itemize}
+    \item \textbf{Syntactic Precision}: $P_\pre(a)=\frac{TP(a)}{TP(a)+FP(a)}$
+    \item \textbf{Syntactic Recall}: $R_\pre(a)\frac{TP(a)}{TP(a)+FN(a)}$
+\end{itemize}
+Other metrics such as Accuracy and F1-score can also be computed based on these values. 
+To obtain an overall precision and recall for preconditions the entire domain model, one can compute the average of the precision and recall values for all actions:
+$P_\text{avg}=\frac{1}{|A|}\sum_{a\in A} P(a)$ and $R_\text{avg}=\frac{1}{|A|}\sum_{a\in A} R(a)$, where $P(a)$ and $R(a)$ are the precision and recall of action $a$, respectively. 
+The same metrics can be defined for the effects of actions, with the only difference being that the literals in the effects are used instead of those in the preconditions. 
+
+\roni{TODO: Add an example}
+
+% As discussed above, while the syntactic similarity metrics are easy to compute, they do not accurately reflect functional differences between learned and original models. In addition, these metrics are not well-defined when the learned model and the original model have different action signatures for actions, predicates, or object types. Next, we present our domain model evaluation paradigm, which includes a set of metrics that measure model predictiveness and effectiveness and overcome representation differences between the learned domain model and the real domain model. 
+
+
+\subsection{Predictive Power Metrics}
+\label{sec:predictiveness-metrics}
+While the syntactic similarity metrics are easy to compute, they do not accurately reflect the predictive power of the learned model. 
+The \emph{predictive power} metrics described next are designed to address this issue. 
+These metrics are based on the idea that a learned model should be able to predict the applicability of actions and their effects in the real domain model. 
+
+We define two types of predictive power metrics: \emph{action applicability} metrics and \emph{predicted effects} metrics. 
+The former measures the ability of the learned model to predict whether an action is applicable in a given state, while the latter measures the ability of the learned model to predict the effects of an action in a given state.
+% These metrics require a dataset of (state, action) pairs 
+Unlike the syntactic similarity metrics, which are computed based on the action model itself, the predictive power metrics require a dataset of states that we denote by $S$. 
+This dataset is intended to represent the distribution of states of interest in the domain. 
+One way to create this dataset is by running a planner on a set of test problems with the real action model. 
+
+
+\paragraph{Predicted applicability}
+For a domain model $M$ and action $a$, we denote by $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. Based on this notation, we define the following predicted action applicability metric as follows for some action $a$:
+\begin{itemize}
+    \item TP$_{\app}(a)=|\app_M(a,S)\cap \app_\realm(a,S)|$
+    \item FP$_{\app}(a)=|\app_M(a,S)\setminus \app_\realm(a,S)|$ 
+    \item TN$_{\app}(a)=|S\setminus (\app_M(a,S)\cup \app_\realm(a,S))|$
+    \item FN$_{\app}(a)=|\app_\realm(a,S)\setminus \app_M(a,S)|$
+\end{itemize}
+In words, TP$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to both the learned model and the real model, FP$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to the learned model but not the real model, TN$_{\app}(a)$ is the number of states in $S$ where $a$ is not applicable according to both models, and FN$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to the real model but not the learned model. 
+From these metrics, one can compute the precision and recall of the learned model for action applicability as follows,
+\begin{align}
+    P_{\app}(a)= & \frac{TP_{\app}(a)}{TP_{\app}(a)+FP_{\app}(a)}\\
+    R_{\app}(a)= & \frac{TP_{\app}(a)}{TP_{\app}(a)+FN_{\app}(a)}    
+\end{align} 
+and the overall action applicability precision and recall
+by averaging overa all actions.  
+
+\paragraph{Predicted effects}
+For domain $M$, action $a$, and state $s$, we denote by $a_M(s)$ the state resulting from applying $a$ in $s$ according to $M$. 
+Based on this, we define the following predicted action effect metrics for some action $a$ and state $s$, as follows: 
+\begin{itemize}
+    \item TP$_{\eff}(s,a)=|(a_M(s)\setminus s)\cap (a_\realm(s)\setminus s)|$
+    \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
+    \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$
+    \item FN$_{\eff}(s,a)=|(a_\realm(s)\setminus s)\setminus a_\realm(s)|$
+\end{itemize}
+For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
+\roni{Ensure this makes sense}
+One can aggregate the above metrics over all states and actions, 
+compute the overall values, and compute aggregated precision and recall values accordingly.  
+Recent work have used these predictive power metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{mordoch2024safe,le2024learning}. \roni{TODO: Add more references that us this type of metrics}
+
+\roni{Add a concrete example of how to compute these metrics}
+
+
+\subsection{Problem-Solving Metrics}
+Neither the syntactic similarity metrics nor the predictive power metrics are sufficient for evaluating the effectiveness of using a learned domain model to actually solve problems in the real domain. 
+We propose two metrics that are designed to address this issue: \emph{solving ratio} and \emph{false plans ratio}. 
+Both metrics are defined with respect to a set of problems $P$ is the real domain model $\realm$. 
+The solving ratio metric is defined as the ratio of problems in $P$ that can be solved with the learned model by a given planning within a fixed limit on the available computational resources --- CPU runtime and memory. 
+We say that a problem is solved if a plan is found within the limited computational resources and that plan is valid according to the real action model. 
+The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the real action model. 
+This reflects the reliability of using plans with the learned model.
+
+
+
+
+
+
+
+
+
+% particularly since certain predicates or negative conditions in one model might implicitly imply others, complicating direct comparisons and similarly there exists domains (rovers for example) that rely on add-delete of effects mechanism where it adds and deletes the same literal $l$ in the same transition to simulate a continuous domain but it cannot be represented in the trajectory used as an input for the learning algorithms. Furthermore, another limitation arises when learned domain actions or predicates do not share identical signatures with those of the original domain, making direct syntactic comparisons even more challenging.
+
+
+\section{Bridging Representation Gaps}
+\label{sec:bridging-gap}
+% Motivation: representation may be different learning
+Some domain model learning algorithms output a classical planning domain that uses a different representation. Such a domain model can still be used by a planner, yet its input and output may be incompatible with that of the real domain. 
+In some cases, these representation differences are minimal, e.g., using  different ordering of the parameters or object types. 
+In other cases, the differences are more significant. 
+For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with additional \emph{proxy actions} that are used to resolve ambiguities in the mapping of objects to parameters.
+The proxy actions are not part of the original domain model, and they are not used in the real domain model. 
+\roni{More examples?}
+
+
+The syntactic similarity metrics are not relevant in such cases, where the representation is intentionally differetn from the real domain. Next, we describe how to apply the other metrics -- predictive power and problem-solving --- in such cases. 
+Note that we limit the discussion to the case where the learned domain is still a planning domain, as oppose to images or other more involved representatios. 
+
+\subsection{The Encoder-Decoder Mechanism}
+Let $R_{\realm}$ denote the input representation and let $R_M$ denote the representation of the learned domain model. 
+The given trajectories are given in $R_{\realm}$, 
+while the output of a planner that uses the learned domain model is in $R_M$. 
+To allow the comparison of the learned domain model with the real domain model, we need to bridge the gap between these two representations. 
+To this end, we require every domain model learning algorithm to output 
+a representation \emph{encoder} and a representation \emph{decoder} in addition to the learned model. We describe these two components below.  
+The \emph{encoder} transforms states and actions in $R_{\realm}$ to corresponding states and actions in the learned domain representation $R_M$. 
+The \emph{decoder} performs the reverse transformation, mapping states and actions in $R_M$ to corresponding states and actions in $R_\realm$.
+
+
+Formally, let $A$ and $A_M$ be the set of actions in the real and learned domain models, respectively, and let $S$ an $S_M$ be the set of states in the real and learned domain models, respectively. The power set is denoted by $P(X)$, which is the set of all subsets of $X$. 
+The encoder is required to implement the following set of functions:
+\begin{itemize}
+    \item ${\mathit{encodeAction}: S\times A\rightarrow P(A_M)}$, returns the set of actions in $M$ that represent the application of $a$ in a given state $s$. 
+    \item ${\mathit{encodeState}: S\rightarrow S_M}$, returns the state in $M$ that represents the state $s$ in $\realm$.
+\end{itemize}
+The decoder is required to implement the following functions:
+\begin{itemize}
+    \item ${\mathit{decodeAction}: A_M\rightarrow A}$, returns the action in $\realm$ corresponding to the action in $M$. 
+    \item ${\mathit{decodeState}: S_M\rightarrow S}$, returns the state in the input representation ($S$) that represents a given state in $S_M$. 
+\end{itemize}
+
+
+
+
+
+% \end{itemize}
+    
+%     are a proxy of the action $a$.
+    
+%     $\text{ and} \\ encodeAction(s,a,m^*,m)$=
+% ${\{a'\in m| a'\ is\ a\ proxy\ action\ of\ a\}}$
+%     \item ${\mathit{decodeAction}: A_{m}\rightarrow  A_{m^*} }$ $\text{ and } {\mathit{decodeAction}(s,a',m^*,m)}$$  a^*\in A_{m^*}$ s.t. $a^*$ is a proxy of $a$. 
+
+
+
+% \begin{itemize}
+%     \item $encodePlan: \{\pi_{m^*}\in \pi(A_{m^*})\}\rightarrow P(\pi_{m}\in \pi(A_{m}))$
+%     \item $\mathit{decodePlan}:\{\pi_{m}\in \pi(A_{m})\} \rightarrow  \{\pi_{m^*}\in \pi(A_{m^*})\}$
+% \end{itemize}
+
+% \begin{itemize}
+%     \item $encodePredicates:P( P_{m^*}) \rightarrow  P(P_m) \\$  and $encode{Predicates}(P'\subseteq P^*,m^*,m) = P''\subseteq P_m$
+%     \item $\mathit{decodePredicates}: P( P_{m}) \rightarrow  P(P_{m^*}) $  and $\mathit{decodePredicates}(P'\subseteq P_{m^*},m^*,m) = P''\subseteq P_m$. 
+% \end{itemize}
+
+\subsection{Predictive Power Metrics with an Encoder-Decoder}
+For the predicted applicability metric, we modify the way $\app_M(a,S)$ is computed. The main difference is that a single action in the real domain model may be represented by multiple actions in the learned model. 
+Thus, we define 
+$\app_M(a,S)$ to be the number of states in $S$ in which \emph{there exists} an action $a'$ in the learned model such that $a'$ is applicable in the state in $M$ that encodes $s$. 
+
+\roni{TODO: Add a formal definition of the $app_M$ method using the encoder and decoder methods}
+
+Similarly, for the predicted effects metric, we need to decode the state resulting from $a_M(s)$ instead of using it as-is. 
+
+\roni{TODO: Add a formal definition of the $app_M$ method using the encoder and decoder methods}
+
+\subsection{Problem-Solving Metrics with an Encoder-Decoder}
+
+Adapting the problem-solving metrics to use the encoder-decoder mechanism is straightforward.
+The encoder is used to encode the problem from the input representation to the learned model representation. 
+Then, the planner is run on the encoded problem with the learned model. 
+Finally, the decoder is used to decode the solution plan from the learned model representation to the input representation. 
+This allows checking if a plan has been found and if it is valid according to the real domain model. 
+
+
+\subsection{Case Studies}
+Next, we describe how the encoder-decoder mechanism can be implemented for several action model learning algorithms. 
+
+SAM:
+Encoder: identity
+Decoder: identity
+
+FAMA - Leonardo L.?:
+Encoder: identity
+Decoder: identity - maybe change to parameter names?
+
+ESAM:
+Encoder: identity for both state and actions     
+Decoder: translate proxy actions to original actions
+
+ROSAME:
+Encoder: encode to a numeric vector of ones and zeros
+Decoder: map action parameters
+
+OBSERVER: 
+Encoder: from binding to grounded
+Decoder: from grounded predicates and actions to the binding they represent
+
+\roni{TODO: help me with the encoder-decoder for the other algorithms.}
+
+
+\subsection{An Evaluation Paradigm}
+Using the above metrics and the encoder-decoder mechanism, we can define an evaluation paradigm for action model learning algorithms.
+The evaluation paradigm consists of the following steps: 
+First, we generate a set of trajectories in the input representation for learning. 
+This set of trajectories can be generated by running a planner on a set of problems in the real domain model or via random walk.
+Then, this set of trajectories is split in 80/20 ratio, using 80\% of the trajectories for training and 20\% for testing. 
+The evaluated learning algorithm is given the training set of trajectories and is required to output a learned domain model, an encoder, and a decoder. 
+Following we use the learned model, encoder, and decoder to compute the metrics described above. 
+This 80/20 split is repeated $k$ times following a standard $k$-fold validation process. 
+
+% \begin{algorithm}[h]
+% \caption{Simple Increment Function}
+% \begin{algorithmic}[1]
+% \REQUIRE Integer $x$
+% \ENSURE Integer $y = x + 1$
+% \FUNCTION{Increment}{$x$}
+%     \STATE $y \leftarrow x + 1$
+%     \RETURN $y$
+% \ENDFUNCTION
+% \end{algorithmic}
+% \end{algorithm}
+
+
+
+
+
+
+
+
+\section{Benchmarks and Results}
+\roni{TODO: Describe the benchmark suite and how to use it.}
+
+\roni{TODO: If we have time: show results for at least some of the algorithms on the benchmark suite.}
+
+\section{Discussion}
+% Different input representations
+The proposed evaluation paradigm is designed to be flexible and extensible. 
+In particular, it can be extended to support other types of representations, such as images or other types of data. 
+Another possible extension is to allow the action model learning algorithm to output a domain model that uses a more general type of planning. 
+For example, the action model learning algorithm may output a domain model that uses a probabilistic~\cite{xi2024neuro} or partially observable representation~\cite{le2024learning}. 
+Adapting the predictive power metrics to such cases may be not trivial, but the problem-solving metrics can be adapted in a straightforward manner.
+
+
+% Beyond discrete
+Going beyond discrete representations is also possible. 
+The predicted applicability metrics can be computed as-is, considering both numeric and discrete preconditions.
+More involved is the predicted effects metric, which may require defining some loss function for the numeric effects, as learning exactly the same numeric effects as in the real domain seems unlikely. 
+Note that in all of these variants and generalizations, the encoder-decoder mechanism allows seemless use of the problem-solving metrics. 
+
+\section{Conclusion Future Work}
+% TODO VERIFY TEXT BELOW
+We presented a new paradigm for evaluating action 
+model learning algorithms across different representations. In this paradigm, each action model learning algorithm is required to output an action model and an encoder-decoder pair. The encoder-decoder pair is used to bridge representation gaps and enable measuring the problem-solving capabilities of the learned action models. We proposed an evaluation scheme that leverages the encoder-decoder pair to systematically compare learned action models, and described several evaluation metrics. A benchmark suite was also provided to facilitate the evaluation of action model learning algorithms, based on existing domain models from the International Planning Competition (IPC). We demonstrated our evaluation paradigm by applying it to several action model learning algorithms, including SAM, ESAM, FAMA, and ROSAME.
+
+
+
+\bibliographystyle{kr}
+\bibliography{library} 
+
+
+\end{document}
+

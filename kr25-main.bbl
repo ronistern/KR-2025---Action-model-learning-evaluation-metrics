@@ -1,0 +1,119 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Aineto, Celorrio, and
+  Onaindia}{2019}]{aineto2019learning}
+Aineto, D.; Celorrio, S.~J.; and Onaindia, E.
+\newblock 2019.
+\newblock Learning action models with minimal observability.
+\newblock {\em Artificial Intelligence} 275:104--137.
+
+\bibitem[\protect\citeauthoryear{Amir and Chang}{2008}]{amir2008learning}
+Amir, E., and Chang, A.
+\newblock 2008.
+\newblock Learning partially observable deterministic action models.
+\newblock {\em Journal of Artificial Intelligence Research} 33:349--402.
+
+\bibitem[\protect\citeauthoryear{Asai and Fukunaga}{2018}]{asai2018classical}
+Asai, M., and Fukunaga, A.
+\newblock 2018.
+\newblock Classical planning in deep latent space: Bridging the
+  subsymbolic-symbolic boundary.
+\newblock In {\em Proceedings of the aaai conference on artificial
+  intelligence}, volume~32,  6094--6101.
+
+\bibitem[\protect\citeauthoryear{Cresswell and
+  Gregory}{2011}]{cresswell2011generalised}
+Cresswell, S., and Gregory, P.
+\newblock 2011.
+\newblock Generalised domain model acquisition from action traces.
+\newblock In {\em International Conference on Automated Planning and Scheduling
+  (ICAPS)},  42--49.
+
+\bibitem[\protect\citeauthoryear{Cresswell, McCluskey, and
+  West}{2013}]{cresswell2013acquiring}
+Cresswell, S.~N.; McCluskey, T.~L.; and West, M.~M.
+\newblock 2013.
+\newblock Acquiring planning domain models using locm.
+\newblock {\em The Knowledge Engineering Review} 28(2):195--213.
+
+\bibitem[\protect\citeauthoryear{Helmert}{2006}]{helmert2006fast}
+Helmert, M.
+\newblock 2006.
+\newblock The fast downward planning system.
+\newblock {\em Journal of Artificial Intelligence Research} 26:191--246.
+
+\bibitem[\protect\citeauthoryear{Juba and Stern}{2022}]{juba2022learning}
+Juba, B., and Stern, R.
+\newblock 2022.
+\newblock Learning probably approximately complete and safe action models for
+  stochastic worlds.
+\newblock In {\em AAAI},  9795--9804.
+
+\bibitem[\protect\citeauthoryear{Juba, Le, and Stern}{2021}]{juba2021safe}
+Juba, B.; Le, H.~S.; and Stern, R.
+\newblock 2021.
+\newblock Safe learning of lifted action models.
+\newblock In {\em International Conference on Principles of Knowledge
+  Representation and Reasoning ({KR})},  379--389.
+
+\bibitem[\protect\citeauthoryear{Lamanna and Serafini}{2024}]{Lamanna24}
+Lamanna, L., and Serafini, L.
+\newblock 2024.
+\newblock Action model learning from noisy traces: a probabilistic approach.
+\newblock In {\em {ICAPS}},  342--350.
+\newblock {AAAI} Press.
+
+\bibitem[\protect\citeauthoryear{Le, Juba, and Stern}{2024}]{le2024learning}
+Le, H.~S.; Juba, B.; and Stern, R.
+\newblock 2024.
+\newblock Learning safe action models with partial observability.
+\newblock In {\em AAAI Conference on Artificial Intelligence}, volume~38,
+  20159--20167.
+
+\bibitem[\protect\citeauthoryear{Mordoch \bgroup et al\mbox.\egroup
+  }{2023}]{mordoch2023safe}
+Mordoch, A.; Stern, R.; Scala, E.; and Juba, B.
+\newblock 2023.
+\newblock Safe learning of pddl domains with conditional effects.
+\newblock In {\em Reliable Data-Driven Planning and Scheduling (RDDP) workshop
+  in ICAPS}.
+
+\bibitem[\protect\citeauthoryear{Mordoch \bgroup et al\mbox.\egroup
+  }{2024}]{mordoch2024safe}
+Mordoch, A.; Scala, E.; Stern, R.; and Juba, B.
+\newblock 2024.
+\newblock Safe learning of pddl domains with conditional effects.
+\newblock In {\em Proceedings of the International Conference on Automated
+  Planning and Scheduling}, volume~34,  387--395.
+
+\bibitem[\protect\citeauthoryear{Mordoch, Juba, and
+  Stern}{2023}]{mordoch2023learning}
+Mordoch, A.; Juba, B.; and Stern, R.
+\newblock 2023.
+\newblock Learning safe numeric action models.
+\newblock In {\em AAAI Conference on Artificial Intelligence},  12079--12086.
+
+\bibitem[\protect\citeauthoryear{Stern and
+  Juba}{2017}]{stern2017efficientAndSafe}
+Stern, R., and Juba, B.
+\newblock 2017.
+\newblock Efficient, safe, and probably approximately complete learning of
+  action models.
+\newblock In {\em the International Joint Conference on Artificial Intelligence
+  (IJCAI)},  4405--4411.
+
+\bibitem[\protect\citeauthoryear{Xi, Gould, and
+  Thi{\'e}baux}{2024}]{xi2024neuro}
+Xi, K.; Gould, S.; and Thi{\'e}baux, S.
+\newblock 2024.
+\newblock Neuro-symbolic learning of lifted action models from visual traces.
+\newblock In {\em Proceedings of the International Conference on Automated
+  Planning and Scheduling}, volume~34,  653--662.
+
+\bibitem[\protect\citeauthoryear{Yang, Wu, and Jiang}{2007}]{yang2007learning}
+Yang, Q.; Wu, K.; and Jiang, Y.
+\newblock 2007.
+\newblock Learning action models from plan examples using weighted max-sat.
+\newblock {\em Artificial Intelligence} 171(2-3):107--143.
+
+\end{thebibliography}

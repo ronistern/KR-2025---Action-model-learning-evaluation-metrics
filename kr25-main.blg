@@ -1,0 +1,63 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: .\kr25-main.aux
+Reallocating 'name_of_file' (item size: 1) to 3 items.
+The style file: kr.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Database file #1: library.bib
+Repeated entry---line 6299 of file library.bib
+ : @inproceedings{le2024learning
+ :                              ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 6337 of file library.bib
+ : @article{aineto2019learning
+ :                            ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 6357 of file library.bib
+ : @inproceedings{cresswell2011generalised
+ :                                        ,
+I'm skipping whatever remains of this entry
+Warning--can't use both volume and number fields in asai2018classical
+Warning--can't use both volume and number fields in le2024learning
+You've used 16 entries,
+            2568 wiz_defined-function locations,
+            675 strings with 7286 characters,
+and the built_in function-call counts, 8071 in all, are:
+= -- 902
+> -- 257
+< -- 14
++ -- 85
+- -- 84
+* -- 607
+:= -- 1184
+add.period$ -- 81
+call.type$ -- 16
+change.case$ -- 106
+chr.to.int$ -- 16
+cite$ -- 18
+duplicate$ -- 348
+empty$ -- 600
+format.name$ -- 120
+if$ -- 1765
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 16
+newline$ -- 100
+num.names$ -- 48
+pop$ -- 96
+preamble$ -- 1
+purify$ -- 122
+quote$ -- 0
+skip$ -- 304
+stack$ -- 0
+substring$ -- 574
+swap$ -- 140
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 128
+warning$ -- 2
+while$ -- 72
+width$ -- 19
+write$ -- 231
+(There were 3 error messages)
