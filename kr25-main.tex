@@ -183,10 +183,10 @@
 
 \begin{abstract}
 %%%MAURO: proposed new version, feel free to ignore.
-Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, that provides to a planning engine the necessary application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
+Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, which provides to a planning engine the necessary application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
 Formulating domain-models is a challenging, time consuming, and error-prone task. For this reason, a number of approaches has been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches; there is a lack of evaluation metrics, and the complexity is exacerbated since learning algorithms may output models with different representations of states and actions. 
+To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models using the proposed metrics. Finally, suggest a benchmark suite based on existing domain models from the International Planning Competition (IPC) an evaluation process for using it. 
 
-To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models. Finally, we show .... 
 
 %%%MAURO: original version below.
 %    Model-based planning is a fundamental approach to sequential decision-making in which a domain model is used to generate plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. Obtaining domain models for planning is a challenging task, and various algorithms have been proposed to learn them from observations. However, evaluating learned domain models is challenging since there are no standardized evaluation metrics or benchmarks. In addition, domain model learning algorithms may output models with different representations of states and actions. To address this gap in the literature, we describe metrics designed to measure the syntactic similarity, predictive power, and problem-solving capabilities of learned domain models. To bridge over representation gaps, we propose an encoder-decoder mechanism that maps the learned domain model to the original domain representation.  We present an evaluation paradigm that leverages this encoder-decoder mechanism to systematically compare learned domain models and compute the proposed metrics for them. Finally , we provide a benchmark suite based on existing domain models from the International Planning Competition (IPC) to facilitate the evaluation of domain model learning algorithms. We demonstrate our evaluation paradigm by applying it to several domain model learning algorithms, including SAM, ESAM, FAMA, and ROSAME. 
@@ -275,6 +275,11 @@ They propose a neural network architecture that learns the action model in a lif
 
 
 
+\subsection{Related Work}
+
+\todo{Discuss model reconciliation and model merging. Pascal and Mauro? }
+
+\todo{Other?}
 
 
 
@@ -360,6 +365,7 @@ Unlike the syntactic similarity metrics, which are computed based on the action 
 This dataset is intended to represent the distribution of states of interest in the domain. 
 One way to create this dataset is by running a planner on a set of test problems with the real action model. 
 
+\roni{TODO: Clarify this does not consider complexity of the doamin (which will be addressed in the next metric)}
 
 \paragraph{Predicted applicability}
 For a domain model $M$ and action $a$, we denote by $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. Based on this notation, we define the following predicted action applicability metric as follows for some action $a$:
@@ -393,6 +399,11 @@ One can aggregate the above metrics over all states and actions,
 compute the overall values, and compute aggregated precision and recall values accordingly.  
 Recent work have used these predictive power metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{mordoch2024safe,le2024learning}. \roni{TODO: Add more references that us this type of metrics}
 
+The difference between the syntactic similarity of effects and the predicted effects metrics is subtle. 
+It manifests when processing observations in which some literal $\ell$ is observed in the state before an action $a$, 
+it is not an effect according to the learned model, but it is an effect according to the real model. 
+This will count as a false positive in the syntactic similarity metrics yet not count as a false positive in the predicted effects metrics. 
+
 \roni{Add a concrete example of how to compute these metrics}
 
 
@@ -408,8 +419,21 @@ This reflects the reliability of using plans with the learned model.
 
 
 
+\todo{Add metric on the runtime of solving the problem.}
+\todo{Discussion: what about a metric on how many real plans can be validated by the learned model.}
+\todo{Maybe: add some unsolvability detection metrics?}
 
+\todo{TODO Mauro?: Add a discussion on the limitation of this metric?}
 
+\subsection{Evaluating Domain Models without a Reference Model}
+All the metrics above are defined based on the assumption that the ground truth model is available. 
+However, in many cases, the ground truth model is not available. 
+Moreover, the ground truth model may be a suboptimal representation for the actual environment. 
+
+Fortunately, with the exception of the syntactic similarity metrics, all other metrics 
+can still be used to compare two learned model,  
+providing statistics on which one is better according to different aspects of the environment without a ground truth model. 
+For the predictive power metrics, we can use the same dataset of states $S$ to compute the predicted applicability and predicted effects metrics for each evaluated model. Similarly, the problem-solving metrics can be computed for each model without a reference model, if one can execute the plans generated by the learned model in the real environment, then we can evaluate the solving ratio and false plans ratio metrics. 
 
 
 
@@ -554,10 +578,13 @@ This 80/20 split is repeated $k$ times following a standard $k$-fold validation 
 
 
 
-\section{Benchmarks and Results}
-\roni{TODO: Describe the benchmark suite and how to use it.}
+\section{Benchmarks}
 
-\roni{TODO: If we have time: show results for at least some of the algorithms on the benchmark suite.}
+\todo{Leonardo is in charge of this section.}
+
+\todo{Describe the benchmark suite and how to use it.}
+
+\todo{If we have time: show results for at least some of the algorithms on the benchmark suite.}
 
 \section{Discussion}
 % Different input representations
@@ -573,6 +600,14 @@ Going beyond discrete representations is also possible.
 The predicted applicability metrics can be computed as-is, considering both numeric and discrete preconditions.
 More involved is the predicted effects metric, which may require defining some loss function for the numeric effects, as learning exactly the same numeric effects as in the real domain seems unlikely. 
 Note that in all of these variants and generalizations, the encoder-decoder mechanism allows seemless use of the problem-solving metrics. 
+
+
+% Online metrics 
+\todo{Maybe talk about metrics for online learning}
+The metrics and evaluation paradigm outlined in this paper are for \emph{offline} learning of action models, where the learning algorithm is given a set of trajectories and is required to output a domain model. \emph{Online learning} of action models have also been studied in the literature~\citep{lamanna2021online}\todo{More citations?}, where the learning algorithm is required to learn a domain model by actively interacting with the environment. Similar to other online tasks, one may distinguish between the \emph{cummulative regret} of the learning process, which can be the number of actions performed for learning or the number of problems failed to solve while collecting observations. 
+Specific metrics and evaluation for online learning of action models, however is beyond the scope of this work. 
+
+
 
 \section{Conclusion Future Work}
 % TODO VERIFY TEXT BELOW

@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  19 MAY 2025 02:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  20 MAY 2025 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**c:/projects/Action-model-learning-evaluation-metrics/kr25-main.tex
-(c:/projects/Action-model-learning-evaluation-metrics/kr25-main.tex
+**c:/projects/KR-2025---Action-model-learning-evaluation-metrics/kr25-main.tex
+(c:/projects/KR-2025---Action-model-learning-evaluation-metrics/kr25-main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
 KR2025 Instructions for Authors
@@ -358,42 +358,42 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 \c@theorem=\count315
 \c@definition=\count316
 \c@observation=\count317
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 179.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 180.
  (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
-) (kr25-main.aux)
+)
+No file kr25-main.aux.
 \openout1 = `kr25-main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 179.
-LaTeX Font Info:    ... okay on input line 179.
-Package hyperref Info: Link coloring OFF on input line 179.
- (kr25-main.out) (kr25-main.out)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 180.
+LaTeX Font Info:    ... okay on input line 180.
+Package hyperref Info: Link coloring OFF on input line 180.
 \@outlinefile=\write3
 \openout3 = `kr25-main.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
- (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+(C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count319
 \scratchdimen=\dimen192
@@ -415,11 +415,14 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 \titlearea=\box58
 \actualheight=\skip65
 
-Underfull \hbox (badness 3068) in paragraph at lines 215--216
+Underfull \hbox (badness 3068) in paragraph at lines 214--215
 [][]\OT1/ptm/m/n/10 [Roni: TODO: Ex-plain high-level Encoder-decoder
  []
 
 
+
+
+Package natbib Warning: Citation `helmert2006fast' on page 1 undefined on input line 239.
 
 
 
@@ -428,41 +431,261 @@ Underfull \hbox (badness 3068) in paragraph at lines 215--216
 
 
 ]
+
+Package natbib Warning: Citation `yang2007learning' on page 2 undefined on input line 255.
+
+
+Package natbib Warning: Citation `amir2008learning' on page 2 undefined on input line 256.
+
+
+Package natbib Warning: Citation `aineto2019learning' on page 2 undefined on input line 258.
+
+
+Package natbib Warning: Citation `Lamanna24' on page 2 undefined on input line 262.
+
+
+Package natbib Warning: Citation `cresswell2011generalised' on page 2 undefined on input line 263.
+
+
+Package natbib Warning: Citation `cresswell2013acquiring' on page 2 undefined on input line 263.
+
+
+Package natbib Warning: Citation `asai2018classical' on page 2 undefined on input line 264.
+
+
+Package natbib Warning: Citation `xi2024neuro' on page 2 undefined on input line 264.
+
 Package acronym Info: Label `acro:SAM' newly defined as it shall be overridden
-although it is yet undefined on input line 261.
+although it is yet undefined on input line 266.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Package acronym Warning: Acronym SAM is not defined on input line 266.
+
+
+Package acronym Warning: Acronym SAM is not defined on input line 266.
+
+
+Package natbib Warning: Citation `stern2017efficientAndSafe' on page 2 undefined on input line 266.
+
+
+Package natbib Warning: Citation `mordoch2023learning' on page 2 undefined on input line 266.
+
+
+Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 266.
+
+
+Package natbib Warning: Citation `juba2022learning' on page 2 undefined on input line 266.
+
+
+Package natbib Warning: Citation `le2024learning' on page 2 undefined on input line 266.
+
+
+Package natbib Warning: Citation `mordoch2024safe' on page 2 undefined on input line 266.
+
+
+Package acronym Warning: Acronym SAM is not defined on input line 269.
+
+
+Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 270.
+
+
+Package natbib Warning: Citation `juba2022learning' on page 2 undefined on input line 270.
+
+
+Package natbib Warning: Citation `mordoch2024safe' on page 2 undefined on input line 270.
+
+
+Package natbib Warning: Citation `mordoch2023learning' on page 2 undefined on input line 270.
+
+
+Package natbib Warning: Citation `le2024learning' on page 2 undefined on input line 271.
+
+
+Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 272.
+
+
+Package acronym Warning: Acronym SAM is not defined on input line 272.
+
+
+Package natbib Warning: Citation `xi2024neuro' on page 2 undefined on input line 273.
+
+! Undefined control sequence.
+l.280 \todo
+           {Discuss model reconciliation and model merging. Pascal and Mauro? }
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.282 \todo
+           {Other?}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 289.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 301.
 (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
+LaTeX Warning: Reference `sec:bridging-gap' on page 2 undefined on input line 321.
+
+
+
 [2]
+
+Package natbib Warning: Citation `aineto2019learning' on page 3 undefined on input line 326.
+
+
+Package natbib Warning: Citation `mordoch2023safe' on page 3 undefined on input line 326.
+
+
+Package natbib Warning: Citation `xi2024neuro' on page 3 undefined on input line 326.
+
+
+
+
+Package natbib Warning: Citation `mordoch2024safe' on page 3 undefined on input line 400.
+
+
+Package natbib Warning: Citation `le2024learning' on page 3 undefined on input line 400.
 
 
 
 [3]
+! Undefined control sequence.
+l.422 \todo
+           {Add metric on the runtime of solving the problem.}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.423 \todo
+           {Discussion: what about a metric on how many real plans can be va...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.424 \todo
+           {Maybe: add some unsolvability detection metrics?}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.426 \todo
+           {TODO Mauro?: Add a discussion on the limitation of this metric?}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package natbib Warning: Citation `juba2021safe' on page 4 undefined on input line 450.
+
+
+
+
+Package natbib Warning: Citation `mccluskey2010action' on page 4 undefined on input line 454.
 
 
 
 [4]
 
-(kr25-main.bbl
+! Undefined control sequence.
+l.583 \todo
+           {Leonardo is in charge of this section.}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-[5])
+! Undefined control sequence.
+l.585 \todo
+           {Describe the benchmark suite and how to use it.}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.587 \todo
+           {If we have time: show results for at least some of the algorithm...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package natbib Warning: Citation `xi2024neuro' on page 5 undefined on input line 594.
+
+
+Package natbib Warning: Citation `le2024learning' on page 5 undefined on input line 594.
+
+! Undefined control sequence.
+l.606 \todo
+           {Maybe talk about metrics for online learning}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package natbib Warning: Citation `lamanna2021online' on page 5 undefined on input line 607.
+
+! Undefined control sequence.
+l.607 ...literature~\citep{lamanna2021online}\todo
+                                                  {More citations?}, where t...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 
-[6
+[5] (kr25-main.bbl
 
-] (kr25-main.aux)
+)
+
+Package natbib Warning: There were undefined citations.
+
+
+
+[6] (kr25-main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
 Package rerunfilecheck Warning: File `kr25-main.out' has changed.
@@ -470,24 +693,21 @@ Package rerunfilecheck Warning: File `kr25-main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `kr25-main.out':
-(rerunfilecheck)             Before: 5215D680292B89C1021FAA347051EBD7;3089
-(rerunfilecheck)             After:  A2AB1A1AC14EBA1683EF2654B755335C;2913.
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D93C80D9AF891401EA8CBF903239967E;3566.
  ) 
 Here is how much of TeX's memory you used:
- 12940 strings out of 470081
- 205306 string characters out of 5477822
- 615834 words of memory out of 5000000
- 39383 multiletter control sequences out of 15000+600000
+ 12918 strings out of 470081
+ 204925 string characters out of 5477822
+ 613702 words of memory out of 5000000
+ 39364 multiletter control sequences out of 15000+600000
  644489 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,885b,632s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{section.9} has been referenced but does not exist, replaced by a fixed one
-
+ 75i,12n,79p,1587b,507s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (6 pages, 199002 bytes).
+Output written on kr25-main.pdf (6 pages, 182845 bytes).
 PDF statistics:
- 263 PDF objects out of 1000 (max. 8388607)
- 47 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 146 PDF objects out of 1000 (max. 8388607)
+ 50 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
