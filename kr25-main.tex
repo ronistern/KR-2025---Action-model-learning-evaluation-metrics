@@ -119,6 +119,7 @@
 \newcommand{\roni}[1]{{\textcolor{red}{[Roni: #1]}}}
 \newcommand{\argaman}[1]{{\textcolor{blue}{[Argaman: #1]}}}
 \newcommand{\omer}[1]{{\textcolor{purple}{[Omer: #1]}}}
+\newcommand{\mauro}[1]{{\textcolor{green}{[Mauro: #1]}}}
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -181,16 +182,14 @@
 \maketitle
 
 \begin{abstract}
-    Model-based planning is a fundamental approach to sequential decision-making in which a domain model is used to generate plans. 
-    A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
-    Obtaining domain models for planning is a challenging task, and various algorithms have been proposed to learn them from observations. 
-    However, evaluating learned domain models is challenging since there are no standardized evaluation metrics or benchmarks. 
-    In addition, domain model learning algorithms may output models with different representations of states and actions. 
-    To address this gap in the literature, we describe metrics designed to measure the syntactic similarity, predictive power, and problem-solving capabilities of learned domain models.
-    To bridge over representation gaps, we propose an encoder-decoder mechanism that maps the learned domain model to the original domain representation. 
-    We present an evaluation paradigm that leverages this encoder-decoder mechanism to systematically compare learned domain models and compute the proposed metrics for them. 
-    Finally , we provide a benchmark suite based on existing domain models from the International Planning Competition (IPC) to facilitate the evaluation of domain model learning algorithms.
-    We demonstrate our evaluation paradigm by applying it to several domain model learning algorithms, including SAM, ESAM, FAMA, and ROSAME. 
+%%%MAURO: proposed new version, feel free to ignore.
+Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, that provides to a planning engine the necessary application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
+Formulating domain-models is a challenging, time consuming, and error-prone task. For this reason, a number of approaches has been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches; there is a lack of evaluation metrics, and the complexity is exacerbated since learning algorithms may output models with different representations of states and actions. 
+
+To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models. Finally, we show .... 
+
+%%%MAURO: original version below.
+%    Model-based planning is a fundamental approach to sequential decision-making in which a domain model is used to generate plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. Obtaining domain models for planning is a challenging task, and various algorithms have been proposed to learn them from observations. However, evaluating learned domain models is challenging since there are no standardized evaluation metrics or benchmarks. In addition, domain model learning algorithms may output models with different representations of states and actions. To address this gap in the literature, we describe metrics designed to measure the syntactic similarity, predictive power, and problem-solving capabilities of learned domain models. To bridge over representation gaps, we propose an encoder-decoder mechanism that maps the learned domain model to the original domain representation.  We present an evaluation paradigm that leverages this encoder-decoder mechanism to systematically compare learned domain models and compute the proposed metrics for them. Finally , we provide a benchmark suite based on existing domain models from the International Planning Competition (IPC) to facilitate the evaluation of domain model learning algorithms. We demonstrate our evaluation paradigm by applying it to several domain model learning algorithms, including SAM, ESAM, FAMA, and ROSAME. 
 \end{abstract}
 %% outline:
 
@@ -222,7 +221,10 @@
 
 \section{Background and Related Work}
 
-In this work, we focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
+In this section, we provide the necessary background on classical planning, and a discussion of related work. 
+
+\subsection{Classical Planning}
+We focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
 A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{S, A, s_0, s_g}$, where $S$ is a finite set of states, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G$ is a set of goal states. 
 An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the precondition of $a$ and $\mathit{eff}(a)$ is the effect of $a$. 
 The precondition $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effect $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
@@ -243,6 +245,9 @@ A \emph{trajectory} is a sequence of observations and actions.
 An \emph{observation} can be a state or some other information about the state, 
 such as a set of predicates that hold in the state or a visual representation of a state. 
 Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
+
+
+\subsection{Related Work}
 
 % Example of prominent domain learning algorithms. 
 \roni{Refine and add more algorithms to the following pargraphs}
@@ -276,13 +281,15 @@ They propose a neural network architecture that learns the action model in a lif
 \section{Problem Setting and Objectives}
 \label{sec:problem-setting}
 
-For the majority of this work, we consider the following setup. 
+In this work we consider the traditional domain model learning setup. 
+%For the majority of this work, we consider the following setup. 
 An agent is acting in a planning domain $\realm$, which can be represented as a classical planning domain. 
 The agent's actions are recorded in a set of trajectories, which are sequences of observations and actions. 
 The observations and actions in the trajectories are given in a specific representation, which we refer to as the \emph{input representation}. 
-An action model learning algorithm is given this set of trajectories, and is expected to output a domain model that is a classical planning domain. 
-That is, this domain model can be given as input to a classical planner, and the planner can generate plans with it. 
+An action model learning algorithm is given this set of trajectories, and is expected to output a domain model in classical planning. 
+That is, this domain model can be given as input to a classical planner, and together with an appropriate problem description, the planner can generate plans with it. 
 
+\mauro{clarify here the ground truth model, and discuss issues and alternatives.}
 
 In this setup, we consider the following desired objectives of a learned domain model. 
 \begin{itemize}
@@ -290,6 +297,9 @@ In this setup, we consider the following desired objectives of a learned domain 
     \item \textbf{Predictive power.} Learn a domain model that allows predicting the outcome of actions in the real domain model. 
     \item \textbf{Problem-solving ability.} Learn a domain model that enables solving problems in the real domain model.      
 \end{itemize}
+
+\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
+
 While the real domain model satisfies all three objectives, 
 a key insight is that these objectives are in general not necessarily aligned. 
 A learned domain model may be very \emph{similar syntactically} to the real domain model but not effective in solving problems in it, 
@@ -335,6 +345,7 @@ The same metrics can be defined for the effects of actions, with the only differ
 
 % As discussed above, while the syntactic similarity metrics are easy to compute, they do not accurately reflect functional differences between learned and original models. In addition, these metrics are not well-defined when the learned model and the original model have different action signatures for actions, predicates, or object types. Next, we present our domain model evaluation paradigm, which includes a set of metrics that measure model predictiveness and effectiveness and overcome representation differences between the learned domain model and the real domain model. 
 
+\mauro{add here the notion of strong/weak equivalence, and the metrics based on graph similarity}
 
 \subsection{Predictive Power Metrics}
 \label{sec:predictiveness-metrics}
@@ -386,6 +397,7 @@ Recent work have used these predictive power metrics, referred to sometimes as \
 
 
 \subsection{Problem-Solving Metrics}
+\mauro{add here disclaimer}
 Neither the syntactic similarity metrics nor the predictive power metrics are sufficient for evaluating the effectiveness of using a learned domain model to actually solve problems in the real domain. 
 We propose two metrics that are designed to address this issue: \emph{solving ratio} and \emph{false plans ratio}. 
 Both metrics are defined with respect to a set of problems $P$ is the real domain model $\realm$. 
@@ -415,6 +427,7 @@ For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with
 The proxy actions are not part of the original domain model, and they are not used in the real domain model. 
 \roni{More examples?}
 
+\mauro{OpMaker2 generates classical planning models in OCL language \cite{mccluskey2010action}}
 
 The syntactic similarity metrics are not relevant in such cases, where the representation is intentionally differetn from the real domain. Next, we describe how to apply the other metrics -- predictive power and problem-solving --- in such cases. 
 Note that we limit the discussion to the case where the learned domain is still a planning domain, as oppose to images or other more involved representatios. 
