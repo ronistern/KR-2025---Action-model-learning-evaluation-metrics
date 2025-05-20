@@ -221,7 +221,7 @@ To foster the use of model learning approaches, in this paper we describe a set 
 
 \section{Background and Related Work}
 
-In this section, we provide the necessary background on classical planning, and a discussion of related work. 
+In this section, we provide the necessary background on classical planning, and a discussion of approaches to automatically learn domain models. 
 
 \subsection{Classical Planning}
 We focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
@@ -247,11 +247,12 @@ such as a set of predicates that hold in the state or a visual representation of
 Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
 
 
-\subsection{Related Work}
+\subsection{Action Domain Learning Algorithms}
 
 % Example of prominent domain learning algorithms. 
 \roni{Refine and add more algorithms to the following pargraphs}
-\paragraph{Action domain learning algorithms}
+%\paragraph{}
+
 The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
 The Simultaneous Learning and Filtering (SLAF)~\citep{amir2008learning} learns lifted action models from trajectories even if some of the states in them are not observed. 
 SLAF uses logical inference to filter inconsistent action models, and requires observing all actions in the trajectory.  
@@ -260,7 +261,7 @@ It frames the task of learning an action model as a planning problem, ensuring t
 
 
 NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
-LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. 
+LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, and its extension to learn action costs \citep{gregory2016domain} analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. Based on less structured input knowledge, Framer \citep{lindsay2017framer} is an approach for learning planning domain models from natural language descriptions of activity sequences.
 LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
 % None of the presented algorithms provide execution soundness guarantees, i.e., that plans created with the learned action model are applicable in the real action model. 
 The \sam learning algorithms~\citep{stern2017efficientAndSafe,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
