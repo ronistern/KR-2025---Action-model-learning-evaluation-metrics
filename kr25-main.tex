@@ -120,6 +120,7 @@
 \newcommand{\argaman}[1]{{\textcolor{blue}{[Argaman: #1]}}}
 \newcommand{\omer}[1]{{\textcolor{purple}{[Omer: #1]}}}
 \newcommand{\mauro}[1]{{\textcolor{green}{[Mauro: #1]}}}
+\newcommand{\yarin}[1]{{\textcolor{teal}{[Yarin: #1]}}}
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -276,7 +277,7 @@ They propose a neural network architecture that learns the action model in a lif
 
 
 
-\subsection{Related Work}
+\subsection{Model Reconciliation}
 
 \todo{Discuss model reconciliation and model merging. Pascal and Mauro? }
 
@@ -353,6 +354,7 @@ The same metrics can be defined for the effects of actions, with the only differ
 
 \mauro{add here the notion of strong/weak equivalence, and the metrics based on graph similarity}
 
+
 \subsection{Predictive Power Metrics}
 \label{sec:predictiveness-metrics}
 While the syntactic similarity metrics are easy to compute, they do not accurately reflect the predictive power of the learned model. 
@@ -409,22 +411,23 @@ This will count as a false positive in the syntactic similarity metrics yet not 
 
 
 \subsection{Problem-Solving Metrics}
-\mauro{add here disclaimer}
+\mauro{add here disclaimer}\roni{Added the disclaimer below. Let me know what you think}
 Neither the syntactic similarity metrics nor the predictive power metrics are sufficient for evaluating the effectiveness of using a learned domain model to actually solve problems in the real domain. 
 We propose two metrics that are designed to address this issue: \emph{solving ratio} and \emph{false plans ratio}. 
 Both metrics are defined with respect to a set of problems $P$ is the real domain model $\realm$. 
 The solving ratio metric is defined as the ratio of problems in $P$ that can be solved with the learned model by a given planning within a fixed limit on the available computational resources --- CPU runtime and memory. 
 We say that a problem is solved if a plan is found within the limited computational resources and that plan is valid according to the real action model. 
-The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the real action model. 
-This reflects the reliability of using plans with the learned model.
+The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the real action model. This reflects the reliability of using plans with the learned model.
+
+% Limitations
+The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner. Ideally, the above metrics would be run on a diverse set of test set problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
+
+\roni{TODO: Add metric on the runtime of solving the problem.}
+\roni{TODO: Discussion: what about a metric on how many real plans can be validated by the learned model.}
+\roni{TODO: Maybe: add some unsolvability detection metrics?}
 
 
 
-\todo{Add metric on the runtime of solving the problem.}
-\todo{Discussion: what about a metric on how many real plans can be validated by the learned model.}
-\todo{Maybe: add some unsolvability detection metrics?}
-
-\todo{TODO Mauro?: Add a discussion on the limitation of this metric?}
 
 \subsection{Evaluating Domain Models without a Reference Model}
 All the metrics above are defined based on the assumption that the ground truth model is available. 
