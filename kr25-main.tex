@@ -252,7 +252,7 @@ Domain model learning algorithm differ in the type of trajectories they can lear
 \subsection{Action Domain Learning Algorithms}
 
 % Example of prominent domain learning algorithms. 
-\roni{Refine and add more algorithms to the following pargraphs}
+\todo{Open request for all: refine and add more algorithms to the following pargraphs as needed. Do not be shy: add your algorithms here.}
 %\paragraph{}
 
 The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
@@ -280,24 +280,29 @@ They propose a neural network architecture that learns the action model in a lif
 
 \subsection{Model Reconciliation}
 
-\todo{Discuss model reconciliation and model merging. Pascal and Mauro? }
+\todo{Pascal and Mauro will add text on model reconciliation and model merging.}
 
-\todo{Other?}
+\todo{Pascal and Mauro: can you write something about how this work relates to your model repair survey paper?}
+
+
 
 
 
 \section{Problem Setting and Objectives}
 \label{sec:problem-setting}
 
-In this work we consider the traditional domain model learning setup. 
-%For the majority of this work, we consider the following setup. 
-An agent is acting in a planning domain $\realm$, which can be represented as a classical planning domain. 
+In this work we consider the following domain model learning setup. 
+An agent is acting in an environment $\realm$, 
+which can be represented as a classical planning domain. 
 The agent's actions are recorded in a set of trajectories, which are sequences of observations and actions. 
 The observations and actions in the trajectories are given in a specific representation, which we refer to as the \emph{input representation}. 
-An action model learning algorithm is given this set of trajectories, and is expected to output a domain model in classical planning. 
+A domain model learning algorithm is given this set of trajectories, and is expected to output a domain model in classical planning. 
 That is, this domain model can be given as input to a classical planner, and together with an appropriate problem description, the planner can generate plans with it. 
 
 \mauro{clarify here the ground truth model, and discuss issues and alternatives.}
+\roni{Note: changing \emph{real domain model} to \emph{environment}, to clarify that it is not a model. Then discuss what if we do have a verified domain model. TODO}
+
+
 
 In this setup, we consider the following desired objectives of a learned domain model. 
 \begin{itemize}
@@ -360,7 +365,8 @@ The same metrics can be defined for the effects of actions, with the only differ
 \label{sec:predictiveness-metrics}
 While the syntactic similarity metrics are easy to compute, they do not accurately reflect the predictive power of the learned model. 
 The \emph{predictive power} metrics described next are designed to address this issue. 
-These metrics are based on the idea that a learned model should be able to predict the applicability of actions and their effects in the real domain model. 
+These metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{aineto2019learning,mordoch2024safe,le2024learning}, are based on the idea that a learned model should be able to predict the applicability of actions and their effects in the real domain model. 
+
 
 We define two types of predictive power metrics: \emph{action applicability} metrics and \emph{predicted effects} metrics. 
 The former measures the ability of the learned model to predict whether an action is applicable in a given state, while the latter measures the ability of the learned model to predict the effects of an action in a given state.
@@ -401,8 +407,6 @@ For the purpose of the above computation, a state includes all the literals true
 \roni{Ensure this makes sense}
 One can aggregate the above metrics over all states and actions, 
 compute the overall values, and compute aggregated precision and recall values accordingly.  
-Recent work have used these predictive power metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{mordoch2024safe,le2024learning}. \roni{TODO: Add more references that us this type of metrics}
-
 The difference between the syntactic similarity of effects and the predicted effects metrics is subtle. 
 It manifests when processing observations in which some literal $\ell$ is observed in the state before an action $a$, 
 it is not an effect according to the learned model, but it is an effect according to the real model. 
