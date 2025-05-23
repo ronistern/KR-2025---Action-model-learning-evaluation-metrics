@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  23 MAY 2025 16:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  23 MAY 2025 16:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -466,65 +466,65 @@ Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on inp
 Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on input line 348.
 
 
-Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 3 undefined on input line 378.
+Package natbib Warning: Citation `DBLP:journals/aim/ChrpaMVV17' on page 3 undefined on input line 356.
+
+
+Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 3 undefined on input line 358.
+
+
+Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 3 undefined on input line 382.
 
 
 
 [3]
 
 
-Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 4 undefined on input line 451.
+Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 4 undefined on input line 455.
 
 
-Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 4 undefined on input line 451.
+Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 4 undefined on input line 455.
 
 
-Package natbib Warning: Citation `vallati2021importance' on page 4 undefined on input line 451.
+Package natbib Warning: Citation `vallati2021importance' on page 4 undefined on input line 455.
 
 
 
 [4]
 
-Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 5 undefined on input line 471.
+Package natbib Warning: Citation `mccluskey2010action' on page 5 undefined on input line 500.
 
 
-Package natbib Warning: Citation `DBLP:journals/aim/ChrpaMVV17' on page 5 undefined on input line 473.
-
-
-
-
-Package natbib Warning: Citation `mccluskey2010action' on page 5 undefined on input line 502.
 
 
 
 [5]
 
 
-Package natbib Warning: Citation `lamanna2021online' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `lamanna2021online' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `sreedharan2023optimistic' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `sreedharan2023optimistic' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `benyamin2025integratingreinforcementlearningaction' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `benyamin2025integratingreinforcementlearningaction' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `ng2019incremental' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `ng2019incremental' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `chitnis2021glib' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `chitnis2021glib' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `verma2023autonomous' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `verma2023autonomous' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `karia2023epistemic' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `karia2023epistemic' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `jin2022creativity' on page 6 undefined on input line 650.
+Package natbib Warning: Citation `jin2022creativity' on page 6 undefined on input line 648.
 
 
-Package natbib Warning: Citation `vallati2021quality' on page 6 undefined on input line 653.
+Package natbib Warning: Citation `vallati2021quality' on page 6 undefined on input line 651.
 
 
 
@@ -541,21 +541,31 @@ Package natbib Warning: There were undefined citations.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-Package rerunfilecheck Info: File `kr25-main.out' has not changed.
-(rerunfilecheck)             Checksum: 861DD8902D24D5EAF68A69062D2C4813;3602.
+
+
+Package rerunfilecheck Warning: File `kr25-main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `kr25-main.out':
+(rerunfilecheck)             Before: 861DD8902D24D5EAF68A69062D2C4813;3602
+(rerunfilecheck)             After:  9B1603D8CC3525722567B1ECA9479D0F;3276.
  ) 
 Here is how much of TeX's memory you used:
  12949 strings out of 470081
  205518 string characters out of 5477822
- 612939 words of memory out of 5000000
+ 613939 words of memory out of 5000000
  39390 multiletter control sequences out of 15000+600000
  644489 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,1024b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{subsection.4.3} has been referenced but does not exist, replaced by a fixed one
+
 <C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (7 pages, 218121 bytes).
+Output written on kr25-main.pdf (7 pages, 217926 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
+ 315 PDF objects out of 1000 (max. 8388607)
  49 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
