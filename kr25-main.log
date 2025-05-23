@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  21 MAY 2025 15:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  23 MAY 2025 15:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -358,42 +358,42 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 \c@theorem=\count315
 \c@definition=\count316
 \c@observation=\count317
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 182.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 183.
  (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count318
-)
-No file kr25-main.aux.
+) (kr25-main.aux)
 \openout1 = `kr25-main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 182.
-LaTeX Font Info:    ... okay on input line 182.
-Package hyperref Info: Link coloring OFF on input line 182.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 183.
+LaTeX Font Info:    ... okay on input line 183.
+Package hyperref Info: Link coloring OFF on input line 183.
+ (kr25-main.out) (kr25-main.out)
 \@outlinefile=\write3
 \openout3 = `kr25-main.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-(C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+ (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count319
 \scratchdimen=\dimen192
@@ -415,14 +415,24 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 \titlearea=\box58
 \actualheight=\skip65
 
-Underfull \hbox (badness 3068) in paragraph at lines 216--217
+
+Package natbib Warning: Citation `pddl' on page 1 undefined on input line 199.
+
+
+
+
+Package natbib Warning: Citation `stern2017efficient' on page 1 undefined on input line 218.
+
+
+Package natbib Warning: Citation `others' on page 1 undefined on input line 218.
+
+
+Package natbib Warning: Citation `locm' on page 1 undefined on input line 218.
+
+
+Underfull \hbox (badness 3068) in paragraph at lines 228--229
 [][]\OT1/ptm/m/n/10 [Roni: TODO: Ex-plain high-level Encoder-decoder
  []
-
-
-
-
-Package natbib Warning: Citation `helmert2006fast' on page 1 undefined on input line 241.
 
 
 
@@ -432,191 +442,125 @@ Package natbib Warning: Citation `helmert2006fast' on page 1 undefined on input 
 
 ]
 
-Package natbib Warning: Citation `yang2007learning' on page 2 undefined on input line 258.
+
+Package natbib Warning: Citation `gregory2016domain' on page 2 undefined on input line 278.
 
 
-Package natbib Warning: Citation `amir2008learning' on page 2 undefined on input line 259.
-
-
-Package natbib Warning: Citation `aineto2019learning' on page 2 undefined on input line 261.
-
-
-Package natbib Warning: Citation `Lamanna24' on page 2 undefined on input line 265.
-
-
-Package natbib Warning: Citation `cresswell2011generalised' on page 2 undefined on input line 266.
-
-
-Package natbib Warning: Citation `cresswell2013acquiring' on page 2 undefined on input line 266.
-
-
-Package natbib Warning: Citation `gregory2016domain' on page 2 undefined on input line 266.
-
-
-Package natbib Warning: Citation `lindsay2017framer' on page 2 undefined on input line 266.
-
-
-Package natbib Warning: Citation `asai2018classical' on page 2 undefined on input line 267.
-
-
-Package natbib Warning: Citation `xi2024neuro' on page 2 undefined on input line 267.
+Package natbib Warning: Citation `lindsay2017framer' on page 2 undefined on input line 278.
 
 Package acronym Info: Label `acro:SAM' newly defined as it shall be overridden
-although it is yet undefined on input line 269.
+although it is yet undefined on input line 282.
 
-Package acronym Warning: Acronym SAM is not defined on input line 269.
-
-
-Package acronym Warning: Acronym SAM is not defined on input line 269.
-
-
-Package natbib Warning: Citation `stern2017efficientAndSafe' on page 2 undefined on input line 269.
-
-
-Package natbib Warning: Citation `mordoch2023learning' on page 2 undefined on input line 269.
-
-
-Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 269.
-
-
-Package natbib Warning: Citation `juba2022learning' on page 2 undefined on input line 269.
-
-
-Package natbib Warning: Citation `le2024learning' on page 2 undefined on input line 269.
-
-
-Package natbib Warning: Citation `mordoch2024safe' on page 2 undefined on input line 269.
-
-
-Package acronym Warning: Acronym SAM is not defined on input line 272.
-
-
-Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 273.
-
-
-Package natbib Warning: Citation `juba2022learning' on page 2 undefined on input line 273.
-
-
-Package natbib Warning: Citation `mordoch2024safe' on page 2 undefined on input line 273.
-
-
-Package natbib Warning: Citation `mordoch2023learning' on page 2 undefined on input line 273.
-
-
-Package natbib Warning: Citation `le2024learning' on page 2 undefined on input line 274.
-
-
-Package natbib Warning: Citation `juba2021safe' on page 2 undefined on input line 275.
-
-
-Package acronym Warning: Acronym SAM is not defined on input line 275.
-
-
-Package natbib Warning: Citation `xi2024neuro' on page 2 undefined on input line 276.
-
-
-
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 309.
-(C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-
-LaTeX Warning: Reference `sec:bridging-gap' on page 2 undefined on input line 329.
+Package natbib Warning: Citation `stern2017efficient' on page 2 undefined on input line 282.
 
 
 
 [2]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 326.
+ (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
 
-Package natbib Warning: Citation `aineto2019learning' on page 3 undefined on input line 334.
-
-
-Package natbib Warning: Citation `mordoch2023safe' on page 3 undefined on input line 334.
-
-
-Package natbib Warning: Citation `xi2024neuro' on page 3 undefined on input line 334.
+Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 3 undefined on input line 337.
 
 
-Package natbib Warning: Citation `aineto2019learning' on page 3 undefined on input line 368.
 
 
-Package natbib Warning: Citation `mordoch2024safe' on page 3 undefined on input line 368.
+Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on input line 356.
 
 
-Package natbib Warning: Citation `le2024learning' on page 3 undefined on input line 368.
-
-
+Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on input line 388.
 
 
 
 [3]
 
 
-Package natbib Warning: Citation `juba2021safe' on page 4 undefined on input line 459.
+Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 4 undefined on input line 447.
 
 
-Package natbib Warning: Citation `mccluskey2010action' on page 4 undefined on input line 463.
+Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 4 undefined on input line 447.
+
+
+Package natbib Warning: Citation `vallati2021importance' on page 4 undefined on input line 447.
 
 
 
 [4]
 
-
-Package natbib Warning: Citation `xi2024neuro' on page 5 undefined on input line 603.
-
-
-Package natbib Warning: Citation `le2024learning' on page 5 undefined on input line 603.
+Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 5 undefined on input line 467.
 
 
-Package natbib Warning: Citation `lamanna2021online' on page 5 undefined on input line 616.
+Package natbib Warning: Citation `DBLP:journals/aim/ChrpaMVV17' on page 5 undefined on input line 469.
+
+
+Package natbib Warning: Citation `mccluskey2010action' on page 5 undefined on input line 498.
 
 
 
-[5] (kr25-main.bbl
 
-)
+
+[5]
+
+
+Package natbib Warning: Citation `lamanna2021online' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `sreedharan2023optimistic' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `benyamin2025integratingreinforcementlearningaction' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `ng2019incremental' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `chitnis2021glib' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `verma2023autonomous' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `karia2023epistemic' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `jin2022creativity' on page 6 undefined on input line 651.
+
+
+Package natbib Warning: Citation `vallati2021quality' on page 6 undefined on input line 654.
+
+(kr25-main.bbl
+
+[6])
 
 Package natbib Warning: There were undefined citations.
 
 
 
-[6] (kr25-main.aux
 
-Package natbib Warning: Citation(s) may have changed.
-(natbib)                Rerun to get citations correct.
 
-)
+[7
+
+] (kr25-main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `kr25-main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `kr25-main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  C55DFE99B1BE7266DC9749AE7F945DBB;3717.
+Package rerunfilecheck Info: File `kr25-main.out' has not changed.
+(rerunfilecheck)             Checksum: 52B6FAD906B7B66B02CB31CADE7EBC09;3697.
  ) 
 Here is how much of TeX's memory you used:
- 12919 strings out of 470081
- 204924 string characters out of 5477822
- 614748 words of memory out of 5000000
- 39366 multiletter control sequences out of 15000+600000
+ 12951 strings out of 470081
+ 205548 string characters out of 5477822
+ 613937 words of memory out of 5000000
+ 39391 multiletter control sequences out of 15000+600000
  644489 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1587b,562s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1024b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (6 pages, 183783 bytes).
+Output written on kr25-main.pdf (7 pages, 214858 bytes).
 PDF statistics:
- 145 PDF objects out of 1000 (max. 8388607)
- 49 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 307 PDF objects out of 1000 (max. 8388607)
+ 50 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

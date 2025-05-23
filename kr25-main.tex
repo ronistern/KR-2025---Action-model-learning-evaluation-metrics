@@ -185,31 +185,42 @@
 \maketitle
 
 \begin{abstract}
-%%%MAURO: proposed new version, feel free to ignore.
 Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, which provides to a planning engine the necessary application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
 Formulating domain-models is a challenging, time consuming, and error-prone task. For this reason, a number of approaches has been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches; there is a lack of evaluation metrics, and the complexity is exacerbated since learning algorithms may output models with different representations of states and actions. 
 To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models using the proposed metrics. Finally, suggest a benchmark suite based on existing domain models from the International Planning Competition (IPC) an evaluation process for using it. 
-
-
-%%%MAURO: original version below.
-%    Model-based planning is a fundamental approach to sequential decision-making in which a domain model is used to generate plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. Obtaining domain models for planning is a challenging task, and various algorithms have been proposed to learn them from observations. However, evaluating learned domain models is challenging since there are no standardized evaluation metrics or benchmarks. In addition, domain model learning algorithms may output models with different representations of states and actions. To address this gap in the literature, we describe metrics designed to measure the syntactic similarity, predictive power, and problem-solving capabilities of learned domain models. To bridge over representation gaps, we propose an encoder-decoder mechanism that maps the learned domain model to the original domain representation.  We present an evaluation paradigm that leverages this encoder-decoder mechanism to systematically compare learned domain models and compute the proposed metrics for them. Finally , we provide a benchmark suite based on existing domain models from the International Planning Competition (IPC) to facilitate the evaluation of domain model learning algorithms. We demonstrate our evaluation paradigm by applying it to several domain model learning algorithms, including SAM, ESAM, FAMA, and ROSAME. 
 \end{abstract}
 %% outline:
 
 \section{Introduction}
 
-\roni{TODO: What is automated planning. Focus: classical planning. }
+% \roni{TODO: What is automated planning. Focus: classical planning. }
+Domain-independent planning is a foundational area of research in Artificial Intelligence (AI) that focuses on the automatic generation of plans to achieve specific goals from a given initial state in a given environment. Classical planning, which is the focus of this work, is the colloquial name for a well-studied type of domain-indepednent planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
+% \roni{TODO: Creating an action model is hard. Learning action models algorithms exists.}
+Most research on classical planning has focused on developing efficient algorithms for solving planning problems, and assumed the existence of a \emph{domain model} specified in a formal language such as the Planning Domain Definition Language (PDDL)~\cite{pddl}. 
+The domain model in classical planning defines how states are represented, the set of possible actions, and the preconditions and effects of each action. 
+However, creating a domain model is a challenging, time-consuming, and error-prone task.
+This prevents wider dissemination of planning technology in real-world applications. 
+
+% \roni{TODO: Learning action models output action models that use different representations of states and actions.}
+To address this issue, a number of algorithms have been proposed to automatically learn domain models from a set of provided observations~\cite{xi2024neuro,juba2021safe,mordoch2024safe}.\roni{Everyone is invited to add their action model learning algorithm here.}
+% \roni{TODO: Key question: how to evaluate action model learning algorithms?}
+Despite a recent resurgance in interest in learning domain models, there is no standard evaluation process for such algorithm, 
+no set of agreed-upon evaluation metrics, and no standard benchmark. 
+This paper aims to close this gap, and propose an evaluation paradigm for domain model learning algorithms, a set of metrics, and a publicly available benchmark for evaluation. 
 
 
-\roni{TODO: Creating an action model is hard. Learning action models algorithms exists.}
+We begin our explanation by assuming the existance of a \emph{reference domain model} which can be used as a ground truth to assess the learned domain model. 
+Under this assumption, we define several evaluation metrics that measure the similirity of the learned domain model to the reference domain model,
+the predictive power of the learned domain, and its usefulness in solving problems in the environment. Most of these metrics have been proposed in prior work~\cite{aineto2019learning}, and we discuss the pros and cons of using each metric. 
 
-\roni{TODO: Learning action models output action models that use different representations of states and actions.}
+
+% \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
+Then, we discuss the limitation of depending on a reference domain model, and the challenge of comparing action models that use different state and action representations. This challenge is a very practical one, since ddomain model learning algorithms vary in the representation of the domain models they output. For example, some algorithms output models in a grounded representation~\cite{stern2017efficient,others}, while others output models in a lifted representation~\cite{juba2021safe,xi2024neuro,aineto2019learning}. Some example represent states based only the parameters of executed actions~\cite{locm}, others require a richer symbolic representation of states~\cite{juba2021safe}, while others use a visual representation of states~\cite{xi2024neuro}.
+\roni{All: add references and refine the above and add more examples of representation gap.}
 
 
-\roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
 
-\roni{TODO: Key question: how to evaluate action model learning algorithms?}
-\roni{TODO: Syntactic metrics are not enough. We need semantic metrics.}
+
 
 
 \roni{TODO: We propose a new paradigm for evaluating action model learning algorithms. }
@@ -268,7 +279,7 @@ LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, 
 \yarin{ROSAME is mentioned in the last paragraph too, move them to be together}
 LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
 % None of the presented algorithms provide execution soundness guarantees, i.e., that plans created with the learned action model are applicable in the real action model. 
-The \sam learning algorithms~\citep{stern2017efficientAndSafe,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
+The \sam learning algorithms~\citep{stern2017efficient,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
 An action model having this property is referred to as \emph{safe action model}.
 % This property is commonly referred to as a \emph{safety} guarantee.
 The \sam family of algorithms addresses learning safe action models under different settings: 
