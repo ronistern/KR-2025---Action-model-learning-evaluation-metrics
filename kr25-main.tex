@@ -122,6 +122,7 @@
 \newcommand{\omer}[1]{{\textcolor{purple}{[Omer: #1]}}}
 \newcommand{\mauro}[1]{{\textcolor{green}{[Mauro: #1]}}}
 \newcommand{\yarin}[1]{{\textcolor{teal}{[Yarin: #1]}}}
+\newcommand{\gregor}[1]{{\textcolor{orange}{[Gregor: #1]}}}
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -264,6 +265,7 @@ It frames the task of learning an action model as a planning problem, ensuring t
 
 NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
 LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, and its extension to learn action costs \citep{gregory2016domain} analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. Based on less structured input knowledge, Framer \citep{lindsay2017framer} is an approach for learning planning domain models from natural language descriptions of activity sequences.
+\yarin{ROSAME is mentioned in the last paragraph too, move them to be together}
 LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
 % None of the presented algorithms provide execution soundness guarantees, i.e., that plans created with the learned action model are applicable in the real action model. 
 The \sam learning algorithms~\citep{stern2017efficientAndSafe,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
@@ -273,7 +275,7 @@ The \sam family of algorithms addresses learning safe action models under differ
 the action models are lifted~\citep{juba2021safe}, with stochastic~\citep{juba2022learning} or conditional effects~\citep{mordoch2024safe}, and even action models containing numeric preconditions and effects~\citep{mordoch2023learning}.
 \citet{le2024learning} extended their approach to support learning safe action models in a partially observable environment. 
 ESAM~\citep{juba2021safe} is an extension of the \sam algorithm that learns action models from domains in which there is ambiguity regarding the mapping of objects to parameters. To resolve this ambiguity, ESAM outputs a model with additional \emph{proxy actions} that impose additional preconditions and parameter changes on actions in which such ambiguity cannot be resolved. 
-I-ROSAME~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images. 
+ROSAME-I~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images. 
 They propose a neural network architecture that learns the action model in a lifted representation in tandem with a neural network that learns to map images to a given symbolic representation. 
 
 
@@ -345,15 +347,16 @@ Prior work often focused on domain model metrics that aim for the first objectiv
 \roni{Others who have used, please add citations}
 These metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
 Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
+Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.
 
 
 % Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ and $\eff_M(a)$ the preconditions and effects, respectively, of action $a$ according to domain $M$.
  \begin{itemize}
-    \item True Positives: $TP_\pre(a)=|(\pre_M(a)\cap \pre_\realm(a)|$
-    \item False Positives: $FP_\pre(a)=|((\pre_M(a)\setminus \pre_\realm(a)|$
-    \item False Negatives: $FN_\pre(a)=|(\pre_\realm(a)\setminus \pre_M(a))|$
-    \item True Negatives: $TN_\pre(a)=|L_a \setminus(\pre_M(a)\cup \pre_\realm(a))|$, 
-    where $L_a$ is the set of all parameter-bound literals for an action $a$. 
+    \item True Positives: TP$_\pre(a)=|(\pre_M(a)\cap \pre_\realm(a)|$
+    \item False Positives: FP$_\pre(a)=|((\pre_M(a)\setminus \pre_\realm(a)|$
+    \item True Negatives: TN$_\pre(a)=|L_a \setminus(\pre_M(a)\cup \pre_\realm(a))|$
+    % , where $L_a$ is the set of all parameter-bound literals for an action $a$.
+    \item False Negatives: FN$_\pre(a)=|(\pre_\realm(a)\setminus \pre_M(a))|$
 \end{itemize}
 The following standard metrics from statistical analysis can then computed based on these values for each action:
 \begin{itemize}
@@ -385,7 +388,7 @@ The former measures the ability of the learned model to predict whether an actio
 % These metrics require a dataset of (state, action) pairs 
 Unlike the syntactic similarity metrics, which are computed based on the action model itself, the predictive power metrics require a dataset of states that we denote by $S$. 
 This dataset is intended to represent the distribution of states of interest in the domain. 
-One way to create this dataset is by running a planner on a set of test problems with the real action model. 
+One way to create this dataset is by running a planner on a set of test problems with the real action model.
 
 \roni{TODO: Clarify this does not consider complexity of the doamin (which will be addressed in the next metric)}
 
@@ -411,8 +414,8 @@ For domain $M$, action $a$, and state $s$, we denote by $a_M(s)$ the state resul
 Based on this, we define the following predicted action effect metrics for some action $a$ and state $s$, as follows: 
 \begin{itemize}
     \item TP$_{\eff}(s,a)=|(a_M(s)\setminus s)\cap (a_\realm(s)\setminus s)|$
+    \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$ \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
-    \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$
     \item FN$_{\eff}(s,a)=|(a_\realm(s)\setminus s)\setminus a_\realm(s)|$
 \end{itemize}
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
@@ -425,6 +428,7 @@ it is not an effect according to the learned model, but it is an effect accordin
 This will count as a false positive in the syntactic similarity metrics yet not count as a false positive in the predicted effects metrics. 
 
 \roni{Add a concrete example of how to compute these metrics}
+\yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
 
 
 \subsection{Problem-Solving Metrics}
@@ -633,7 +637,7 @@ Note that in all of these variants and generalizations, the encoder-decoder mech
 
 % Online metrics 
 \todo{Maybe talk about metrics for online learning}
-The metrics and evaluation paradigm outlined in this paper are for \emph{offline} learning of action models, where the learning algorithm is given a set of trajectories and is required to output a domain model. \emph{Online learning} of action models have also been studied in the literature~\citep{lamanna2021online}\todo{More citations?}, where the learning algorithm is required to learn a domain model by actively interacting with the environment. Similar to other online tasks, one may distinguish between the \emph{cumulative regret} of the learning process, which can be the number of actions performed for learning or the number of problems failed to solve while collecting observations. 
+The metrics and evaluation paradigm outlined in this paper are for \emph{offline} learning of action models, where the learning algorithm is given a set of trajectories and is required to output a domain model. \emph{Online learning} of action models have also been studied in the literature~\citep{lamanna2021online, sreedharan2023optimistic, benyamin2025integratingreinforcementlearningaction, ng2019incremental, chitnis2021glib, verma2023autonomous, karia2023epistemic, jin2022creativity}\todo{More citations?}\yarin{added, to many?}, where the learning algorithm is required to learn a domain model by actively interacting with the environment. Similar to other online tasks, one may distinguish between the \emph{cumulative regret} of the learning process, which can be the number of actions performed for learning or the number of problems failed to solve while collecting observations. 
 Specific metrics and evaluation for online learning of action models, however is beyond the scope of this work. 
 
 Finally, models can also be compared not only in terms of their characteristics, but also in terms of the processes used to learn or generate them \citep{vallati2021quality}, a perspective that is commonly used for assessing conceptual models.
