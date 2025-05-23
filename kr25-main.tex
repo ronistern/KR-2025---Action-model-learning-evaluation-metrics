@@ -209,29 +209,23 @@ no set of agreed-upon evaluation metrics, and no standard benchmark.
 This paper aims to close this gap, and propose an evaluation paradigm for domain model learning algorithms, a set of metrics, and a publicly available benchmark for evaluation. 
 
 
-We begin our explanation by assuming the existance of a \emph{reference domain model} which can be used as a ground truth to assess the learned domain model. 
-Under this assumption, we define several evaluation metrics that measure the similirity of the learned domain model to the reference domain model,
-the predictive power of the learned domain, and its usefulness in solving problems in the environment. Most of these metrics have been proposed in prior work~\cite{aineto2019learning}, and we discuss the pros and cons of using each metric. 
+We begin our exposition by describing a straightforward evaluation process for action model learning algorithms, which is based on comparing the \emph{syntactic similarity} of the learned domain model to a \emph{reference domain model}. We discuss the limitations of this evaluation method and propose an alternative evaluation process that aims to evaluate the \emph{predictive power} and \emph{problem-solving} ability to the learned domain model. 
+Several specific evaluation metrics are defined for this type of evaluation based on prior works~\cite{aineto2019learning,juba2021safe,mordoch2024safe}, and we discuss their pros and cons. 
 
 
 % \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
-Then, we discuss the limitation of depending on a reference domain model, and the challenge of comparing action models that use different state and action representations. This challenge is a very practical one, since ddomain model learning algorithms vary in the representation of the domain models they output. For example, some algorithms output models in a grounded representation~\cite{stern2017efficient,others}, while others output models in a lifted representation~\cite{juba2021safe,xi2024neuro,aineto2019learning}. Some example represent states based only the parameters of executed actions~\cite{locm}, others require a richer symbolic representation of states~\cite{juba2021safe}, while others use a visual representation of states~\cite{xi2024neuro}.
+The proposed metrics are designed for evaluating models that use the same representation of states and actions. 
+However, in practice, action model learning algorithms may output models that use different representations of states and actions. For example, some algorithms output models in a grounded representation~\cite{stern2017efficient,others}, while others output models in a lifted representation~\cite{juba2021safe,xi2024neuro,aineto2019learning}. Some example represent states based only the parameters of executed actions~\cite{locm}, others require a richer symbolic representation of states~\cite{juba2021safe}, while others use a visual representation of states~\cite{xi2024neuro}.
 \roni{All: add references and refine the above and add more examples of representation gap.}
-
-
-
-
-
-
-\roni{TODO: We propose a new paradigm for evaluating action model learning algorithms. }
-
-\roni{TODO: Explain high-level Encoder-decoder mechanism}
-
-\roni{TODO: Proposed Metrics}
-
+We propose an evaluation paradigm that addresses this representation gap challenge. 
+In this paradigm, an evaluate domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
+We adapt the domain model evaluation metrics defined above to use these bridging functions, 
+and show to define such functions for several domain model learning algorithms. 
 \roni{TODO: Benchmarks, evaluation methodology}
+Finally, we describe a benchmark suite and suggsted evaluation process for using it based on existing domain models from the International Planning Competition (IPC).
 
-\roni{TODO: Case study results}
+
+
 
 \section{Background and Related Work}
 
@@ -261,7 +255,7 @@ such as a set of predicates that hold in the state or a visual representation of
 Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
 
 
-\subsection{Action Domain Learning Algorithms}
+\subsection{Domain Learning Algorithms}
 
 % Example of prominent domain learning algorithms. 
 \todo{Open request for all: refine and add more algorithms to the following pargraphs as needed. Do not be shy: add your algorithms here.}
@@ -303,7 +297,7 @@ They propose a neural network architecture that learns the action model in a lif
 
 
 
-\section{Problem Setting and Objectives}
+\section{Problem Setting and Syntactic Similiary}
 \label{sec:problem-setting}
 
 \mauro{reshaped the section. Please check.}
@@ -319,44 +313,10 @@ That is, this domain model can be given as input to a classical planner, and tog
 %\mauro{clarify here the ground truth model, and discuss issues and alternatives.}
 %\roni{Note: changing \emph{real domain model} to \emph{environment}, to clarify that it is not a model. Then discuss what if we do have a verified domain model. TODO}
 
-In this setting, we assume that there exists a \textit{reference domain model}, to be used as a ground truth to assess the learned domain model. Specifically, we can consider three main dimensions to optimize the learning process and to evaluate the learned model:
-%
-%In this setup, we consider the following desired objectives of a learned domain model. 
-\begin{itemize}
-    \item \textbf{Syntactic similarity.} Aim to learn a domain model that is  as similar as possible syntactically to the reference one. 
-    \item \textbf{Predictive power.} Aim to learn a domain model that allows predicting the outcome of actions in the reference domain model. 
-    \item \textbf{Problem-solving ability.} Aim to learn a domain model that enables the generation of solutions within given reasonable resources bounds. %enables solving problems in the real domain model.      
-\end{itemize}
 
-%\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
-
-A key insight to consider 
-%While the real domain model satisfies all three objectives, a key insight 
-is that these objectives are in general not necessarily aligned. 
-A learned domain model may be very \emph{similar syntactically} to the reference domain model but not effective in solving problems from the corresponding real-world environment, 
-e.g., adding redundant preconditions or missing a crucial effect \cite{DBLP:conf/kcap/VallatiC19}. 
-In contrast, a domain model may be very different from the reference domain model, e.g., adding many redundant preconditions to some actions, yet very \emph{effective} in solving problems in the application domain since these redundant preconditions are often true in the real world. 
-Lastly, a domain model may be very \emph{predictive} of behavior of the agent in the reference domain model, yet too complex to be used for solving problems by any existing planning engine. 
-For example, assume a learned domain model that has many copies of the same action in the reference domain model, each with different parameters and preconditions, in order to capture different aspects of that action's behavior. 
-While this may be useful for predicting the applicability of actions in the reference domain model, 
-it may hinder the ability of a planning engine to find plans for problems in the application domain with this model, due to its complexity (e.g., large branching factor). 
-
-
-
-\section{Evaluation Metrics}
-Next, we discuss possible and existing metrics for evaluating the three dimensions discussed in the previous section. 
-We begin by assuming that the learned domain model and the reference domain model both use the same representation of states and actions, %i.e., they are \emph{syntactically similar} 
-in the sense that they have the same action names, object types, and parameter ordering. This is indeed generally the case for approaches that learn models from trajectories and plan traces, that come with a pre-defined vocabulary. 
-
-In Section~\ref{sec:bridging-gap}, we discuss how to extend the metrics to handle cases where the learned domain model and the reference domain model use different representations. 
-
-
-% Existing metrics are syntectic
-\subsection{Syntactic Similarity Metrics}
-Prior work often focused on domain model metrics that aim for the first objective (similarity), which are sometimes referred to as \emph{syntactic similarly} metrics~\citep{aineto2019learning,mordoch2023safe,xi2024neuro}. In literature, two models that are syntactically identical have been defined as \textit{strongly equivalent} \cite{chrpa2023comparing}
-
-\roni{Others who have used, please add citations}
-These metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
+Many prior work evaluated their domain model learning algorithms by comparing the learned domain model to a \emph{reference domain model} (or \emph{ground truth model}). 
+The reference domain model is assumed to be correct, and have been used to evaluate the learned domain model in terms of its \emph{syntactic similarity} to the reference model~\citep{aineto2019learning,mordoch2023safe,xi2024neuro}.\roni{Others who have used, please add citations}
+These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
 Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
 Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.
 
@@ -385,7 +345,51 @@ The same metrics can be defined for the effects of actions, with the only differ
 
 %\mauro{add here the notion of strong/weak equivalence, and the metrics based on graph similarity}
 
-In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach to assess the edit distance of the learned domain model with regards to the reference one. Low distance values indicate models that are syntactically close to each other. %Similarly, the work done on model reconciliation \citep{} looks into approaches to suggest minimal changes to a model to reconcile it with a reference one.
+In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach to assess the edit distance of the learned domain model with regards to the reference one. Low distance values indicate models that are syntactically close to each other, and if two models are syntactically identical (i.e., edit distance of zero) then they are said to be \textit{strongly equivalent} \cite{chrpa2023comparing}
+
+%Similarly, the work done on model reconciliation \citep{} looks into approaches to suggest minimal changes to a model to reconcile it with a reference one.
+
+
+\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
+The above approach to evaluating domain models has several limitations. 
+First, it relies on the existence of a reference domain model, which may not be available in practice. 
+Second, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\cite{aineto2019learning,juba2021safe,mordoch2024safe}.
+Next, we discuss what constitutes a useful domain model, and how to evaluate it.
+
+
+
+\section{Metrics for Evaluating Domain Models}
+
+We can consider two main dimensions to optimize the learning process and to evaluate the learned model:
+%
+%In this setup, we consider the following desired objectives of a learned domain model. 
+\begin{itemize}
+    % \item \textbf{Syntactic similarity.} Aim to learn a domain model that is  as similar as possible syntactically to the reference one. 
+    \item \textbf{Predictive power.} Aim to learn a domain model that allows predicting the outcome of actions in the reference domain model. 
+    \item \textbf{Problem-solving ability.} Aim to learn a domain model that enables the generation of solutions within given reasonable resources bounds. %enables solving problems in the real domain model.      
+\end{itemize}
+
+%\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
+
+A key insight to consider 
+%While the real domain model satisfies all three objectives, a key insight 
+is that these objectives are in general not necessarily aligned with each other and with the syntactic similarity metrics defined above. 
+A learned domain model may be very \emph{similar syntactically} to the reference domain model but not effective in solving problems from the corresponding real-world environment, 
+e.g., adding redundant preconditions or missing a crucial effect \cite{DBLP:conf/kcap/VallatiC19}. 
+In contrast, a domain model may be very different from the reference domain model, e.g., adding many redundant preconditions to some actions, yet very \emph{effective} in solving problems in the application domain since these redundant preconditions are often true in the real world. 
+Lastly, a domain model may be very \emph{predictive} of behavior of the agent in the reference domain model, yet too complex to be used for solving problems by any existing planning engine. 
+For example, assume a learned domain model that has many copies of the same action in the reference domain model, each with different parameters and preconditions, in order to capture different aspects of that action's behavior. 
+While this may be useful for predicting the applicability of actions in the reference domain model, 
+it may hinder the ability of a planning engine to find plans for problems in the application domain with this model, due to its complexity (e.g., large branching factor). 
+
+
+
+Next, we discuss possible and existing metrics for evaluating the two dimensions discussed in the previous section. 
+We begin by assuming that the learned domain model and the reference domain model both use the same representation of states and actions, %i.e., they are \emph{syntactically similar} 
+in the sense that they have the same action names, object types, and parameter ordering. This is indeed generally the case for approaches that learn models from trajectories and plan traces, that come with a pre-defined vocabulary. 
+In Section~\ref{sec:bridging-gap}, we discuss how to extend the metrics to handle cases where the learned domain model and the reference domain model use different representations. 
+
+
 
 \subsection{Predictive Power Metrics}
 \label{sec:predictiveness-metrics}
@@ -570,7 +574,7 @@ This allows checking if a plan has been found and if it is valid according to th
 \subsection{Case Studies}
 Next, we describe how the encoder-decoder mechanism can be implemented for several action model learning algorithms. 
 
-SAM:
+SAM: \roni{Either me or someone from my group will write this one}
 Encoder: identity
 Decoder: identity
 
@@ -578,19 +582,19 @@ FAMA - Leonardo L.?:
 Encoder: identity
 Decoder: identity - maybe change to parameter names?
 
-ESAM:
+ESAM: \roni{Either me or someone from my group will write this one}
 Encoder: identity for both state and actions     
 Decoder: translate proxy actions to original actions
 
-ROSAME:
+ROSAME: \roni{Maybe Yarin or Argaman can help with this one}
 Encoder: encode to a numeric vector of ones and zeros
 Decoder: map action parameters
 
-OBSERVER: 
+OBSERVER: \roni{Anyone can help here?}
 Encoder: from binding to grounded
 Decoder: from grounded predicates and actions to the binding they represent
 
-\roni{TODO: help me with the encoder-decoder for the other algorithms.}
+\roni{Most important: anyone can help here?}
 
 
 \subsection{An Evaluation Paradigm}
@@ -616,12 +620,6 @@ This 80/20 split is repeated $k$ times following a standard $k$-fold validation 
 % \end{algorithm}
 
 
-
-
-
-
-
-
 \section{Benchmarks}
 
 \todo{Leonardo is in charge of this section.}
@@ -631,6 +629,7 @@ This 80/20 split is repeated $k$ times following a standard $k$-fold validation 
 \todo{If we have time: show results for at least some of the algorithms on the benchmark suite.}
 
 \section{Discussion}
+\roni{For all: please read and let me know what you think by adding comments in the text (e.g., add text like this ``[[YourName: bla bla bla'']]) or editting.}
 % Different input representations
 The proposed evaluation paradigm is designed to be flexible and extensible. 
 In particular, it can be extended to support other types of representations, such as images or other types of data. 
@@ -654,6 +653,7 @@ Specific metrics and evaluation for online learning of action models, however is
 Finally, models can also be compared not only in terms of their characteristics, but also in terms of the processes used to learn or generate them \citep{vallati2021quality}, a perspective that is commonly used for assessing conceptual models.
 
 \section{Conclusion Future Work}
+\roni{I'll fix this text later}
 % TODO VERIFY TEXT BELOW
 We presented a new paradigm for evaluating action 
 model learning algorithms across different representations. In this paradigm, each action model learning algorithm is required to output an action model and an encoder-decoder pair. The encoder-decoder pair is used to bridge representation gaps and enable measuring the problem-solving capabilities of the learned action models. We proposed an evaluation scheme that leverages the encoder-decoder pair to systematically compare learned action models, and described several evaluation metrics. A benchmark suite was also provided to facilitate the evaluation of action model learning algorithms, based on existing domain models from the International Planning Competition (IPC). We demonstrated our evaluation paradigm by applying it to several action model learning algorithms, including SAM, ESAM, FAMA, and ROSAME.
