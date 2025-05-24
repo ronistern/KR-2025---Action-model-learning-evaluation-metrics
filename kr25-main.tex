@@ -186,15 +186,15 @@
 
 \begin{abstract}
 Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, which provides to a planning engine the necessary application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possibly actions and the preconditions and effects of each action. 
-Formulating domain-models is a challenging, time consuming, and error-prone task. For this reason, a number of approaches has been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches; there is a lack of evaluation metrics, and the complexity is exacerbated since learning algorithms may output models with different representations of states and actions. 
-To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models using the proposed metrics. Finally, suggest a benchmark suite based on existing domain models from the International Planning Competition (IPC) an evaluation process for using it. 
+Formulating domain-models is a challenging, time consuming, and error-prone task. For this reason, a number of approaches have been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches; there is a lack of evaluation metrics, and the complexity is exacerbated since learning algorithms may output models with different representations of states and actions. 
+To foster the use of model learning approaches, in this paper we describe a set of metrics designed to assess different characteristics of models to be compared. Further, to bridge the potential representation gap between different learned models, we propose an encoder-decoder mechanism that allows to map two models regardless of their encoding, and we demonstrate how this encoder-decoder mechanism can be leveraged on to systematically compare models using the proposed metrics. Finally, suggest a benchmark suite based on existing domain models from the International Planning Competition (IPC) and an evaluation process for using it. 
 \end{abstract}
 %% outline:
 
 \section{Introduction}
 
 % \roni{TODO: What is automated planning. Focus: classical planning. }
-Domain-independent planning is a foundational area of research in Artificial Intelligence (AI) that focuses on the automatic generation of plans to achieve specific goals from a given initial state in a given environment. Classical planning, which is the focus of this work, is the colloquial name for a well-studied type of domain-independent planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
+Domain-independent planning is a foundational area of research in Artificial Intelligence (AI) that focuses on the automatic generation of plans to achieve specific goals from a given initial state in a given environment. Classical planning, which is the focus of this work, is the colloquial name for a well-studied type of domain-independent planning in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
 % \roni{TODO: Creating an action model is hard. Learning action models algorithms exists.}
 Most research on classical planning has focused on developing efficient algorithms for solving planning problems, and assumed the existence of a \emph{domain model} specified in a formal language such as the Planning Domain Definition Language (PDDL)~\citep{haslum2019introduction}. 
 The domain model in classical planning defines how states are represented, the set of possible actions, and the preconditions and effects of each action. 
@@ -204,9 +204,9 @@ This is a bottleneck for the wider dissemination of planning technology in real-
 % \roni{TODO: Learning action models output action models that use different representations of states and actions.}
 To address this issue, a number of algorithms have been proposed to automatically learn domain models from a set of provided observations~\citep{gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
 % \roni{TODO: Key question: how to evaluate action model learning algorithms?}
-Despite a recent resurgence in interest in learning domain models, there is no standard evaluation process for such algorithm, 
+Despite a recent resurgence in interest in learning domain models, there is no standard evaluation process for such algorithms, 
 no set of agreed-upon evaluation metrics, and no standard benchmark. 
-This paper aims to close this gap, and propose an evaluation paradigm for domain model learning algorithms, a set of metrics, and a publicly available benchmark for evaluation. 
+This paper aims to close this gap, and proposes an evaluation paradigm for domain model learning algorithms, a set of metrics, and a publicly available benchmark for evaluation. 
 
 
 We begin our exposition by describing a straightforward evaluation process for action model learning algorithms, which is based on comparing the \emph{syntactic similarity} of the learned domain model to a \emph{reference domain model}. We discuss the limitations of this evaluation method and propose an alternative evaluation process that aims to evaluate the \emph{predictive power} and \emph{problem-solving} ability of the learned domain model. 
@@ -216,14 +216,14 @@ Several specific evaluation metrics are defined for this type of evaluation base
 % \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
 The proposed metrics are designed for evaluating models that use the same representation of states and actions. 
 However, in practice, action model learning algorithms may output models that use different representations of states and actions. 
-For example, some algorithms output models in a grounded representation~\citep{stern2017efficient}, while others output models in a lifted representation~\citep{juba2021safe,xi2024neuro,aineto2019learning}. 
+For example, some algorithms output models in a grounded representation~\citep{stern2017efficient}, while others output models in a lifted representation~\citep{aineto2019learning,juba2021safe,xi2024neuro}. 
 Some represent states based only the parameters of executed actions~\citep{cresswell2011generalised}, or different languages to support human engineers \citep{mccluskey2010action}. 
 Finally, some require a richer symbolic representation of states~\citep{juba2021safe}, while others use a visual representation of states~\citep{xi2024neuro}.
 \roni{All: add references and refine the above and add more examples of representation gap.}
 We propose an evaluation paradigm that addresses this representation gap challenge. 
-In this paradigm, an evaluate domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
+In this paradigm, an evaluated domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
 We adapt the domain model evaluation metrics defined above to use these bridging functions, 
-and show to define such functions for several domain model learning algorithms. 
+and show how to define such functions for several domain model learning algorithms. 
 \roni{TODO: Benchmarks, evaluation methodology}
 Finally, we describe a benchmark suite and suggested evaluation process for using it based on existing domain models from the International Planning Competition (IPC). 
 
@@ -236,11 +236,11 @@ Finally, we describe a benchmark suite and suggested evaluation process for usin
 % \subsection{Classical Planning}
 We focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
 A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{S, A, s_0, s_g}$, where $S$ is a finite set of states, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G$ is a set of goal states. 
-An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the precondition of $a$ and $\mathit{eff}(a)$ is the effect of $a$. 
-The precondition $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effect $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
+An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the preconditions of $a$ and $\mathit{eff}(a)$ is the effects of $a$. 
+The preconditions $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effects $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
 In classical planning, a state is defined by a set of propositions.  
-The precondition and effect of an action are defined as a set of literals, which are either positive or negative propositions. 
-A solution to a classical planning is a sequence of actions that transforms the initial state $s_0$ into a goal state $s_g\in G$.   
+The preconditions and effects of an action are each defined as a set of literals, which are either positive or negative propositions. 
+A solution to a classical planning problem is a sequence of actions that transforms the initial state $s_0$ into a goal state $s_g\in G$.   
 
 
 % Discussion on lifted domain representation
@@ -255,7 +255,7 @@ The input to these algorithms is a set of \emph{trajectories}.
 A \emph{trajectory} is a sequence of observations and actions. 
 An \emph{observation} can be a state or some other information about the state, 
 such as a set of predicates that hold in the state or a visual representation of a state. 
-Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
+Domain model learning algorithms differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
 
 % Example of prominent domain learning algorithms. 
 % \todo{Open request for all: refine and add more algorithms to the following paragraphs as needed. Do not be shy: add your algorithms here.}
@@ -303,11 +303,11 @@ ROSAME-I, in contrast, assumes a predefined set of propositions and action signa
 %\mauro{reshaped the section. Please check.}
 
 In this work we consider the following domain model learning setup. 
-\gregor{Here it seems that $\realm$ is not yet a planning model, but a more general ``some environment''. Maybe we should distinguish between the ``environment'' (i.e. the thing that exists in reality) and the planning domain that it can be represented with? This might allow us to talk more concisely about @Mauro's concerns w.r.t.\ the ability to even know this ground truth model.\\
-E.g.\ say: An agent is acting in an environment $E$, 
-for which we assume that it can be represented as a classical planning domain $\realm$. }
-\roni{I like it. Implementing this change below}
-An agent is acting in an environment $E$ that we assume can be represented as a classical planning domain denoted by $\realm$. 
+% \gregor{Here it seems that $\realm$ is not yet a planning model, but a more general ``some environment''. Maybe we should distinguish between the ``environment'' (i.e. the thing that exists in reality) and the planning domain that it can be represented with? This might allow us to talk more concisely about @Mauro's concerns w.r.t.\ the ability to even know this ground truth model.\\
+% E.g.\ say: An agent is acting in an environment $E$, 
+% for which we assume that it can be represented as a classical planning domain $\realm$. }
+% \roni{I like it. Implementing this change below}
+An agent is acting in an environment that we assume can be represented as a classical planning domain denoted by $\realm$. 
 The agent's actions are recorded in a set of trajectories, which are sequences of observations and actions. 
 The observations and actions in the trajectories are given in a specific representation, which we refer to as the \emph{input representation}. 
 A domain model learning algorithm is given this set of trajectories, and is expected to output a domain model in classical planning. 
@@ -317,9 +317,13 @@ That is, this domain model can be given as input to a classical planner, and tog
 %\mauro{clarify here the ground truth model, and discuss issues and alternatives.}
 %\roni{Note: changing \emph{real domain model} to \emph{environment}, to clarify that it is not a model. Then discuss what if we do have a verified domain model. TODO}
 
-\gregor{Add: The core question is then: How good is the model learned by the domain model learning algorithm?}
+% \gregor{Add: The core question is then: How good is the model learned by the domain model learning algorithm?} DONE
+The core question is then: How good is the model learned by the domain model learning algorithm?
 Many prior works evaluated their domain model learning algorithms by comparing the learned domain model to a \emph{reference domain model} (or \emph{ground truth model}). 
-The reference domain model is assumed to be correct\gregor{i.e.\ it correctly models $E/\realm$}, and has been used to evaluate the learned domain model in terms of its \emph{syntactic similarity} to the reference model~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.\roni{Others who have used, please add citations}
+The reference domain model is assumed to be correct, i.e., equivalent to \realm, 
+% \gregor{i.e.\ it correctly models $E/\realm$}, 
+and has been used to evaluate the learned domain model in terms of its \emph{syntactic similarity} to it~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
+% \roni{Others who have used, please add citations}
 These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
 Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
 Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.
@@ -339,12 +343,13 @@ The following standard metrics from statistical analysis can then computed based
     \item \textbf{Syntactic Recall}: $R_\pre(a)\frac{TP(a)}{TP(a)+FN(a)}$
 \end{itemize}
 Other metrics such as Accuracy and F1-score can also be computed based on these values. 
-To obtain an overall precision and recall for preconditions the entire domain model, one can compute the average of the precision and recall values for all actions:
+To obtain an overall precision and recall for preconditions of the entire domain model, one can compute the average of the precision and recall values for all actions:
 $P_\text{avg}=\frac{1}{|A|}\sum_{a\in A} P(a)$ and $R_\text{avg}=\frac{1}{|A|}\sum_{a\in A} R(a)$, where $P(a)$ and $R(a)$ are the precision and recall of action $a$, respectively. 
 The same metrics can be defined for the effects of actions, with the only difference being that the literals in the effects are used instead of those in the preconditions. 
 
 \roni{TODO: Add an example}
 \gregor{Proposed this ``pathological'' example}
+\roni{Not sure about this. It is just an example, not a "corner case".}
 As an example consider a delivery scenario.
 The true model $\realm$ has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck and a truck contains a package.
 The action unload has three parameters $\ell, t,$ and $p$ (location, truck, and package).
@@ -364,7 +369,7 @@ In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach 
 %\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
 The above approach to evaluating domain models has several limitations. 
 First, it relies on the existence of a reference domain model, which may not be available in practice. 
-In fact, this is usually the case in new applications of automated planning to real world problems. In such cases, there may be a number of alternative models but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling \citep{DBLP:journals/aim/ChrpaMVV17}.
+In fact, this is usually the case in new applications of automated planning to real world problems. In such cases, there may be a number of alternative models but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
 \gregor{One could distinguish two cases here: (1) the practical application case i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case the issue of multiple equivalent models remains.}
 
 
@@ -390,9 +395,9 @@ We can consider two main dimensions to optimize the learning process and to eval
 %In this setup, we consider the following desired objectives of a learned domain model. 
 \begin{itemize}
     % \item \textbf{Syntactic similarity.} Aim to learn a domain model that is  as similar as possible syntactically to the reference one. 
-    \item \textbf{Predictive power.} Aim to learn a domain model that allows predicting the outcome \gregor{and applicability?} of actions in the environment. 
-    \item \textbf{Problem-solving ability.} Aim to learn a domain model that enables the generation of solutions within given reasonable resources bounds. %enables solving problems in the real domain model.
-    \gregor{Question here is: which solutions? (1) A plan that solves the learned problem? Definitely not, as this is not useful in the real environment. (2) A plan that will be executable in the real environment!}
+    \item \textbf{Predictive power.} Aim to learn a domain model that allows predicting the applicability and outcome of actions in the environment. 
+    \item \textbf{Problem-solving ability.} Aim to learn a domain model that enables the generation of applicable plans in the environment within reasonable resources bounds. %enables solving problems in the real domain model.
+    % \gregor{Question here is: which solutions? (1) A plan that solves the learned problem? Definitely not, as this is not useful in the real environment. (2) A plan that will be executable in the real environment!}    \roni{Good catch. I rephrased to emphasize it's (2)}
 \end{itemize}
 
 %\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
@@ -409,7 +414,7 @@ e.g., adding redundant preconditions or missing a crucial effect \citep{DBLP:con
 In contrast, a domain model may be very different from a reference domain model, e.g., adding many redundant preconditions to some actions, yet very \emph{effective} in solving problems in the application domain since these redundant preconditions are often true in the real world. 
 
 
-The two dimensions described here --- predictive power and problem-solving ability -- are also not necessarily aligned. Indeed, a domain model may be very \emph{predictive} of behavior of the agent in the reference domain model, yet too complex to be used for solving problems by any existing planning engine.
+The two dimensions described here --- predictive power and problem-solving ability --- are also not necessarily aligned. Indeed, a domain model may be very \emph{predictive} of behavior of the agent in the reference domain model, yet too complex to be used for solving problems by any existing planning engine.
 Assume, for example, that a learned domain model that has many copies of the same action in the reference domain model, each with different parameters and preconditions, in order to capture different aspects of that action's behavior. 
 While this may be useful for predicting the applicability of actions in the reference domain model, 
 it may hinder the ability of a planning engine to find plans for problems in the application domain with this model, due to its complexity (e.g., large branching factor). 
@@ -522,10 +527,11 @@ Note that all the metrics described in this section do not require a reference m
 \section{Bridging Representation Gaps}
 \label{sec:bridging-gap}
 % Motivation: representation may be different learning
-Some domain model learning algorithms output a classical planning domain model that uses a different representation. Such a model can still be used by a planner, yet its input and output may be incompatible with that of the reference domain model. 
+Some domain model learning algorithms output a classical planning domain model that uses a different representation than the input representation. Such a model can still be used by a planner, yet its input and output may be incompatible with that of the reference domain model. 
 In some cases, these representation differences are minimal, e.g., using  different ordering of the parameters or object types. 
 In other cases, the differences are more significant. 
 For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with additional \emph{proxy actions} that are used to resolve ambiguities in the mapping of objects to parameters.
+\roni{Pascal mentioned a paper that learned macro actions. TODO: add ref for it here (with relevant short text)}
 The proxy actions are not part of the original domain model, and they are not used in the reference domain model. 
 \roni{More examples?}
 
@@ -647,7 +653,8 @@ First, we generate a set of trajectories in the input representation for learnin
 This set of trajectories can be generated by running a planner on a set of problems in the reference domain model or via random walk.
 Then, this set of trajectories is split in 80/20 ratio, using 80\% of the trajectories for training and 20\% for testing. 
 The evaluated learning algorithm is given the training set of trajectories and is required to output a learned domain model, an encoder, and a decoder. 
-Following we use the learned model, encoder, and decoder to compute the metrics described above. 
+\roni{TODO for myself: Complete this subsection}
+% Following, we use the learned model, encoder, and decoder to compute the metrics described above. 
 This 80/20 split is repeated $k$ times following a standard $k$-fold validation process. 
 
 % \begin{algorithm}[h]
