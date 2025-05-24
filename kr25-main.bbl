@@ -21,6 +21,39 @@ Asai, M., and Fukunaga, A.
 \newblock In {\em Proceedings of the aaai conference on artificial
   intelligence}, volume~32,  6094--6101.
 
+\bibitem[\protect\citeauthoryear{Benyamin \bgroup et al\mbox.\egroup
+  }{2025}]{benyamin2025integratingreinforcementlearningaction}
+Benyamin, Y.; Mordoch, A.; Shperberg, S.~S.; and Stern, R.
+\newblock 2025.
+\newblock Integrating reinforcement learning, action model learning, and
+  numeric planning for tackling complex tasks.
+
+\bibitem[\protect\citeauthoryear{Chitnis \bgroup et al\mbox.\egroup
+  }{2021}]{chitnis2021glib}
+Chitnis, R.; Silver, T.; Tenenbaum, J.~B.; Kaelbling, L.~P.; and
+  Lozano-P{\'e}rez, T.
+\newblock 2021.
+\newblock Glib: Efficient exploration for relational model-based reinforcement
+  learning via goal-literal babbling.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~35,  11782--11791.
+
+\bibitem[\protect\citeauthoryear{Chrpa \bgroup et al\mbox.\egroup
+  }{2017}]{DBLP:journals/aim/ChrpaMVV17}
+Chrpa, L.; McCluskey, T.~L.; Vallati, M.; and Vaquero, T.
+\newblock 2017.
+\newblock The fifth international competition on knowledge engineering for
+  planning and scheduling: Summary and trends.
+\newblock {\em {AI} Mag.} 38(1):104--106.
+
+\bibitem[\protect\citeauthoryear{Chrpa \bgroup et al\mbox.\egroup
+  }{2023}]{chrpa2023comparing}
+Chrpa, L.; Dodaro, C.; Maratea, M.; Mochi, M.; and Vallati, M.
+\newblock 2023.
+\newblock Comparing planning domain models using answer set programming.
+\newblock In {\em European Conference on Logics in Artificial Intelligence},
+  227--242.
+
 \bibitem[\protect\citeauthoryear{Cresswell and
   Gregory}{2011}]{cresswell2011generalised}
 Cresswell, S., and Gregory, P.
@@ -36,11 +69,43 @@ Cresswell, S.~N.; McCluskey, T.~L.; and West, M.~M.
 \newblock Acquiring planning domain models using locm.
 \newblock {\em The Knowledge Engineering Review} 28(2):195--213.
 
+\bibitem[\protect\citeauthoryear{Gregory and Lindsay}{2016}]{gregory2016domain}
+Gregory, P., and Lindsay, A.
+\newblock 2016.
+\newblock Domain model acquisition in domains with action costs.
+\newblock In {\em International Conference on Automated Planning and Scheduling
+  (ICAPS)},  149--157.
+
+\bibitem[\protect\citeauthoryear{Gösgens, Jansen, and
+  Geffner}{2025}]{gösgens2025learningfromonlyactiontraces}
+Gösgens, J.; Jansen, N.; and Geffner, H.
+\newblock 2025.
+\newblock Learning lifted {STRIPS} models from action traces alone: A simple,
+  general, and scalable solution.
+\newblock In {\em 35th International Conference on Automated Planning and
+  Scheduling ({ICAPS} 2025)}.
+
+\bibitem[\protect\citeauthoryear{Haslum \bgroup et al\mbox.\egroup
+  }{2019}]{haslum2019introduction}
+Haslum, P.; Lipovetzky, N.; Magazzeni, D.; Muise, C.; Brachman, R.; Rossi, F.;
+  and Stone, P.
+\newblock 2019.
+\newblock {\em An introduction to the planning domain definition language}.
+
 \bibitem[\protect\citeauthoryear{Helmert}{2006}]{helmert2006fast}
 Helmert, M.
 \newblock 2006.
 \newblock The fast downward planning system.
 \newblock {\em Journal of Artificial Intelligence Research} 26:191--246.
+
+\bibitem[\protect\citeauthoryear{Jin \bgroup et al\mbox.\egroup
+  }{2022}]{jin2022creativity}
+Jin, M.; Ma, Z.; Jin, K.; Zhuo, H.~H.; Chen, C.; and Yu, C.
+\newblock 2022.
+\newblock Creativity of {AI}: Automatic symbolic option discovery for
+  facilitating deep reinforcement learning.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~36,  7042--7050.
 
 \bibitem[\protect\citeauthoryear{Juba and Stern}{2022}]{juba2022learning}
 Juba, B., and Stern, R.
@@ -56,6 +121,14 @@ Juba, B.; Le, H.~S.; and Stern, R.
 \newblock In {\em International Conference on Principles of Knowledge
   Representation and Reasoning ({KR})},  379--389.
 
+\bibitem[\protect\citeauthoryear{Karia \bgroup et al\mbox.\egroup
+  }{2023}]{karia2023epistemic}
+Karia, R.; Verma, P.; Vipat, G.; and Srivastava, S.
+\newblock 2023.
+\newblock Epistemic exploration for generalizable planning and learning in
+  non-stationary stochastic settings.
+\newblock In {\em NeurIPS 2023 Workshop on Generalization in Planning}.
+
 \bibitem[\protect\citeauthoryear{Lamanna and Serafini}{2024}]{Lamanna24}
 Lamanna, L., and Serafini, L.
 \newblock 2024.
@@ -63,12 +136,51 @@ Lamanna, L., and Serafini, L.
 \newblock In {\em {ICAPS}},  342--350.
 \newblock {AAAI} Press.
 
+\bibitem[\protect\citeauthoryear{Lamanna \bgroup et al\mbox.\egroup
+  }{2021}]{lamanna2021online}
+Lamanna, L.; Saetti, A.; Serafini, L.; Gerevini, A.; and Traverso, P.
+\newblock 2021.
+\newblock Online learning of action models for pddl planning.
+\newblock In {\em IJCAI},  4112--4118.
+
+\bibitem[\protect\citeauthoryear{Lamanna \bgroup et al\mbox.\egroup
+  }{2025}]{LAMANNA2025104256}
+Lamanna, L.; Serafini, L.; Saetti, A.; Gerevini, A.~E.; and Traverso, P.
+\newblock 2025.
+\newblock Lifted action models learning from partial traces.
+\newblock {\em Artificial Intelligence} 339:104256.
+
 \bibitem[\protect\citeauthoryear{Le, Juba, and Stern}{2024}]{le2024learning}
 Le, H.~S.; Juba, B.; and Stern, R.
 \newblock 2024.
 \newblock Learning safe action models with partial observability.
 \newblock In {\em AAAI Conference on Artificial Intelligence}, volume~38,
   20159--20167.
+
+\bibitem[\protect\citeauthoryear{Lindsay \bgroup et al\mbox.\egroup
+  }{2017}]{lindsay2017framer}
+Lindsay, A.; Read, J.; Ferreira, J.~F.; Hayton, T.; Porteous, J.; and Gregory,
+  P.
+\newblock 2017.
+\newblock Framer: Planning models from natural language action descriptions.
+\newblock In {\em International Conference on Automated Planning and Scheduling
+  (ICAPS)}.
+
+\bibitem[\protect\citeauthoryear{McCluskey \bgroup et al\mbox.\egroup
+  }{2010}]{mccluskey2010action}
+McCluskey, T.~L.; Cresswell, S.~N.; Richardson, N.~E.; and West, M.~M.
+\newblock 2010.
+\newblock Action knowledge acquisition with opmaker2.
+\newblock In {\em Agents and Artificial Intelligence},  137--150.
+
+\bibitem[\protect\citeauthoryear{McCluskey, Vaquero, and
+  Vallati}{2017}]{DBLP:conf/kcap/McCluskeyVV17}
+McCluskey, T.~L.; Vaquero, T.~S.; and Vallati, M.
+\newblock 2017.
+\newblock Engineering knowledge for automated planning: Towards a notion of
+  quality.
+\newblock In {\em Proceedings of the Knowledge Capture Conference, {K-CAP}},
+  14:1--14:8.
 
 \bibitem[\protect\citeauthoryear{Mordoch \bgroup et al\mbox.\egroup
   }{2023}]{mordoch2023safe}
@@ -93,14 +205,70 @@ Mordoch, A.; Juba, B.; and Stern, R.
 \newblock Learning safe numeric action models.
 \newblock In {\em AAAI Conference on Artificial Intelligence},  12079--12086.
 
-\bibitem[\protect\citeauthoryear{Stern and
-  Juba}{2017}]{stern2017efficientAndSafe}
+\bibitem[\protect\citeauthoryear{Ng and Petrick}{2019}]{ng2019incremental}
+Ng, J. H.~A., and Petrick, R.~P.
+\newblock 2019.
+\newblock Incremental learning of planning actions in model-based reinforcement
+  learning.
+\newblock In {\em IJCAI},  3195--3201.
+
+\bibitem[\protect\citeauthoryear{Oswald \bgroup et al\mbox.\egroup
+  }{2024}]{Oswald2024DLLMDomainModeling}
+Oswald, J.; Srinivas, K.; Kokel, H.; Lee, J.; Katz, M.; and Sohrabi, S.
+\newblock 2024.
+\newblock Large language models as planning domain generators.
+\newblock In {\em Proceedings of the 34th International Conference on Automated
+  Planning and Scheduling ({ICAPS 2024})},  423--431.
+\newblock AAAI Press.
+
+\bibitem[\protect\citeauthoryear{Sreedharan and
+  Katz}{2023}]{sreedharan2023optimistic}
+Sreedharan, S., and Katz, M.
+\newblock 2023.
+\newblock Optimistic exploration in reinforcement learning using symbolic model
+  estimates.
+\newblock {\em Advances in Neural Information Processing Systems}
+  36:34519--34535.
+
+\bibitem[\protect\citeauthoryear{Stern and Juba}{2017}]{stern2017efficient}
 Stern, R., and Juba, B.
 \newblock 2017.
 \newblock Efficient, safe, and probably approximately complete learning of
   action models.
-\newblock In {\em the International Joint Conference on Artificial Intelligence
+\newblock In {\em International Joint Conference on Artificial Intelligence
   (IJCAI)},  4405--4411.
+
+\bibitem[\protect\citeauthoryear{Vallati and
+  Chrpa}{2019}]{DBLP:conf/kcap/VallatiC19}
+Vallati, M., and Chrpa, L.
+\newblock 2019.
+\newblock On the robustness of domain-independent planning engines: The impact
+  of poorly-engineered knowledge.
+\newblock In {\em Proceedings of the 10th International Conference on Knowledge
+  Capture, {K-CAP}},  197--204.
+
+\bibitem[\protect\citeauthoryear{Vallati and
+  McCluskey}{2021}]{vallati2021quality}
+Vallati, M., and McCluskey, T.~L.
+\newblock 2021.
+\newblock A quality framework for automated planning knowledge models.
+
+\bibitem[\protect\citeauthoryear{Vallati \bgroup et al\mbox.\egroup
+  }{2021}]{vallati2021importance}
+Vallati, M.; Chrpa, L.; McCluskey, T.~L.; and Hutter, F.
+\newblock 2021.
+\newblock On the importance of domain model configuration for automated
+  planning engines.
+\newblock {\em Journal of Automated Reasoning} 65(6):727--773.
+
+\bibitem[\protect\citeauthoryear{Verma, Karia, and
+  Srivastava}{2023}]{verma2023autonomous}
+Verma, P.; Karia, R.; and Srivastava, S.
+\newblock 2023.
+\newblock Autonomous capability assessment of sequential decision-making
+  systems in stochastic settings.
+\newblock {\em Advances in Neural Information Processing Systems}
+  36:54727--54739.
 
 \bibitem[\protect\citeauthoryear{Xi, Gould, and
   Thi{\'e}baux}{2024}]{xi2024neuro}
@@ -115,5 +283,13 @@ Yang, Q.; Wu, K.; and Jiang, Y.
 \newblock 2007.
 \newblock Learning action models from plan examples using weighted max-sat.
 \newblock {\em Artificial Intelligence} 171(2-3):107--143.
+
+\bibitem[\protect\citeauthoryear{Zhuo \bgroup et al\mbox.\egroup
+  }{2010}]{ZHUO20101540}
+Zhuo, H.~H.; Yang, Q.; Hu, D.~H.; and Li, L.
+\newblock 2010.
+\newblock Learning complex action models with quantifiers and logical
+  implications.
+\newblock {\em Artificial Intelligence} 174(18):1540--1569.
 
 \end{thebibliography}

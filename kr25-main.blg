@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: .\kr25-main.aux
+Reallocating 'name_of_file' (item size: 1) to 3 items.
+The style file: kr.bst
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+Database file #1: library.bib
+Warning--can't use both volume and number fields in asai2018classical
+Warning--can't use both volume and number fields in chitnis2021glib
+Warning--empty publisher in haslum2019introduction
+Warning--can't use both volume and number fields in jin2022creativity
+Warning--can't use both volume and number fields in le2024learning
+Warning--empty booktitle in vallati2021quality
+You've used 38 entries,
+            2568 wiz_defined-function locations,
+            785 strings with 12004 characters,
+and the built_in function-call counts, 19195 in all, are:
+= -- 2085
+> -- 763
+< -- 26
++ -- 264
+- -- 260
+* -- 1487
+:= -- 2892
+add.period$ -- 189
+call.type$ -- 38
+change.case$ -- 281
+chr.to.int$ -- 38
+cite$ -- 44
+duplicate$ -- 781
+empty$ -- 1367
+format.name$ -- 329
+if$ -- 4131
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 38
+newline$ -- 230
+num.names$ -- 114
+pop$ -- 275
+preamble$ -- 1
+purify$ -- 320
+quote$ -- 0
+skip$ -- 666
+stack$ -- 0
+substring$ -- 1224
+swap$ -- 289
+text.length$ -- 26
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 300
+warning$ -- 6
+while$ -- 156
+width$ -- 43
+write$ -- 531
+(There were 6 warnings)

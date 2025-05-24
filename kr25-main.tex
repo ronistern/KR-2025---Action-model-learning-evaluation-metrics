@@ -215,23 +215,25 @@ Several specific evaluation metrics are defined for this type of evaluation base
 
 % \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
 The proposed metrics are designed for evaluating models that use the same representation of states and actions. 
-However, in practice, action model learning algorithms may output models that use different representations of states and actions. For example, some algorithms output models in a grounded representation~\citep{stern2017efficient}, while others output models in a lifted representation~\citep{juba2021safe,xi2024neuro,aineto2019learning}. Some represent states based only the parameters of executed actions~\citep{cresswell2011generalised}, or different languages to support human engineers \citep{mccluskey2010action}. Finally, some require a richer symbolic representation of states~\citep{juba2021safe}, while others use a visual representation of states~\citep{xi2024neuro}.
+However, in practice, action model learning algorithms may output models that use different representations of states and actions. 
+For example, some algorithms output models in a grounded representation~\citep{stern2017efficient}, while others output models in a lifted representation~\citep{juba2021safe,xi2024neuro,aineto2019learning}. 
+Some represent states based only the parameters of executed actions~\citep{cresswell2011generalised}, or different languages to support human engineers \citep{mccluskey2010action}. 
+Finally, some require a richer symbolic representation of states~\citep{juba2021safe}, while others use a visual representation of states~\citep{xi2024neuro}.
 \roni{All: add references and refine the above and add more examples of representation gap.}
 We propose an evaluation paradigm that addresses this representation gap challenge. 
 In this paradigm, an evaluate domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
 We adapt the domain model evaluation metrics defined above to use these bridging functions, 
 and show to define such functions for several domain model learning algorithms. 
 \roni{TODO: Benchmarks, evaluation methodology}
-Finally, we describe a benchmark suite and suggested evaluation process for using it based on existing domain models from the International Planning Competition (IPC).
+Finally, we describe a benchmark suite and suggested evaluation process for using it based on existing domain models from the International Planning Competition (IPC). 
 
 
 
 
-\section{Background and Related Work}
+\section{Background}
 
-In this section, we provide the necessary background on classical planning, approaches to automatically learn domain models, and a discussion on domain models comparison. 
-
-\subsection{Classical Planning}
+% In this section, we provide the necessary background on classical planning, approaches to automatically learn domain models, and a discussion on domain models comparison. 
+% \subsection{Classical Planning}
 We focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
 A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{S, A, s_0, s_g}$, where $S$ is a finite set of states, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G$ is a set of goal states. 
 An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the precondition of $a$ and $\mathit{eff}(a)$ is the effect of $a$. 
@@ -246,6 +248,7 @@ Planning domains are usually represented in a lifted representation, where the a
 The lifted representation of a planning domain is defined as a tuple $\mathcal{D} = \tuple{O, P, A}$, where $O$ is a set of object types, $P$ is a set of predicates, and $A$ is a set of actions. Actions and predicates are parameterized by objects, and preconditions and effects are defined accordingly. 
 Popular classical planning systems, such FastDownward~\citep{helmert2006fast}, support such a lifted representation. 
 
+% \subsection{Domain Learning Algorithms}
 % Action model learning algorithms
 Different algorithms have been proposed for learning domains for classical planning. 
 The input to these algorithms is a set of \emph{trajectories}. 
@@ -254,11 +257,8 @@ An \emph{observation} can be a state or some other information about the state,
 such as a set of predicates that hold in the state or a visual representation of a state. 
 Domain model learning algorithm differ in the type of trajectories they can learn from, the type of action models they can learn, and the representation of the learned action model. 
 
-
-\subsection{Domain Learning Algorithms}
-
 % Example of prominent domain learning algorithms. 
-\todo{Open request for all: refine and add more algorithms to the following paragraphs as needed. Do not be shy: add your algorithms here.}
+% \todo{Open request for all: refine and add more algorithms to the following paragraphs as needed. Do not be shy: add your algorithms here.}
 %\paragraph{}
 
 The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
@@ -269,15 +269,6 @@ It frames the task of learning an action model as a planning problem, ensuring t
 NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
 LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, and its extension to learn action costs \citep{gregory2016domain} analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. 
 Based on less structured input knowledge, Framer \citep{lindsay2017framer} is an approach for learning planning domain models from natural language descriptions of activity sequences.
-
-LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
-\yarin{Rewrote and added part on LatPlan here:}
-% LatPlan uses a variational autoencoder with the Gumbel-Softmax trick~\citep{jang2017categorical} to convert image states into discrete propositional symbols, enabling classical planning in latent space.
-LatPlan is a fully unsupervised system that uses a variational autoencoder as a differentiable approximation to convert image states into discrete propositional symbols, enabling classical planning in a learned latent space.
-% ROSAME-I~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images.
-% ROSAME-I, in contrast, propose a neural network architecture that learns the action model in a lifted representation in tandem with a neural network that learns to map images to a given symbolic representation. 
-ROSAME-I, in contrast, assumes a predefined set of propositions and action signatures. It simultaneously trains a classifier to identify propositions from images and learns a lifted, first-order action model over the given symbolic vocabulary.
-% While both approaches learn from image-based trajectories, LatPlan is fully unsupervised, whereas ROSAME-I incorporates prior symbolic knowledge to learn structured models.
 
 
 
@@ -292,13 +283,15 @@ ESAM~\citep{juba2021safe} is an extension of the \sam algorithm that learns acti
 
 
 
-\subsection{Model Comparison}
+LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
+\yarin{Rewrote and added part on LatPlan here:}
+% LatPlan uses a variational autoencoder with the Gumbel-Softmax trick~\citep{jang2017categorical} to convert image states into discrete propositional symbols, enabling classical planning in latent space.
+LatPlan is a fully unsupervised system that uses a variational autoencoder as a differentiable approximation to convert image states into discrete propositional symbols, enabling classical planning in a learned latent space.
+% ROSAME-I~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images.
+% ROSAME-I, in contrast, propose a neural network architecture that learns the action model in a lifted representation in tandem with a neural network that learns to map images to a given symbolic representation. 
+ROSAME-I, in contrast, assumes a predefined set of propositions and action signatures. It simultaneously trains a classifier to identify propositions from images and learns a lifted, first-order action model over the given symbolic vocabulary.
+% While both approaches learn from image-based trajectories, LatPlan is fully unsupervised, whereas ROSAME-I incorporates prior symbolic knowledge to learn structured models.
 
-\mauro{Discuss here the overall idea of comparing models..}
-
-\todo{Pascal and Mauro will add text on model reconciliation and model merging.}
-
-\todo{Pascal and Mauro: can you write something about how this work relates to your model repair survey paper?}
 
 
 
@@ -313,13 +306,13 @@ In this work we consider the following domain model learning setup.
 \gregor{Here it seems that $\realm$ is not yet a planning model, but a more general ``some environment''. Maybe we should distinguish between the ``environment'' (i.e. the thing that exists in reality) and the planning domain that it can be represented with? This might allow us to talk more concisely about @Mauro's concerns w.r.t.\ the ability to even know this ground truth model.\\
 E.g.\ say: An agent is acting in an environment $E$, 
 for which we assume that it can be represented as a classical planning domain $\realm$. }
-An agent is acting in an environment $\realm$, 
-for which we assume that it can be represented as a classical planning domain. 
+\roni{I like it. Implementing this change below}
+An agent is acting in an environment $E$ that we assume can be represented as a classical planning domain denoted by $\realm$. 
 The agent's actions are recorded in a set of trajectories, which are sequences of observations and actions. 
 The observations and actions in the trajectories are given in a specific representation, which we refer to as the \emph{input representation}. 
 A domain model learning algorithm is given this set of trajectories, and is expected to output a domain model in classical planning. 
 That is, this domain model can be given as input to a classical planner, and together with an appropriate problem description, the planner can generate plans with it.
-\gregor{Maybe add: These plans then should be applicable in the environment $\realm$ and should lead to the goal set in the problem description.}
+\gregor{Maybe add: These plans then should be applicable in the environment $\realm$ and should lead to the goal set in the problem description.}\roni{I intentionally did not add this, as it is not always the case and we talk later about cases where we need a ``decoder'' to translate the plans generated by the planner and the thing that can be executed by the agent in the environment.}
 
 %\mauro{clarify here the ground truth model, and discuss issues and alternatives.}
 %\roni{Note: changing \emph{real domain model} to \emph{environment}, to clarify that it is not a model. Then discuss what if we do have a verified domain model. TODO}
@@ -449,7 +442,9 @@ Can we be more radical here? Maybe it is sufficient to have plans and non-plans 
 }
 
 \paragraph{Predicted applicability}
-For a domain model $M$ and action $a$, we denote by $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. \gregor{This is easy to compute for STRIPS/SAS+, but hard if you have things like disjunctive preconditions. It should be \#P-hard} Based on this notation, we define the following predicted action applicability metric as follows for some action $a$:
+For a domain model $M$ and action $a$, we denote by $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. \gregor{This is easy to compute for STRIPS/SAS+, but hard if you have things like disjunctive preconditions. It should be \#P-hard}
+\roni{Hmm. I don't see what this is not linear in the size of $S$ and the preconditions of $a$ in $M$: we iterate over every state in $S$ and then check whether $a$ is applicable in it according to $M$. I guess if we have some universals in the preconditions this might be harder?}
+Based on this notation, we define the following predicted action applicability metric as follows for some action $a$:
 \begin{itemize}
     \item TP$_{\app}(a)=|\app_M(a,S)\cap \app_\realm(a,S)|$
     \item FP$_{\app}(a)=|\app_M(a,S)\setminus \app_\realm(a,S)|$ 
@@ -473,11 +468,11 @@ Based on this, we define the following predicted action effect metrics for some 
     \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$ 
     % \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}\gregor{For all sets it holds that $(X \setminus Y) \setminus Z = X \setminus (Y \cup Z) = X \setminus (Y \cup Z) = X \setminus (Y  \cup (Z\setminus Y)) = (X \setminus Y) \setminus (Z\setminus Y)$. In short: removing $s$ twice does not make a difference. Both formulations are the same.}\yarin{Thank you for the clarification}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
-    \item FN$_{\eff}(s,a)=|(a_\realm(s)\setminus s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}
+    \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}
 \end{itemize}
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
-\roni{Ensure this makes sense} \gregor{Checked.}
-One can aggregate the above metrics over all states and actions, \gregor{This might be computationally a problem -- so we sample?!}
+% \roni{Ensure this makes sense} \gregor{Checked.}TNX!
+One can aggregate the above metrics over all states and actions, \gregor{This might be computationally a problem -- so we sample?!}\roni{Hmm. I am not sure. Is it worse than low-order polynomial in $S$ and number of actions?}
 compute the overall values, and compute aggregated precision and recall values accordingly.  
 The difference between the syntactic similarity of effects and the predicted effects metrics is subtle. 
 It manifests when processing observations in which some literal $\ell$ is observed in the state before an action $a$, 
@@ -487,7 +482,7 @@ This will count as a false positive in the syntactic similarity metrics yet not 
 \roni{Add a concrete example of how to compute these metrics}
 \yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
 
-
+ 
 \subsection{Problem-Solving Metrics}
 %\mauro{add here disclaimer}\roni{Added the disclaimer below. Let me know what you think}
 Neither the syntactic similarity metrics nor the predictive power metrics are sufficient for evaluating the operationality \citep{DBLP:conf/kcap/McCluskeyVV17} of the learned domain model, i.e. its ability to solve problems. It is well-known that even small syntactical changes in domain models can result in significant performance gaps \citep{DBLP:conf/kcap/VallatiC19,vallati2021importance}.
@@ -699,6 +694,15 @@ The metrics and evaluation paradigm outlined in this paper are for \emph{offline
 Specific metrics and evaluation for online learning of action models, however is beyond the scope of this work. 
 
 Finally, models can also be compared not only in terms of their characteristics, but also in terms of the processes used to learn or generate them \citep{vallati2021quality}, a perspective that is commonly used for assessing conceptual models.
+
+
+
+\subsection{Relation to Model Reconciliation}
+\roni{Pascal and Mauro: maybe put here is a discussion on what is model reconciliation and how it relates to our work, 
+and existing model reconciliation metrics?}
+
+\subsection{Relation to Model Repair}
+\roni{Pascal and Mauro: same for model repair?}
 
 \section{Conclusion Future Work}
 \roni{I'll fix this text later}

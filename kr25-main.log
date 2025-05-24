@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  23 MAY 2025 16:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 01:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -416,19 +416,6 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 \actualheight=\skip65
 
 
-Package natbib Warning: Citation `pddl' on page 1 undefined on input line 199.
-
-
-
-
-Package natbib Warning: Citation `stern2017efficient' on page 1 undefined on input line 218.
-
-
-Package natbib Warning: Citation `others' on page 1 undefined on input line 218.
-
-
-Package natbib Warning: Citation `locm' on page 1 undefined on input line 218.
-
 
 
 [1{C:/Users/sternron/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
@@ -437,135 +424,85 @@ Package natbib Warning: Citation `locm' on page 1 undefined on input line 218.
 
 ]
 
-
-Package natbib Warning: Citation `gregory2016domain' on page 2 undefined on input line 272.
-
-
-Package natbib Warning: Citation `lindsay2017framer' on page 2 undefined on input line 272.
-
 Package acronym Info: Label `acro:SAM' newly defined as it shall be overridden
 although it is yet undefined on input line 276.
-
-Package natbib Warning: Citation `stern2017efficient' on page 2 undefined on input line 276.
-
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [2]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 326.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 330.
  (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
 
-Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on input line 348.
-
-
-Package natbib Warning: Citation `chrpa2023comparing' on page 3 undefined on input line 348.
-
-
-Package natbib Warning: Citation `DBLP:journals/aim/ChrpaMVV17' on page 3 undefined on input line 356.
-
-
-Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 3 undefined on input line 358.
-
-
-Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 3 undefined on input line 382.
-
-
 
 [3]
+Underfull \hbox (badness 1389) in paragraph at lines 412--421
+\OT1/ptm/m/n/10 and problem-solving abil-ity -- are also not nec-es-sar-ily
+ []
 
 
-Package natbib Warning: Citation `DBLP:conf/kcap/McCluskeyVV17' on page 4 undefined on input line 455.
-
-
-Package natbib Warning: Citation `DBLP:conf/kcap/VallatiC19' on page 4 undefined on input line 455.
-
-
-Package natbib Warning: Citation `vallati2021importance' on page 4 undefined on input line 455.
 
 
 
 [4]
 
-Package natbib Warning: Citation `mccluskey2010action' on page 5 undefined on input line 500.
-
-
-
 
 
 [5]
-
-
-Package natbib Warning: Citation `lamanna2021online' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `sreedharan2023optimistic' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `benyamin2025integratingreinforcementlearningaction' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `ng2019incremental' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `chitnis2021glib' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `verma2023autonomous' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `karia2023epistemic' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `jin2022creativity' on page 6 undefined on input line 648.
-
-
-Package natbib Warning: Citation `vallati2021quality' on page 6 undefined on input line 651.
+Underfull \hbox (badness 1412) in paragraph at lines 534--539
+[][]\OT1/ptm/m/n/10 [Yarin: added LOCM:][] Sim-i-larly, the LOCM al-go-
+ []
 
 
 
-[6] (kr25-main.bbl
-
-)
-
-Package natbib Warning: There were undefined citations.
 
 
+[6]
 
-[7] (kr25-main.aux)
+(kr25-main.bbl
+Underfull \vbox (badness 1348) has occurred while \output is active []
+
+
+
+[7]
+
+
+Underfull \hbox (badness 1178) in paragraph at lines 126--131
+\OT1/ptm/m/n/10 Epis-temic ex-plo-ration for gen-er-al-iz-able plan-ning and
+ []
+
+
+
+[8])
+
+
+
+[9
+
+] (kr25-main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-
-
-Package rerunfilecheck Warning: File `kr25-main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `kr25-main.out':
-(rerunfilecheck)             Before: 861DD8902D24D5EAF68A69062D2C4813;3602
-(rerunfilecheck)             After:  9B1603D8CC3525722567B1ECA9479D0F;3276.
+Package rerunfilecheck Info: File `kr25-main.out' has not changed.
+(rerunfilecheck)             Checksum: 8877CAA2E29BD75FB5B54D45A646A4F8;3115.
  ) 
 Here is how much of TeX's memory you used:
- 12949 strings out of 470081
- 205518 string characters out of 5477822
- 613939 words of memory out of 5000000
- 39390 multiletter control sequences out of 15000+600000
+ 13036 strings out of 470081
+ 208042 string characters out of 5477822
+ 615766 words of memory out of 5000000
+ 39455 multiletter control sequences out of 15000+600000
  644489 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1024b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{subsection.4.3} has been referenced but does not exist, replaced by a fixed one
-
+ 75i,12n,79p,1024b,663s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (7 pages, 217926 bytes).
+Output written on kr25-main.pdf (9 pages, 250344 bytes).
 PDF statistics:
- 315 PDF objects out of 1000 (max. 8388607)
- 49 named destinations out of 1000 (max. 500000)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 419 PDF objects out of 1000 (max. 8388607)
+ 71 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
