@@ -481,16 +481,19 @@ Based on this, we define the following predicted action effect metrics for some 
     \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$ 
     % \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}\gregor{For all sets it holds that $(X \setminus Y) \setminus Z = X \setminus (Y \cup Z) = X \setminus (Y \cup Z) = X \setminus (Y  \cup (Z\setminus Y)) = (X \setminus Y) \setminus (Z\setminus Y)$. In short: removing $s$ twice does not make a difference. Both formulations are the same.}\yarin{Thank you for the clarification}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
-    \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}
+    \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}\gregor{Yep, but it does -- $a_M(s)$ is the next state. If you take the intersection with the previous one, you get exactly all literals that have not changed.}
 \end{itemize}
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
 % \roni{Ensure this makes sense} \gregor{Checked.}TNX!
-One can aggregate the above metrics over all states and actions, \gregor{This might be computationally a problem -- so we sample?!}\roni{Hmm. I am not sure. Is it worse than low-order polynomial in $S$ and number of actions?}
+One can aggregate the above metrics over all states and actions, \gregor{This might be computationally a problem -- so we sample?!}\roni{Hmm. I am not sure. Is it worse than low-order polynomial in $S$ and number of actions?}\gregor{No, but $|S|$ can be exponential in the number of facts/predicates that we have.}
 compute the overall values, and compute aggregated precision and recall values accordingly.  
 The difference between the syntactic similarity of effects and the predicted effects metrics is subtle. 
 It manifests when processing observations in which some literal $\ell$ is observed in the state before an action $a$, 
 it is not an \gregor{posisitve i.e.\ adding?} effect according to the learned model, but it is an effect according to the real model. 
-This will count as a false positive in the syntactic similarity metrics yet not count as a false positive in the predicted effects metrics. 
+This will count as a false positive in the syntactic similarity metrics yet not count as a false positive in the predicted effects metrics.
+
+\gregor{One more argument for these predictive power metrics overall: They allow us to differentiate between ``cautious'' or ``safe'' learning (e.g. \cite{juba2021safe}) and optimistic approaches (e.g. \cite{Bachor24learning}; that is don't add a precondition until proven it must exist). Safe model learning will always have $FP_{app}(a) = 0$ at the cost of high $FN_{app}(a)$, while optimistic learning will have $FN_{app}(a) = 0$, but high $FP_{app}(a)$.\\
+Which of the two is better depends on your concrete application --- in criteial domains (air traffic, medicine)}
 
 \roni{Add a concrete example of how to compute these metrics}
 \yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
