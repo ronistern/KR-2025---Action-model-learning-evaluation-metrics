@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 08:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 08:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -474,10 +474,6 @@ Underfull \hbox (badness 1178) in paragraph at lines 126--131
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `kr25-main.out' has not changed.
 (rerunfilecheck)             Checksum: 8877CAA2E29BD75FB5B54D45A646A4F8;3115.
  ) 
