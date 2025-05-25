@@ -123,6 +123,7 @@
 \newcommand{\mauro}[1]{{\textcolor{green}{[Mauro: #1]}}}
 \newcommand{\yarin}[1]{{\textcolor{teal}{[Yarin: #1]}}}
 \newcommand{\gregor}[1]{{\textcolor{orange}{[Gregor: #1]}}}
+\newcommand{\cm}[1]{{\textcolor{olive}{[Christian: #1]}}}
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -203,6 +204,8 @@ This is a bottleneck for the wider dissemination of planning technology in real-
 
 % \roni{TODO: Learning action models output action models that use different representations of states and actions.}
 To address this issue, a number of algorithms have been proposed to automatically learn domain models from a set of provided observations~\citep{gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
+\cm{Why not just point to some of the survey stuff? On the MACQ website (https://macq.planning.domains/), we have the bib entry and pointer to 3 previous survey papers. I'm biased, but I think MACQ should be included :P.}
+\roni{Good idea, and I definitely think MACQ should be included. This is a mistake on my end, but will be remedied}
 % \roni{TODO: Key question: how to evaluate action model learning algorithms?}
 Despite a recent resurgence in interest in learning domain models, there is no standard evaluation process for such algorithms, 
 no set of agreed-upon evaluation metrics, and no standard benchmark. 
@@ -235,12 +238,12 @@ Finally, we describe a benchmark suite and suggested evaluation process for usin
 % In this section, we provide the necessary background on classical planning, approaches to automatically learn domain models, and a discussion on domain models comparison. 
 % \subsection{Classical Planning}
 We focus on \emph{classical planning} problems, which is a well-studied type of planning problem in which a single agent is acting in a fully observable, discrete, and deterministic environment. 
-A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{S, A, s_0, s_g}$, where $S$ is a finite set of states, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G$ is a set of goal states. 
-An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the preconditions of $a$ and $\mathit{eff}(a)$ is the effects of $a$. 
-The preconditions $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effects $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
-In classical planning, a state is defined by a set of propositions.  
-The preconditions and effects of an action are each defined as a set of literals, which are either positive or negative propositions. 
-A solution to a classical planning problem is a sequence of actions that transforms the initial state $s_0$ into a goal state $s_g\in G$.   
+A classical planning problem is defined as a tuple $\mathcal{P} = \tuple{F, A, s_0, G}$, where $F$ is a finite set of fluents, $A$ is a finite set of actions, $s_0 \in S$ is the initial state, and $G\subset F$ is a set of fluents. \roni{For all: I modified the above definition to:(1) not have $S$ as the set of states but have $F$ as the set of fluents, and (2) not have $G$ as a set of states but as a subset of fluents (that must be achieved). If anyone objects please do not change but rather comment here on the change you would like and why.}
+A \emph{state} is defined by a set of propositions, representing that the conjunction of fluents in this set are true in this state.
+An action $a\in A$ is defined as a tuple $a = \tuple{\mathit{pre}(a), \mathit{eff}(a)}$, where $\mathit{pre}(a)$ is the precondition of $a$ and $\mathit{eff}(a)$ is the effect of $a$. 
+The precondition $\mathit{pre}(a)$ specifies the conditions that must hold in a state for the action $a$ to be applicable, while the effect $\mathit{eff}(a)$ specifies the changes to the state resulting from applying the action $a$.   
+The precondition and effect of an action are defined each as a set of literals, which are either positive or negative propositions. We denote by $L$ as the set of literals, i.e., $L=\{\ell | \exists f\in F: \ell=f \vee \ell=\neg f\}$. \roni{Not sure about the }
+A solution to a classical planning problem is a sequence of actions that transforms the initial state $s_0$ into a goal state $s_g$ where $G\subseteq s_g$. \roni{Minor modification to goal state to reflect the change above}
 
 
 % Discussion on lifted domain representation
@@ -261,9 +264,12 @@ Domain model learning algorithms differ in the type of trajectories they can lea
 % \todo{Open request for all: refine and add more algorithms to the following paragraphs as needed. Do not be shy: add your algorithms here.}
 %\paragraph{}
 
+\cm{I'm actually not sure any of this is needed. We're probably pushing over 50 related works in the area (cf. MACQ or similar surveys), and there's no way we'll cover the full space of approaches. A few exemplary ones, and then a pointer to a survey should be fine. Unless we need the background of how some of these work, it's about half-a-page of space we could save. Now the \textit{metrics} used in those papers, is something related.}
+\roni{I agree this needs to be shortened. TODO for me. Would be very good to have a list of the metrics used in each paper. Great idea. TODO by someone? a table or so with metric and list of papers using it?}
+
 The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
 The Simultaneous Learning and Filtering (SLAF)~\citep{amir2008learning} learns lifted action models from trajectories even if some of the states in them are not observed. 
-SLAF uses logical inference to filter inconsistent action models, and requires observing all actions in the trajectory.  
+SLAF uses logical inference to filter inconsistent action models and requires observing all actions in the trajectory.  
 FAMA~\citep{aineto2019learning} can also handle missing observations and outputs a lifted planning domain model. 
 It frames the task of learning an action model as a planning problem, ensuring that the returned action model is consistent with the provided observations.
 NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
@@ -326,23 +332,25 @@ and has been used to evaluate the learned domain model in terms of its \emph{syn
 % \roni{Others who have used, please add citations}
 These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
 Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
-Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.
+% Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.[roni: I don't think this is a good fit for here, following CM's comment]
 
+\cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}
+\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
 
 % Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ and $\eff_M(a)$ the preconditions and effects, respectively, of action $a$ according to domain $M$.
  \begin{itemize}
     \item True Positives: TP$_\pre(a)=|(\pre_M(a)\cap \pre_\realm(a)|$
     \item False Positives: FP$_\pre(a)=|((\pre_M(a)\setminus \pre_\realm(a)|$
-    \item True Negatives: TN$_\pre(a)=|L_a \setminus(\pre_M(a)\cup \pre_\realm(a))|$
+    \item True Negatives: TN$_\pre(a)=|L \setminus(\pre_M(a)\cup \pre_\realm(a))|$
     % , where $L_a$ is the set of all parameter-bound literals for an action $a$.
     \item False Negatives: FN$_\pre(a)=|(\pre_\realm(a)\setminus \pre_M(a))|$
 \end{itemize}
-The following standard metrics from statistical analysis can then computed based on these values for each action:
+The following standard metrics from statistical analysis can then be computed based on these values for each action:
 \begin{itemize}
     \item \textbf{Syntactic Precision}: $P_\pre(a)=\frac{TP(a)}{TP(a)+FP(a)}$
     \item \textbf{Syntactic Recall}: $R_\pre(a)\frac{TP(a)}{TP(a)+FN(a)}$
 \end{itemize}
-Other metrics such as Accuracy and F1-score can also be computed based on these values. 
+Other metrics, such as Accuracy and F1-score, can also be computed based on these values. 
 To obtain an overall precision and recall for preconditions of the entire domain model, one can compute the average of the precision and recall values for all actions:
 $P_\text{avg}=\frac{1}{|A|}\sum_{a\in A} P(a)$ and $R_\text{avg}=\frac{1}{|A|}\sum_{a\in A} R(a)$, where $P(a)$ and $R(a)$ are the precision and recall of action $a$, respectively. 
 The same metrics can be defined for the effects of actions, with the only difference being that the literals in the effects are used instead of those in the preconditions. 
@@ -350,18 +358,18 @@ The same metrics can be defined for the effects of actions, with the only differ
 \roni{TODO: Add an example}
 \gregor{Proposed this ``pathological'' example}
 \roni{Not sure about this. It is just an example, not a "corner case".}
-As an example consider a delivery scenario.
-The true model $\realm$ has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck and a truck contains a package.
+As an example, consider a delivery scenario.
+The true model $\realm$ has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck, and a truck contains a package.
 The action unload has three parameters $\ell, t,$ and $p$ (location, truck, and package).
 In $\realm$ its preconditions are $at(\ell, t)$ and $in(p,t)$, while its effects are $\neg in(p,t), \neg contains(t,p),$ and $at(p,t)$.
-A learned model could conceivably contain have the same effects, but the preconditions $at(\ell, t)$ and $contains(t,p)$.
+A learned model could conceivably have the same effects, but the preconditions $at(\ell, t)$ and $contains(t,p)$.
 It would have syntactic recall and precision for the effects of $1$, but for the preconditions it would be $\frac 1 2$.
 
 % As discussed above, while the syntactic similarity metrics are easy to compute, they do not accurately reflect functional differences between learned and original models. In addition, these metrics are not well-defined when the learned model and the original model have different action signatures for actions, predicates, or object types. Next, we present our domain model evaluation paradigm, which includes a set of metrics that measure model predictiveness and effectiveness and overcome representation differences between the learned domain model and the real domain model. 
 
 %\mauro{add here the notion of strong/weak equivalence, and the metrics based on graph similarity}
 
-In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach to assess the edit distance of the learned domain model with regards to the reference one. Low distance values indicate models that are syntactically close to each other, and if two models are syntactically identical (i.e., edit distance of zero) then they are said to be \textit{strongly equivalent} \citep{chrpa2023comparing}.
+In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach to assess the edit distance of the learned domain model with regard to the reference one. Low distance values indicate models that are syntactically close to each other, and if two models are syntactically identical (i.e., edit distance of zero), then they are said to be \textit{strongly equivalent} \citep{chrpa2023comparing}.
 
 %Similarly, the work done on model reconciliation \citep{} looks into approaches to suggest minimal changes to a model to reconcile it with a reference one.
 
@@ -369,8 +377,8 @@ In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach 
 %\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
 The above approach to evaluating domain models has several limitations. 
 First, it relies on the existence of a reference domain model, which may not be available in practice. 
-In fact, this is usually the case in new applications of automated planning to real world problems. In such cases, there may be a number of alternative models but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
-\gregor{One could distinguish two cases here: (1) the practical application case i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case the issue of multiple equivalent models remains.}
+In fact, this is usually the case in new applications of automated planning to real-world problems. In such cases, there may be a number of alternative models, but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
+\gregor{One could distinguish two cases here: (1) the practical application case, i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case, the issue of multiple equivalent models remains.}
 
 
 \gregor{Maybe add a new second reason here to prepare the argumentation for the next one:\\
@@ -381,9 +389,9 @@ In evaluation would reward a learner if it can reproduce the one arbitrarily cho
 Considering the above transport example, it is equivalent to use $in(p,t)$ or $contains(t,p)$ as a precondition -- but using syntactic similarities forces the learner to have a bias for one of the two option, without being able to infer which bias is correct out of the input trajectories.
 }
 
-Second, the reference model is assumed to be of the best possible quality. This is in itself complicated by the fact that it is very challenging to assess the quality of a model \citep{DBLP:conf/kcap/McCluskeyVV17}. Beside this, the use of a reference model biases the assessment towards a single specific encoding -- while many others of similar quality could potentially exist.
+Second, the reference model is assumed to be of the best possible quality. This is in itself complicated by the fact that it is very challenging to assess the quality of a model \citep{DBLP:conf/kcap/McCluskeyVV17}. Besides this, the use of a reference model biases the assessment towards a single specific encoding -- while many others of similar quality could potentially exist.
 Third, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
-Next, we discuss what constitutes a useful domain model, and how to evaluate it without the need for a reference domain model.
+Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
 
 
 
@@ -406,7 +414,7 @@ A key insight to consider
 %While the real domain model satisfies all three objectives, a key insight 
 is that these dimensions are not necessarily aligned with the syntactic similarity metrics defined above, even if a reference model exists that enables computing it.  
 A domain model may be very \emph{predictive} of 
-behavior of the agent in the reference domain model, yet very different from a reference model since it encodes mutex conditions the reference model did not bother to define. \roni{Is this clear?}\yarin{Yes but, how is this instead: A domain model can be highly \emph{predictive} of an agent's behavior in the reference domain, even if it differs significantly from the reference model. This can happen when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
+behavior of the agent in the reference domain model, yet very different from a reference model since it encodes mutex conditions that the reference model did not bother to define. \roni{Is this clear?}\yarin{Yes but, how is this instead: A domain model can be highly \emph{predictive} of an agent's behavior in the reference domain, even if it differs significantly from the reference model. This can happen when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
 }
 \gregor{maybe: ``does only define implicitly''?} \gregor{I've also put this issue already in the example above. Is this more illustrative?}
 Similarly, a learned domain model may be very \emph{similar syntactically} to a reference domain model but not effective in solving problems from the corresponding real-world environment, 
@@ -432,6 +440,7 @@ While the syntactic similarity metrics are easy to compute, they do not accurate
 %The \emph{predictive power} metrics described next are designed to address this issue. 
 Predictive power metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{aineto2019learning,mordoch2024safe,le2024learning}, are based on the idea that a learned model should be able to predict the applicability of actions and their effects in the environment. 
 
+\cm{Up until this point, I thought it was headed towards the predictive power of explaining the trajectory data. Given that it's about action applicability, this needs to be clarified much earlier on (e.g., intro). Also means that we don't have a notion of how well the learned model predicts the trajectories?}
 
 We define two types of predictive power metrics: \emph{action applicability} metrics and \emph{predicted effects} metrics. 
 The former measures the ability of the learned model to predict whether an action is applicable in a given state, while the latter measures the ability of the learned model to predict the effects of an action in a given state.
@@ -440,11 +449,15 @@ Unlike the syntactic similarity metrics, which are computed based on the action 
 This dataset is intended to represent the distribution of states of interest in the domain. 
 One way to create this dataset is by running a planner on a set of test problems with the real action model.\gregor{Or to actually observe states that appear in the actual environment during execution.}
 
+\cm{We still need the original domain in order to compute the predictive power. Some of the criticisms lofted at the existing metrics may need to be scaled back because of this -- there's no way to know if the predicted actions that are applicable are the right ones, without having a reference model.}
+
 \roni{TODO: Clarify this does not consider complexity of the domain (which will be addressed in the next metric)}
 
 \gregor{Issue: what happens if we either cannot get the states themselves, i.e., no symbolic description or if the state description of the actual model differs from the one of the learned model? (say: predicates are named differently?)\\
 Can we be more radical here? Maybe it is sufficient to have plans and non-plans for the real model? Then we could check whether these plans are executable in the learned model and whether the non-plans are not. One issue: this mixes applicability and effects.
 }
+
+\cm{Ya, I think many of the definitions start to fall apart if we don't have several assumptions down -- same objects, same types, same fluent/action symbols with their signatures, etc.}
 
 \paragraph{Predicted applicability}
 For a domain model $M$ and action $a$, we denote by $\app_M(a,S)$ the set of states in $S$ in which $a$ is applicable according to $M$. \gregor{This is easy to compute for STRIPS/SAS+, but hard if you have things like disjunctive preconditions. It should be \#P-hard}
@@ -462,7 +475,7 @@ From these metrics, one can compute the precision and recall of the learned mode
     P_{\app}(a)= & \frac{TP_{\app}(a)}{TP_{\app}(a)+FP_{\app}(a)}\\
     R_{\app}(a)= & \frac{TP_{\app}(a)}{TP_{\app}(a)+FN_{\app}(a)}    
 \end{align} 
-and the overall action applicability precision and recall
+and the overall action applicability, precision, and recall
 by averaging over all actions.  
 
 \paragraph{Predicted effects}
@@ -473,7 +486,7 @@ Based on this, we define the following predicted action effect metrics for some 
     \item FP$_{\eff}(s,a)=|(a_M(s)\setminus s)\setminus a_\realm(s)|$ 
     % \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}\gregor{For all sets it holds that $(X \setminus Y) \setminus Z = X \setminus (Y \cup Z) = X \setminus (Y \cup Z) = X \setminus (Y  \cup (Z\setminus Y)) = (X \setminus Y) \setminus (Z\setminus Y)$. In short: removing $s$ twice does not make a difference. Both formulations are the same.}\yarin{Thank you for the clarification}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
-    \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}
+    \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}
 \end{itemize}
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
 % \roni{Ensure this makes sense} \gregor{Checked.}TNX!
@@ -494,18 +507,18 @@ Neither the syntactic similarity metrics nor the predictive power metrics are su
 
 %effectiveness of using a learned domain model to actually solve problems in the application domain. 
 We propose two metrics that are designed to address this issue: \emph{solving ratio} and \emph{false plans ratio}. 
-Both metrics are defined with respect to a set of problems $P$ is the environment $\realm$. 
+Both metrics are defined with respect to a set of problems $P$ in the environment $\realm$. 
 The solving ratio metric is defined as the ratio of problems in $P$ that can be solved with the learned model by a given planning within a fixed limit on the available computational resources --- CPU runtime and memory. 
-We say that a problem is solved if a plan is found within the limited computational resources and that plan is valid according to the real action model. 
-The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the real action model. This reflects the reliability of using plans with the learned model.
+We say that a problem is solved if a plan is found within the limited computational resources, and that plan is valid according to the environment. 
+The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the environment. This reflects the reliability of using plans with the learned model.
 
 % Limitations
-The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner. Ideally, the above metrics would be run on a diverse set of test set problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
+The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner. Ideally, the above metrics would be run on a diverse set of test problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement, but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
 
 \roni{TODO: Add metric on the runtime of solving the problem.}
 \roni{TODO: Discussion: what about a metric on how many real plans can be validated by the learned model.}\mauro{Yes! validation capability of the learned model with regards to plans generated with the reference model!}
 \roni{TODO: Maybe: add some unsolvability detection metrics?}
-
+\cm{In our work on aligning (which is very closely related, it seems!), we computed both (1) if the plans found using P and M validate on M* and (2) if the plans found using P and M* validate on M. You need assumptions on the action names+parameters, but then can test (via VAL) both ways.}
 
 
 
@@ -513,7 +526,8 @@ The straightforward nature of the above metrics is not without limitations. The 
 %However, in many cases, the ground truth model is not available. 
 %Moreover, the ground truth model may be a suboptimal representation for the actual environment. 
 
-Note that all the metrics described in this section do not require a reference model, but instead are with respect to the actual environmet. Thus, they can be used to compare two models directly,  providing statistics on which one is better according to different aspects of the environment. 
+Note that all the metrics described in this section do not require a reference model, but instead are with respect to the actual environment. Thus, they can be used to compare two models directly,  providing statistics on which one is better according to different aspects of the environment.
+\cm{I think the above is misleading. We need to have states (fluents matching the learned model), action applicability (for predictive power), etc, etc. We do need a reference model! What's changed is that we aren't using syntactic comparisons anymore, but the M* model is certainly still there.}
 % For the predictive power metrics, we can use the same dataset of states $S$ to compute the predicted applicability and predicted effects metrics for each evaluated model. Similarly, the problem-solving metrics can be computed for each model without a reference model, if one can execute the plans generated by the learned model in the real environment, then we can evaluate the solving ratio and false plans ratio metrics. 
 
 
@@ -528,7 +542,7 @@ Note that all the metrics described in this section do not require a reference m
 \label{sec:bridging-gap}
 % Motivation: representation may be different learning
 Some domain model learning algorithms output a classical planning domain model that uses a different representation than the input representation. Such a model can still be used by a planner, yet its input and output may be incompatible with that of the reference domain model. 
-In some cases, these representation differences are minimal, e.g., using  different ordering of the parameters or object types. 
+In some cases, these representation differences are minimal, e.g., using different ordering of the parameters or object types. 
 In other cases, the differences are more significant. 
 For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with additional \emph{proxy actions} that are used to resolve ambiguities in the mapping of objects to parameters.
 \roni{Pascal mentioned a paper that learned macro actions. TODO: add ref for it here (with relevant short text)}
@@ -544,8 +558,8 @@ These proxy predicates are not part of the original domain but are introduced as
 % For example, a learned transition from \texttt{object\_state1} to \texttt{object\_state0} may represent an object being put down, corresponding to a change in the original predicate \texttt{holding(agent, object)}.
 
 
-The syntactic similarity metrics are not relevant in such cases, where the representation is intentionally different from the reference model. Next, we describe how to apply the other metrics -- predictive power and problem-solving --- in such cases. 
-Note that we limit the discussion to the case where the learned domain is still a planning domain, as oppose to images or other more involved representations. 
+The syntactic similarity metrics are not relevant in such cases, where the representation is intentionally different from the reference model. Next, we describe how to apply the other metrics -- predictive power and problem-solving -- in such cases. 
+Note that we limit the discussion to the case where the learned domain is still a planning domain, as opposed to images or other more involved representations. 
 
 \subsection{The Encoder-Decoder Mechanism}
 Let $R_{\realm}$ denote the input representation and let $R_M$ denote the representation of the learned domain model. 
@@ -558,7 +572,7 @@ The \emph{encoder} transforms states and actions in $R_{\realm}$ to correspondin
 The \emph{decoder} performs the reverse transformation, mapping states and actions in $R_M$ to corresponding states and actions in $R_\realm$.
 
 
-Formally, let $A$ and $A_M$ be the set of actions in the real and learned domain models, respectively, and let $S$ an $S_M$ be the set of states in the real and learned domain models, respectively. The power set is denoted by $P(X)$, which is the set of all subsets of $X$. 
+Formally, let $A$ and $A_M$ be the set of actions in the real and learned domain models, respectively, and let $S$ and $S_M$ be the set of states in the real and learned domain models, respectively. The power set is denoted by $P(X)$, which is the set of all subsets of $X$. 
 The encoder is required to implement the following set of functions:
 \begin{itemize}
     \item ${\mathit{encodeAction}: S\times A\rightarrow P(A_M)}$, returns the set of actions in $M$ that represent the application of $a$\yarin{$a \in A$} in a given state $s$\yarin{$s \in S$}. 
@@ -650,12 +664,14 @@ Decoder: translate proxy predicates to original predicates
 Using the above metrics and the encoder-decoder mechanism, we can define an evaluation paradigm for action model learning algorithms.
 The evaluation paradigm consists of the following steps: 
 First, we generate a set of trajectories in the input representation for learning. 
-This set of trajectories can be generated by running a planner on a set of problems in the reference domain model or via random walk.
+This set of trajectories can be generated by running a planner on a set of problems in the reference domain model or via a random walk.
 Then, this set of trajectories is split in 80/20 ratio, using 80\% of the trajectories for training and 20\% for testing. 
 The evaluated learning algorithm is given the training set of trajectories and is required to output a learned domain model, an encoder, and a decoder. 
 \roni{TODO for myself: Complete this subsection}
 % Following, we use the learned model, encoder, and decoder to compute the metrics described above. 
 This 80/20 split is repeated $k$ times following a standard $k$-fold validation process. 
+
+\cm{An eval-heavy ICAPS'er may take issue with some of the suggestions (random walks are hard to do right, the benchmark problem sets aren't IID, etc, etc. I'd say we're probably mostly fine (someone can always find some issue if they try hard enough), but we \textit{should} comment on the disconnect of trace -vs- state. Many approaches require traces, but the evals require state sets. Taking the latter to just be states along traces is a deliberate choice that warrants discussion.}
 
 % \begin{algorithm}[h]
 % \caption{Simple Increment Function}
@@ -685,7 +701,7 @@ The proposed evaluation paradigm is designed to be flexible and extensible.
 In particular, it can be extended to support other types of representations, such as images or other types of data. 
 Another possible extension is to allow the action model learning algorithm to output a domain model that uses a more general type of planning. 
 For example, the action model learning algorithm may output a domain model that uses a probabilistic~\citep{xi2024neuro} or partially observable representation~\citep{le2024learning}. 
-Adapting the predictive power metrics to such cases may be not trivial, but the problem-solving metrics can be adapted in a straightforward manner.
+Adapting the predictive power metrics to such cases may not be trivial, but the problem-solving metrics can be adapted in a straightforward manner.
 
 
 % Beyond discrete
@@ -698,7 +714,7 @@ Note that in all of these variants and generalizations, the encoder-decoder mech
 % Online metrics 
 \todo{Maybe talk about metrics for online learning}
 The metrics and evaluation paradigm outlined in this paper are for \emph{offline} learning of action models, where the learning algorithm is given a set of trajectories and is required to output a domain model. \emph{Online learning} of action models have also been studied in the literature~\citep{lamanna2021online, sreedharan2023optimistic, benyamin2025integratingreinforcementlearningaction, ng2019incremental, chitnis2021glib, verma2023autonomous, karia2023epistemic, jin2022creativity}\todo{More citations?}\yarin{added, to many?}, where the learning algorithm is required to learn a domain model by actively interacting with the environment. Similar to other online tasks, one may distinguish between the \emph{cumulative regret} of the learning process, which can be the number of actions performed for learning or the number of problems failed to solve while collecting observations. 
-Specific metrics and evaluation for online learning of action models, however is beyond the scope of this work. 
+Specific metrics and evaluation for online learning of action models, however, is beyond the scope of this work. 
 
 Finally, models can also be compared not only in terms of their characteristics, but also in terms of the processes used to learn or generate them \citep{vallati2021quality}, a perspective that is commonly used for assessing conceptual models.
 
@@ -715,7 +731,7 @@ and existing model reconciliation metrics?}
 \roni{I'll fix this text later}
 % TODO VERIFY TEXT BELOW
 We presented a new paradigm for evaluating action 
-model learning algorithms across different representations. In this paradigm, each action model learning algorithm is required to output an action model and an encoder-decoder pair. The encoder-decoder pair is used to bridge representation gaps and enable measuring the problem-solving capabilities of the learned action models. We proposed an evaluation scheme that leverages the encoder-decoder pair to systematically compare learned action models, and described several evaluation metrics. A benchmark suite was also provided to facilitate the evaluation of action model learning algorithms, based on existing domain models from the International Planning Competition (IPC). We demonstrated our evaluation paradigm by applying it to several action model learning algorithms, including SAM, ESAM, FAMA, and ROSAME.
+model learning algorithms across different representations. In this paradigm, each action model learning algorithm is required to output an action model and an encoder-decoder pair. The encoder-decoder pair is used to bridge representation gaps and enable measuring the problem-solving capabilities of the learned action models. We proposed an evaluation scheme that leverages the encoder-decoder pair to systematically compare learned action models and described several evaluation metrics. A benchmark suite was also provided to facilitate the evaluation of action model learning algorithms, based on existing domain models from the International Planning Competition (IPC). We demonstrated our evaluation paradigm by applying it to several action model learning algorithms, including SAM, ESAM, FAMA, and ROSAME.
 
 
 
