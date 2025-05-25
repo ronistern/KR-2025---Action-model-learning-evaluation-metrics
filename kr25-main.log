@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 08:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 09:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -442,11 +442,14 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 [4]
 
 
+Package natbib Warning: Citation `Bachor24learning' on page 5 undefined on input line 504.
+
+
 
 [5]
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 554--559
+Underfull \hbox (badness 1412) in paragraph at lines 560--565
 [][]\OT1/ptm/m/n/10 [Yarin: added LOCM:][] Sim-i-larly, the LOCM al-go-
  []
 
@@ -456,9 +459,9 @@ Underfull \hbox (badness 1412) in paragraph at lines 554--559
 
 
 
-[7] (kr25-main.bbl
+[7]
 
-
+(kr25-main.bbl
 
 [8]
 Underfull \hbox (badness 1178) in paragraph at lines 126--131
@@ -468,6 +471,10 @@ Underfull \hbox (badness 1178) in paragraph at lines 126--131
 
 
 )
+
+Package natbib Warning: There were undefined citations.
+
+
 
 [9] (kr25-main.aux)
  ***********
@@ -484,11 +491,11 @@ Here is how much of TeX's memory you used:
  39456 multiletter control sequences out of 15000+600000
  644489 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1024b,633s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1024b,622s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (9 pages, 254428 bytes).
+Output written on kr25-main.pdf (9 pages, 256700 bytes).
 PDF statistics:
- 418 PDF objects out of 1000 (max. 8388607)
+ 420 PDF objects out of 1000 (max. 8388607)
  71 named destinations out of 1000 (max. 500000)
  137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
