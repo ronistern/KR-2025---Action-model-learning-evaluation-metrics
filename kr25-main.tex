@@ -116,14 +116,28 @@
 \newcommand{\pbls}{pb-literals\xspace}
 \newcommand{\learnblmaa}{Learn\blmaa}
 
-\newcommand{\todo}[1]{{\textcolor{red}{[TODO: #1]}}}
-\newcommand{\roni}[1]{{\textcolor{red}{[Roni: #1]}}}
-\newcommand{\argaman}[1]{{\textcolor{blue}{[Argaman: #1]}}}
-\newcommand{\omer}[1]{{\textcolor{purple}{[Omer: #1]}}}
-\newcommand{\mauro}[1]{{\textcolor{green}{[Mauro: #1]}}}
-\newcommand{\yarin}[1]{{\textcolor{teal}{[Yarin: #1]}}}
-\newcommand{\gregor}[1]{{\textcolor{orange}{[Gregor: #1]}}}
-\newcommand{\cm}[1]{{\textcolor{olive}{[Christian: #1]}}}
+\newif\ifaddcomments
+\addcommentstrue % Uncomment this line to remove the user comments
+
+\newcommand{\todo}[1]{\ifaddcomments{\textcolor{red}{[TODO: #1]}}\fi}
+\newcommand{\roni}[1]{\ifaddcomments{\textcolor{red}{[Roni: #1]}}\fi}
+\newcommand{\argaman}[1]{\ifaddcomments{\textcolor{blue}{[Argaman: #1]}}\fi}
+\newcommand{\omer}[1]{\ifaddcomments{\textcolor{purple}{[Omer: #1]}}\fi}
+\newcommand{\mauro}[1]{\ifaddcomments{\textcolor{green}{[Mauro: #1]}}\fi}
+\newcommand{\yarin}[1]{\ifaddcomments{\textcolor{teal}{[Yarin: #1]}}\fi}
+\newcommand{\gregor}[1]{\ifaddcomments{\textcolor{orange}{[Gregor: #1]}}\fi}
+\newcommand{\cm}[1]{\ifaddcomments{\textcolor{olive}{[Christian: #1]}}\fi}
+\newcommand{\leo}[1]{\ifaddcomments{\textcolor{pink}{[Leonardo: #1]}}\fi}
+
+
+% \newcommand{\roni}[1]{ }
+% \newcommand{\argaman}[1]{ }
+% \newcommand{\omer}[1]{ }
+% \newcommand{\mauro}[1]{ }
+% \newcommand{\yarin}[1]{ }
+% \newcommand{\gregor}[1]{ }
+% \newcommand{\cm}[1]{ }
+% \newcommand{\leo}[1]{ }
 
 % Following comment is from ijcai97-submit.tex:
 % The preparation of these files was supported by Schlumberger Palo Alto
@@ -203,7 +217,9 @@ However, creating a domain model is a challenging, time-consuming, and error-pro
 This is a bottleneck for the wider dissemination of planning technology in real-world applications. 
 
 % \roni{TODO: Learning action models output action models that use different representations of states and actions.}
-To address this issue, a number of algorithms have been proposed to automatically learn domain models from a set of provided observations~\citep{gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
+To address this issue, a number of algorithms have been proposed 
+% \yarin{ To bring consistency to the terminology used in this area, we can refer to the field as Domain Model Learning (DML), which encompasses what has previously been described as planning model learning, action model learning, or model acquisition.} Roni: let's discuss this in our meeting in the morning. I am not sure
+to automatically learn domain models from a set of provided observations~\citep{gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
 \cm{Why not just point to some of the survey stuff? On the MACQ website (https://macq.planning.domains/), we have the bib entry and pointer to 3 previous survey papers. I'm biased, but I think MACQ should be included :P.}
 \roni{Good idea, and I definitely think MACQ should be included. This is a mistake on my end, but will be remedied}
 % \roni{TODO: Key question: how to evaluate action model learning algorithms?}
@@ -221,7 +237,7 @@ The proposed metrics are designed for evaluating models that use the same repres
 However, in practice, action model learning algorithms may output models that use different representations of states and actions. 
 For example, some algorithms output models in a grounded representation~\citep{stern2017efficient}, while others output models in a lifted representation~\citep{aineto2019learning,juba2021safe,xi2024neuro}. 
 Some represent states based only the parameters of executed actions~\citep{cresswell2011generalised}, or different languages to support human engineers \citep{mccluskey2010action}. 
-Finally, some require a richer symbolic representation of states~\citep{juba2021safe}, while others use a visual representation of states~\citep{xi2024neuro}.
+Finally, some require a richer symbolic representation of states~\citep{juba2021safe}, while others use a visual representation of states~\citep{asai2018classical, xi2024neuro}.
 \roni{All: add references and refine the above and add more examples of representation gap.}
 We propose an evaluation paradigm that addresses this representation gap challenge. 
 In this paradigm, an evaluated domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
@@ -397,6 +413,14 @@ Next, we discuss what constitutes a useful domain model and how to evaluate it w
 
 
 \section{Metrics for Evaluating Domain Models}
+\roni{TODO: Add assupmtions on what we know (objects, types, etc.)}
+
+\gregor{In the previous section, we strongly argue that there might not be a ``best'' reference model of the environment available, which we can base our comparison on. But in this section, we still use the reference model $\realm$ to compare with -- we just do it in a more indirect fashion. Should we start this section with a discussion of what we can still assume in terms of access? And where the parallels to classical machine learning are?\\
+From my point-of-view: (1) Having a true model of the actual environment to compare against is problematic in a realistic setting (why would we try to learn it otherwise?). (2) We can assume to have some samples, i.e., plans available from that environment, maybe also counter example plans. (3) There are two types of evaluations that we can conduct: the ICKEPS style, where we have an actual real-world problem that needs modelling, resp.\ whose model we need to learn (here we don't have a model!) and on the other hand our test-bed evaluation where the sole purpose is to determine whether the learning algorithm is good.\\
+In the second case, we create an artificial environment and specify it using a PDDL domain. And then run our experiments in that domain. For these evals, it is totally ok to assume that we have a model to compare against. But: we should still be representation agnostic, which syntactic measures are not.\\
+Let's take the analogy to ML here: they typically want to analyze how well we can learn from a specific real world setting (and thus have no model). While new ML-techniques can (and are?) also tested on artificial test-bed setting and datasets, where the ground truth, i.e., generation of all the data is known and can be used for evaluation.}
+
+\gregor{One general problem: the syntactic metrics all work solely on the level of the domain representation. But the metrics we propose here all require some type of actual states -- i.e.\ they are dependent on at least the set of objects that exists. Or even more they are dependent on the full problem instances. I assume we then have a selection of ``test'' problem instances as in standard machine learning?}
 
 We can consider two main dimensions to optimize the learning process and to evaluate the learned model:
 %
@@ -469,6 +493,14 @@ Based on this notation, we define the following predicted action applicability m
     \item TN$_{\app}(a)=|S\setminus (\app_M(a,S)\cup \app_\realm(a,S))|$
     \item FN$_{\app}(a)=|\app_\realm(a,S)\setminus \app_M(a,S)|$
 \end{itemize}
+\leo{Should we keep TN? (since is not mentioned in precision/recall), similarly for predicted effects}
+\gregor{Hm. That is strange. Should we also define precision and recall for the negative class? Does that make sense? This would be how good the approach is to determine non-applicable actions. I.e.:
+\begin{align}
+    P_{\app}^-(a)= & \frac{TN_{\app}(a)}{TN_{\app}(a)+FN_{\app}(a)}\\
+    R_{\app}^-(a)= & \frac{TN_{\app}(a)}{TN_{\app}(a)+FP_{\app}(a)}    
+\end{align} 
+}
+\leo{I am not sure since it's binary classification. I think precision/recall for the negative class is dual w.r.t. the positive class ones}
 In words, TP$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to both the learned model and the real model, FP$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to the learned model but not the real model, TN$_{\app}(a)$ is the number of states in $S$ where $a$ is not applicable according to both models, and FN$_{\app}(a)$ is the number of states in $S$ where $a$ is applicable according to the real model but not the learned model. 
 From these metrics, one can compute the precision and recall of the learned model for action applicability as follows,
 \begin{align}
@@ -487,12 +519,21 @@ Based on this, we define the following predicted action effect metrics for some 
     % \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}\gregor{For all sets it holds that $(X \setminus Y) \setminus Z = X \setminus (Y \cup Z) = X \setminus (Y \cup Z) = X \setminus (Y  \cup (Z\setminus Y)) = (X \setminus Y) \setminus (Z\setminus Y)$. In short: removing $s$ twice does not make a difference. Both formulations are the same.}\yarin{Thank you for the clarification}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
     \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}\gregor{Yep, but it does -- $a_M(s)$ is the next state. If you take the intersection with the previous one, you get exactly all literals that have not changed.}
+    \leo{should we denote $a_M(s)$ as `$s'$ obtained after executing $a$ in $s$`? I'm not sure currently is formally correct since we used $a$ to denote actions in the previous paragraph.}
 \end{itemize}
+
+
+\roni{Aggregate only over action applicable according to both 
+Rationale: if a model specifies an action does not applicable thne its effects are not defined.
+TODO: Add a discussion about this}
+
+
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
 % \roni{Ensure this makes sense} \gregor{Checked.}TNX!
 One can aggregate the above metrics over all states and actions, \gregor{This might be computationally a problem -- so we sample?!}\roni{Hmm. I am not sure. Is it worse than low-order polynomial in $S$ and number of actions?}
 \gregor{No, but $|S|$ can be exponential in the number of facts/predicates that we have.}
 \roni{You're right. I had at some stage some text on separating $S$ from the set of all states, having the set of states be implicitly defined by the set of fluents. I modified the PDDL definition above, and will add that we need a "test set" of states somewhere here.}
+\leo{I agree, currently in the implemented evaluation the `test set` is the set of states in a *test* set of trajs obtained interleaving optimal planning and random actions. A point is that some actions are executable in a few states, which are unlikely to be sampled randomly; moreover random sampling can generate invalid states}
 compute the overall values, and compute aggregated precision and recall values accordingly.  
 The difference between the syntactic similarity of effects and the predicted effects metrics is subtle. 
 It manifests when processing observations in which some literal $\ell$ is observed in the state before an action $a$, 
@@ -501,10 +542,16 @@ This will count as a false positive in the syntactic similarity metrics yet not 
 
 
 \gregor{One more argument for these predictive power metrics overall: They allow us to differentiate between ``cautious'' or ``safe'' learning (e.g. \cite{juba2021safe}) and optimistic approaches (e.g. \cite{Bachor24learning}; that is don't add a precondition until proven it must exist). Safe model learning will always have $FP_{app}(a) = 0$ at the cost of high $FN_{app}(a)$, while optimistic learning will have $FN_{app}(a) = 0$, but high $FP_{app}(a)$.\\
-Which of the two is better depends on your concrete application --- in criteial domains (air traffic, medicine)}
+Which of the two is better depends on your concrete application --- in critical domains (air traffic, medicine) you want safe model, but in cases where you want to only get some plan that might work and you can always backtrack if it actually does not (transport? travelling?) you are ok with this.}
+
 
 \roni{Add a concrete example of how to compute these metrics}
 \yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
+
+\gregor{I wanted to add one more point that I got from Pascal Bercher:\\
+If we view domain model learning as an algorithmic problem, we are supposed to only judge the output of the learner based on the inferences that can be drawn explicit from the given trajectories.
+If we do anything else we implicitly evaluate the bias of the learners towards the type domain models we ``usually'' have in the input domains.
+}
 
  
 \subsection{Problem-Solving Metrics}
@@ -514,17 +561,47 @@ Neither the syntactic similarity metrics nor the predictive power metrics are su
 %effectiveness of using a learned domain model to actually solve problems in the application domain. 
 We propose two metrics that are designed to address this issue: \emph{solving ratio} and \emph{false plans ratio}. 
 Both metrics are defined with respect to a set of problems $P$ in the environment $\realm$. 
-The solving ratio metric is defined as the ratio of problems in $P$ that can be solved with the learned model by a given planning within a fixed limit on the available computational resources --- CPU runtime and memory. 
+The solving ratio metric is defined as the ratio of problems in $P$ that can be solved with the learned model by a given planning within a fixed limit on the available computational resources --- CPU runtime and memory.
 We say that a problem is solved if a plan is found within the limited computational resources, and that plan is valid according to the environment. 
 The false plans ratio metric is defined as the ratio of problems in $P$ that are solved by the learned model but are not valid according to the environment. This reflects the reliability of using plans with the learned model.
 
 % Limitations
-The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner. Ideally, the above metrics would be run on a diverse set of test problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement, but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
+The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner.
+\gregor{Theorem provers and proof assistants, e.g., Lean, sometimes use ``heartbearts'' (\url{https://florisvandoorn.com/carleson/docs/Lean/Util/Heartbeats.html}) instead of time. They measure elementary orations and bound their number. This ensures reproducibility across different machines. For us this could e.g.\ be number of expanded states. Or the number of times an effect is applied -- this would also include computation effort for heuristics.}
+Ideally, the above metrics would be run on a diverse set of test problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement, but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
 
 \roni{TODO: Add metric on the runtime of solving the problem.}
 \roni{TODO: Discussion: what about a metric on how many real plans can be validated by the learned model.}\mauro{Yes! validation capability of the learned model with regards to plans generated with the reference model!}
 \roni{TODO: Maybe: add some unsolvability detection metrics?}
 \cm{In our work on aligning (which is very closely related, it seems!), we computed both (1) if the plans found using P and M validate on M* and (2) if the plans found using P and M* validate on M. You need assumptions on the action names+parameters, but then can test (via VAL) both ways.}
+\gregor{Agree! I have been using this in teaching as well: generate plans for both $P$ and $\realm$.}
+
+\gregor{Proposal:\\
+Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action.
+Let $\mathcal P(M,k)$ be the set of all plans of $M$ that have at most $k$ many actions (or cost $k$) and that do not visit the same state $s$ more than once during their execution.
+We then define three metrics:
+\begin{itemize}
+    \item $TP_{plan}(k) = |\mathcal P(M,k) \cap \mathcal P(\realm,k)|$
+    \item $FP_{plan}(k) = |\mathcal P(M,k) \setminus \mathcal P(\realm,k)|$
+    \item $FN_{plan}(k) = |\mathcal P(\realm,k) \setminus \mathcal P(M,k)|$
+\end{itemize}
+Lastly we could define $FN_{plan}(k) = |A|^k - TP_{plan}(k) - FP_{plan}(k) - FN_{plan}(k)$.
+%
+We only consider plans up to length $k$, as computing the set of all plans that a model admits might be computationally infeasible.
+To determine $\mathcal P(M,k)$, we could use a top-k planner~\cite{katz2018novel,speck2020symbolic,von2022loopless}.
+Alternatively one can generate plans for one model and validate it in the other using, e.g., VAL.\\
+The main advantage of this evaluation metric is that it is (mostly) agnostic w.r.t.\ the representation of the problem chosen by the learner.
+E.g.\ if the learned model uses different predicates or an entirely different formalism (numeric, images, ...) to represent states.
+The only technical requirement is that we are able to ``translate'' the initial state and goal states of the problems in $\realm$ to the problems in $M$.\\
+This however does not solve the issue of potentially different representations of the actions, which we will discuss in the next section.
+}
+\leo{I have currently implemented the alternative: generate plans with a `reference` model and validate them in the learned model. I liked Gregor proposal to define also this metric in terms of TP/FP/FN, I would slightly rephrase it as: 
+\begin{itemize}
+    \item $TP_{plan} = |\Pi(s, G) \cap \Pi^*(s, G)|$
+    \item $FP_{plan} = |\Pi(s, G) \setminus \Pi^*(s, G)|$
+    \item $FN_{plan} = |\Pi^*(s, G) \setminus \Pi(s, G)|$
+\end{itemize}
+ where $\Pi$ and $\Pi^*$ are the set of solution plans in $M$ and $M^*$ for going from state $s$ to a goal state in $G$}
 
 
 
@@ -534,6 +611,11 @@ The straightforward nature of the above metrics is not without limitations. The 
 
 Note that all the metrics described in this section do not require a reference model, but instead are with respect to the actual environment. Thus, they can be used to compare two models directly,  providing statistics on which one is better according to different aspects of the environment.
 \cm{I think the above is misleading. We need to have states (fluents matching the learned model), action applicability (for predictive power), etc, etc. We do need a reference model! What's changed is that we aren't using syntactic comparisons anymore, but the M* model is certainly still there.}
+\gregor{I think you could relax this a bit more. Iirc the point here is that you don't need to have a symbolic model of $\realm$ to evaluate. It would be enough to ``try'' the actions in the actual physical world. For action applicability this would be enough.
+%
+Well in both cases, you still need to be able to correlate an initial state in the real world with a symbolically represented initial state in the learned model.
+For example, if you observe only action sequences (think LOCM), you have no means to correlate the initial state that your learner thought the trajectories have with the actual one. You are missing a kind-of anchoring or ``grounding'' in the actual model $\realm$.
+This is what Roni's group proposes in the Encoder-Decoder Mechanism section.}
 % For the predictive power metrics, we can use the same dataset of states $S$ to compute the predicted applicability and predicted effects metrics for each evaluated model. Similarly, the problem-solving metrics can be computed for each model without a reference model, if one can execute the plans generated by the learned model in the real environment, then we can evaluate the solving ratio and false plans ratio metrics. 
 
 
@@ -667,6 +749,7 @@ Decoder: translate proxy predicates to original predicates
 
 
 \subsection{An Evaluation Paradigm}
+\roni{Leonardo will merge this into the next section}
 Using the above metrics and the encoder-decoder mechanism, we can define an evaluation paradigm for action model learning algorithms.
 The evaluation paradigm consists of the following steps: 
 First, we generate a set of trajectories in the input representation for learning. 
@@ -692,13 +775,36 @@ This 80/20 split is repeated $k$ times following a standard $k$-fold validation 
 % \end{algorithm}
 
 
-\section{Benchmarks}
+\section{Benchmarks and Evaluation}
 
 \todo{Leonardo is in charge of this section.}
 
 \todo{Describe the benchmark suite and how to use it.}
 
 \todo{If we have time: show results for at least some of the algorithms on the benchmark suite.}
+
+\leo{
+\subsection{Benchmark}
+We validate the proposed metrics by experimenting with some state-of-the-art approaches on a newly generated benchmark for offline learning classical planning domains.
+%
+ we consider the set of $20$ classical planning domains adopted in all previous IPC learning tracks \citep{fern2011first, vallati20152014, taitler20242023}, with a number of operators in $[1, 12]$, predicates in $[3,25]$, and object types in $[1, 9]$\footnote{\label{foot:supplementary}Further details about the benchmarks are provided in the supplementary material.}.
+%
+For each domain, we produced a set of $10$ trajectories from a set of $10$ small-medium size problems as described in the following. Firstly, we randomly generated a problem using existing generators \citep{seipp-et-al-zenodo2022}. Then, we run FastDownward \citep{helmert2006fast} to generate a solution plan, and generated the trajectory by executing the plan starting from the initial state of the problem. 
+%
+% \paragraph{Bias mitigation}
+It is worth noting that problem generators available in the literature can be biased in terms of initial states and goals. For example, in domain \textsf{ferry} the ferry is always empty in the initial state; in domain \textsf{floortile} the goal is always to paint all even tiles white and all odd ones black, leaving an empty extra row to place the robot at the end. 
+%
+To mitigate such biases, we randomly sample a \emph{subtrajectory} from the original generated one, resulting in a subtrajectory where the initial and final states are also randomized. 
+%
+However, some operators are unlikely to appear in a randomly sampled subtrajectory; for example, in domain \textsf{goldminer}, the operator \textsf{pick-gold} is always executed at the end of a solution plan. Hence, we jointly sample the initial and final states of each subtrajectory such that the initial or final state is the same as the original trajectory with probability $0.33$.   
+%
+Moreover, some operators are not likely to be executed in an heuristic plan; for example, in domain \textsf{barman}, it is possible to either clean and fill a shot, which requires $2$ actions, or just refill a (possibly dirty) shot. To increase the chance of executing more efficient actions in a plan, we \emph{optimally} solved $30\%$ of the problems.
+%
+Finally, to obtain heterogeneous trajectories, we generated problems with all different settings in terms of the number of objects of each type; however, \textsf{npuzzle} and \textsf{blocksworld} does not respect this requirement, since there is only one object type and linearly increase it leads to problem that are too difficult to solve. We also randomized the trajectory length in $[5, 30]$, and the number of objects in $[3, 107]$\footnotemark[1].
+-- IN PROGRESS -- 
+\subsection{Evaluation paradigm?}
+\subsection{Experimental analysis}
+}
 
 \section{Discussion}
 \roni{For all: please read and let me know what you think by adding comments in the text (e.g., add text like this ``[[YourName: bla bla bla'']]) or editting.}
@@ -716,6 +822,7 @@ The predicted applicability metrics can be computed as-is, considering both nume
 More involved is the predicted effects metric, which may require defining some loss function for the numeric effects, as learning exactly the same numeric effects as in the reference domain model seems unlikely. 
 Note that in all of these variants and generalizations, the encoder-decoder mechanism allows seamless use of the problem-solving metrics. 
 
+\yarin{We can add a section on trajectories with not successful actions too @Argaman}
 
 % Online metrics 
 \todo{Maybe talk about metrics for online learning}
@@ -726,12 +833,15 @@ Finally, models can also be compared not only in terms of their characteristics,
 
 
 
-\subsection{Relation to Model Reconciliation}
-\roni{Pascal and Mauro: maybe put here is a discussion on what is model reconciliation and how it relates to our work, 
-and existing model reconciliation metrics?}
+%\subsection{Relation to Model Reconciliation}
+%\roni{Pascal and Mauro: maybe put here is a discussion on what is model reconciliation and how it relates to our work, and existing model reconciliation metrics?}
 
 \subsection{Relation to Model Repair}
-\roni{Pascal and Mauro: same for model repair?}
+There is a strong relation between model learning and model repair. Following the definition provided in \cite{ace58d7c61b44f7eac8ee226d89e2153}, model learning approaches start from a minimalistic (potentially empty) model and extend it on the basis of some provided input. The goal is to bring such an initial model to a model that can be used in practice. Instead, model repair starts from compilable/operational models, and refine them according to some constraints in order to maintain the operationality of the models with regards to changing requirements or demands. Constraints can come under different forms, such as the request to include/exclude some given plans in the solution space of a model, to ensure that a given plan is optimal for the model, or to constraint the solution space. 
+
+This relationship also extends to approaches such as model reconciliation (see, e.g., \citep{ChakrabortiSZK17,SreedharanHMK19}), where one model needs to be aligned with another model to maximize the explainability of generated plans. In reconciliation approaches, the usual metric considered is the number of changes to be made to align the models, with the goal of minimizing modifications.
+
+%\roni{Pascal and Mauro: same for model repair?}
 
 \section{Conclusion Future Work}
 \roni{I'll fix this text later}
