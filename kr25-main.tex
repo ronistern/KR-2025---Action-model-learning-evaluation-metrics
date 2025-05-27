@@ -66,7 +66,7 @@
 \newcommand{\type}{\textit{type}}
 \newcommand{\cnf}{\textit{CNF}}
 \newcommand{\conj}{\textit{Conj}}
-\newcommand{\realm}{\ensuremath{M^*}\xspace}
+\newcommand{\realm}{{\ensuremath{M^*}}\xspace}
 \newcommand{\liftf}{\mathsf{f}}
 % \newcommand{\liftl}{\mathsf{l}} RONI: This looks too much like "one"
 \newcommand{\liftl}{\ensuremath{\ell}} 
@@ -217,14 +217,13 @@ However, creating a domain model is a challenging, time-consuming, and error-pro
 This is a bottleneck for the wider dissemination of planning technology in real-world applications. 
 
 % \roni{TODO: Learning action models output action models that use different representations of states and actions.}
-To address this issue, a number of algorithms have been proposed 
-% \yarin{ To bring consistency to the terminology used in this area, we can refer to the field as Domain Model Learning (DML), which encompasses what has previously been described as planning model learning, action model learning, or model acquisition.} Roni: let's discuss this in our meeting in the morning. I am not sure
-to automatically learn domain models from a set of provided observations~\citep{gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
-\cm{Why not just point to some of the survey stuff? On the MACQ website (https://macq.planning.domains/), we have the bib entry and pointer to 3 previous survey papers. I'm biased, but I think MACQ should be included :P.}
-\roni{Good idea, and I definitely think MACQ should be included. This is a mistake on my end, but will be remedied}
+To address this issue, a number of algorithms have been proposed to automatically learn domain models from a set of provided observations~\citep{macq,aineto2019learning,jimenez2012review}.\footnote{A comprehensive list of such algorithms is listed in \url{https://macq.planning.domains}.} 
+This task is often referred to as \emph{domain model learning}, \emph{model acquisition}, and \emph{action model learning}. 
+% \yarin{ To bring consistency to the terminology used in this area, we can refer to the field as Domain Model Learning (DML), which encompasses what has previously been described as planning model learning, action model learning, or model acquisition.} Roni: let's discuss this in our meeting in the morning. I am not sure  
+% gösgens2025learningfromonlyactiontraces,LAMANNA2025104256,xi2024neuro,mordoch2024safe,juba2021safe,lamanna2021online,cresswell2011generalised,ZHUO20101540}.\roni{Everyone is invited to add their action model learning algorithm here.}
+% \cm{Why not just point to some of the survey stuff? On the MACQ website (https://macq.planning.domains/), we have the bib entry and pointer to 3 previous survey papers. I'm biased, but I think MACQ should be included :P.} \roni{Good idea, and I definitely think MACQ should be included. This is a mistake on my end, but will be remedied}
 % \roni{TODO: Key question: how to evaluate action model learning algorithms?}
-Despite a recent resurgence in interest in learning domain models, there is no standard evaluation process for such algorithms, 
-no set of agreed-upon evaluation metrics, and no standard benchmark. 
+Despite a recent resurgence in interest in learning domain models, there is no standard evaluation process for such algorithms, no set of agreed-upon evaluation metrics, and no standard benchmark. 
 This paper aims to close this gap, and proposes an evaluation paradigm for domain model learning algorithms, a set of metrics, and a publicly available benchmark for evaluation. 
 
 
@@ -243,8 +242,10 @@ We propose an evaluation paradigm that addresses this representation gap challen
 In this paradigm, an evaluated domain model learning algorithm is obliged to define encoder and decoder functions to bridge the representation gap. 
 We adapt the domain model evaluation metrics defined above to use these bridging functions, 
 and show how to define such functions for several domain model learning algorithms. 
-\roni{TODO: Benchmarks, evaluation methodology}
 Finally, we describe a benchmark suite and suggested evaluation process for using it based on existing domain models from the International Planning Competition (IPC). 
+We implemented this evaluation process and executed it on several domain model learning algorithms, including \roni{TODO: what do we have}. 
+The code, dataset, and evaluation process described in this work is intended to be publicly available.
+\footnote{A link to this is omitted to preserve anonymity.} 
 
 
 
@@ -306,7 +307,7 @@ ESAM~\citep{juba2021safe} is an extension of the \sam algorithm that learns acti
 
 
 LatPlan~\citep{asai2018classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
-\yarin{Rewrote and added part on LatPlan here:}
+% \yarin{Rewrote and added part on LatPlan here:}\roni{Great! tnx}
 % LatPlan uses a variational autoencoder with the Gumbel-Softmax trick~\citep{jang2017categorical} to convert image states into discrete propositional symbols, enabling classical planning in latent space.
 LatPlan is a fully unsupervised system that uses a variational autoencoder as a differentiable approximation to convert image states into discrete propositional symbols, enabling classical planning in a learned latent space.
 % ROSAME-I~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images.
@@ -317,7 +318,7 @@ ROSAME-I, in contrast, assumes a predefined set of propositions and action signa
 
 
 
-
+\roni{To all: do not worry about shortening the background section. I will do this later.}
 
 \section{Problem Setting and Syntactic Similarity}
 \label{sec:problem-setting}
@@ -343,15 +344,16 @@ That is, this domain model can be given as input to a classical planner, and tog
 The core question is then: How good is the model learned by the domain model learning algorithm?
 Many prior works evaluated their domain model learning algorithms by comparing the learned domain model to a \emph{reference domain model} (or \emph{ground truth model}). 
 The reference domain model is assumed to be correct, i.e., equivalent to \realm, 
-% \gregor{i.e.\ it correctly models $E/\realm$}, 
-and has been used to evaluate the learned domain model in terms of its \emph{syntactic similarity} to it~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
+and that the domain model returned by the evaluated domain model learning algorithm usese the same input representaiton (action names, object types, etc.). 
+
+% Syntactic similarity metrics
+Several metrics have been proposed to quantify the \emph{syntactic similarity} between the learned domain model and the reference domain model~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
 % \roni{Others who have used, please add citations}
 These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
 Let $M$ and $\realm$ be the evaluated and reference domain models, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
 % Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.[roni: I don't think this is a good fit for here, following CM's comment]
 
-\cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}
-\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
+% \cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
 
 % Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ and $\eff_M(a)$ the preconditions and effects, respectively, of action $a$ according to domain $M$.
  \begin{itemize}
@@ -392,22 +394,33 @@ In a slightly different fashion, \cite{chrpa2023comparing} proposed an approach 
 
 %\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
 The above approach to evaluating domain models has several limitations. 
-First, it relies on the existence of a reference domain model, which may not be available in practice. 
-In fact, this is usually the case in new applications of automated planning to real-world problems. In such cases, there may be a number of alternative models, but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
-\gregor{One could distinguish two cases here: (1) the practical application case, i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case, the issue of multiple equivalent models remains.}
-
-
-\gregor{Maybe add a new second reason here to prepare the argumentation for the next one:\\
-Second, there might be multiple models that are fully identical for all practical purposes.
-That is, we will be able to find exactly the same set of plans using all of these models.
-A supposed ground truth model would then be an arbitrary pick out of these equivalent models.
-In evaluation would reward a learner if it can reproduce the one arbitrarily chosen ground truth model over any other equivalent model.
-Considering the above transport example, it is equivalent to use $in(p,t)$ or $contains(t,p)$ as a precondition -- but using syntactic similarities forces the learner to have a bias for one of the two option, without being able to infer which bias is correct out of the input trajectories.
-}
-
-Second, the reference model is assumed to be of the best possible quality. This is in itself complicated by the fact that it is very challenging to assess the quality of a model \citep{DBLP:conf/kcap/McCluskeyVV17}. Besides this, the use of a reference model biases the assessment towards a single specific encoding -- while many others of similar quality could potentially exist.
-Third, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
+First, in some evaluation setups a reference model may not be available at all. 
+This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}, 
+and, of course, when applying automated planning to real-world problems.
+Second, comparing to a reference model implies there is a single best model for the environment. 
+What constitutes a \emph{best model} for an environment is not well-defined, and assessing the quality of a model is very challenging \citep{DBLP:conf/kcap/McCluskeyVV17}. 
+Lastly, there may be multiple domain models for a given environment that are fully identical for all practical purposes yet different syntactically. 
+Thus, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
 Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
+
+\roni{Tried to compile above the comments from Mauro and Gregor (which are commented out below). Please check if it is ok.}
+
+% First, it relies on the existence of a reference domain model, which may not be available in practice. 
+% In fact, this is usually the case in new applications of automated planning to real-world problems. In such cases, there may be a number of alternative models, but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
+% \gregor{One could distinguish two cases here: (1) the practical application case, i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case, the issue of multiple equivalent models remains.}
+
+
+% \gregor{Maybe add a new second reason here to prepare the argumentation for the next one:\\
+% Second, there might be multiple models that are fully identical for all practical purposes.
+% That is, we will be able to find exactly the same set of plans using all of these models.
+% A supposed ground truth model would then be an arbitrary pick out of these equivalent models.
+% In evaluation would reward a learner if it can reproduce the one arbitrarily chosen ground truth model over any other equivalent model.
+% Considering the above transport example, it is equivalent to use $in(p,t)$ or $contains(t,p)$ as a precondition -- but using syntactic similarities forces the learner to have a bias for one of the two option, without being able to infer which bias is correct out of the input trajectories.
+% }\roni{I think this is captured in the paragraph below (probably someone editted it - maybe Gregor or Mauro? anyhow it turned out nicely)}
+
+% Second, the reference model is assumed to be of the best possible quality. This is in itself complicated by the fact that it is very challenging to assess the quality of a model \citep{DBLP:conf/kcap/McCluskeyVV17}. Besides this, the use of a reference model biases the assessment towards a single specific encoding -- while many others of similar quality could potentially exist.
+% Third, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
+% Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
 
 
 
@@ -419,10 +432,11 @@ Next, we discuss what constitutes a useful domain model and how to evaluate it w
 From my point-of-view: (1) Having a true model of the actual environment to compare against is problematic in a realistic setting (why would we try to learn it otherwise?). (2) We can assume to have some samples, i.e., plans available from that environment, maybe also counter example plans. (3) There are two types of evaluations that we can conduct: the ICKEPS style, where we have an actual real-world problem that needs modelling, resp.\ whose model we need to learn (here we don't have a model!) and on the other hand our test-bed evaluation where the sole purpose is to determine whether the learning algorithm is good.\\
 In the second case, we create an artificial environment and specify it using a PDDL domain. And then run our experiments in that domain. For these evals, it is totally ok to assume that we have a model to compare against. But: we should still be representation agnostic, which syntactic measures are not.\\
 Let's take the analogy to ML here: they typically want to analyze how well we can learn from a specific real world setting (and thus have no model). While new ML-techniques can (and are?) also tested on artificial test-bed setting and datasets, where the ground truth, i.e., generation of all the data is known and can be used for evaluation.}
+\roni{I like this distinction. Our focus should initially be on case (2), and then later talk about case (1).}
 
-\gregor{One general problem: the syntactic metrics all work solely on the level of the domain representation. But the metrics we propose here all require some type of actual states -- i.e.\ they are dependent on at least the set of objects that exists. Or even more they are dependent on the full problem instances. I assume we then have a selection of ``test'' problem instances as in standard machine learning?}
-
-We can consider two main dimensions to optimize the learning process and to evaluate the learned model:
+\gregor{One general problem: the syntactic metrics all work solely on the level of the domain representation. But the metrics we propose here all require some type of actual states -- i.e.\ they are dependent on at least the set of objects that exists. Or even more they are dependent on the full problem instances. I assume we then have a selection of ``test'' problem instances as in standard machine learning?}\roni{Yes, different metrics require differet "test sets". I'll write about this below, let me know if this works}
+We consider two main dimensions when evaluating the ``usefulness'' of a learned domain model: its \emph{predictive power} and its \emph{ability to enable solving problems}.
+% optimize the learning process and to evaluate the learned model:
 %
 %In this setup, we consider the following desired objectives of a learned domain model. 
 \begin{itemize}
@@ -434,15 +448,16 @@ We can consider two main dimensions to optimize the learning process and to eval
 
 %\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
 
-A key insight to consider 
-%While the real domain model satisfies all three objectives, a key insight 
-is that these dimensions are not necessarily aligned with the syntactic similarity metrics defined above, even if a reference model exists that enables computing it.  
-A domain model may be very \emph{predictive} of 
-behavior of the agent in the reference domain model, yet very different from a reference model since it encodes mutex conditions that the reference model did not bother to define. \roni{Is this clear?}\yarin{Yes but, how is this instead: A domain model can be highly \emph{predictive} of an agent's behavior in the reference domain, even if it differs significantly from the reference model. This can happen when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
-}
-\gregor{maybe: ``does only define implicitly''?} \gregor{I've also put this issue already in the example above. Is this more illustrative?}
-Similarly, a learned domain model may be very \emph{similar syntactically} to a reference domain model but not effective in solving problems from the corresponding real-world environment, 
-e.g., adding redundant preconditions or missing a crucial effect \citep{DBLP:conf/kcap/VallatiC19}. \gregor{or missing a crucial precondition: e.g.\ can only open a door if I have key.}
+Observe that these dimensions are not necessarily aligned with the syntactic similarity metrics defined above, even if a reference model exists that enables computing it.  
+A domain model may predict accurately when actions are applicable and the effects of applying them, while still being very different from a given reference model. 
+This can happen, for example, when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
+% since it encodes mutex conditions that the reference model did not bother to define. \roni{Is this clear?}\yarin{Yes but, how is this instead: A domain model can be highly \emph{predictive} of an agent's behavior in the reference domain, even if it differs significantly from the reference model. This can happen when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
+% }Roni: pluged this in above. 
+\gregor{maybe: ``does only define implicitly''?}\roni{Editted. Is it clearer?} 
+\gregor{I've also put this issue already in the example above. Is this more illustrative?}
+Similarly, a learned domain model may be very \emph{similar syntactically} to a reference domain model but not effective in solving problems from the corresponding real-world environment. 
+For example, the learned domain may miss a single crucial effect or precondition that prevent it from solving many problems correctly. 
+% adding redundant preconditions or missing a crucial effect \citep{DBLP:conf/kcap/VallatiC19}. \gregor{or missing a crucial precondition: e.g.\ can only open a door if I have key.} [Roni: added it]
 In contrast, a domain model may be very different from a reference domain model, e.g., adding many redundant preconditions to some actions, yet very \emph{effective} in solving problems in the application domain since these redundant preconditions are often true in the real world. 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  25 MAY 2025 09:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.3) (preloaded format=pdflatex 2025.4.27)  27 MAY 2025 00:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -358,7 +358,7 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 \c@theorem=\count315
 \c@definition=\count316
 \c@observation=\count317
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 184.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 198.
  (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
@@ -367,25 +367,25 @@ File: l3backend-pdftex.def 2025-03-14 L3 backend support: PDF output (pdfTeX)
 ) (kr25-main.aux)
 \openout1 = `kr25-main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-Package hyperref Info: Link coloring OFF on input line 184.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 198.
+LaTeX Font Info:    ... okay on input line 198.
+Package hyperref Info: Link coloring OFF on input line 198.
  (kr25-main.out) (kr25-main.out)
 \@outlinefile=\write3
 \openout3 = `kr25-main.out'.
@@ -425,12 +425,12 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ]
 
 Package acronym Info: Label `acro:SAM' newly defined as it shall be overridden
-although it is yet undefined on input line 282.
+although it is yet undefined on input line 299.
 
 
 [2]
 
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 342.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 360.
 (C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
@@ -442,15 +442,12 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 [4]
 
 
-Package natbib Warning: Citation `Bachor24learning' on page 5 undefined on input line 504.
-
-
 
 [5]
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 560--565
-[][]\OT1/ptm/m/n/10 [Yarin: added LOCM:][] Sim-i-larly, the LOCM al-go-
+Underfull \hbox (badness 1910) in paragraph at lines 584--587
+\OT1/ptm/m/n/10 mem-ory bud-get al-lowed for it to run, and the com-
  []
 
 
@@ -458,44 +455,61 @@ Underfull \hbox (badness 1412) in paragraph at lines 560--565
 [6]
 
 
+Underfull \hbox (badness 1412) in paragraph at lines 657--662
+[][]\OT1/ptm/m/n/10 [Yarin: added LOCM:][] Sim-i-larly, the LOCM al-go-
+ []
+
+
 
 [7]
 
-(kr25-main.bbl
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 822.
+(C:\Users\sternron\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
+)
+Underfull \hbox (badness 1337) in paragraph at lines 822--822
+\OT1/ptm/m/n/10 some state-of-the-art ap-proaches on a newly gen-er-ated
+ []
+
+
 
 [8]
-Underfull \hbox (badness 1178) in paragraph at lines 126--131
+
+
+
+[9] (kr25-main.bbl
+
+
+Underfull \hbox (badness 1178) in paragraph at lines 167--172
 \OT1/ptm/m/n/10 Epis-temic ex-plo-ration for gen-er-al-iz-able plan-ning and
  []
 
 
 
+[10]
+
 )
 
-Package natbib Warning: There were undefined citations.
-
-
-
-[9] (kr25-main.aux)
+[11] (kr25-main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-03-26>
  ***********
 Package rerunfilecheck Info: File `kr25-main.out' has not changed.
-(rerunfilecheck)             Checksum: 8877CAA2E29BD75FB5B54D45A646A4F8;3115.
+(rerunfilecheck)             Checksum: EFE599CECE01C47E98134A5A54832843;3399.
  ) 
 Here is how much of TeX's memory you used:
- 13037 strings out of 470081
- 208044 string characters out of 5477822
- 615795 words of memory out of 5000000
- 39456 multiletter control sequences out of 15000+600000
- 644489 words of font info for 70 fonts, out of 8000000 for 9000
+ 13173 strings out of 470081
+ 210113 string characters out of 5477822
+ 616325 words of memory out of 5000000
+ 39559 multiletter control sequences out of 15000+600000
+ 650803 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1024b,622s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on kr25-main.pdf (9 pages, 256700 bytes).
+ 75i,12n,79p,1024b,648s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/sternron/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on kr25-main.pdf (11 pages, 288180 bytes).
 PDF statistics:
- 420 PDF objects out of 1000 (max. 8388607)
- 71 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 484 PDF objects out of 1000 (max. 8388607)
+ 90 named destinations out of 1000 (max. 500000)
+ 153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
