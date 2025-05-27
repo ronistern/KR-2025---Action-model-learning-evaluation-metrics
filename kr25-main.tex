@@ -116,6 +116,17 @@
 \newcommand{\pbls}{pb-literals\xspace}
 \newcommand{\learnblmaa}{Learn\blmaa}
 
+\newboolean{showsupplementary}
+\setboolean{showsupplementary}{true} % or false
+
+% Usage:
+% \supplementary{
+%  ...
+% }
+\newcommand{\supplementary}[1]{%
+  \ifthenelse{\boolean{showsupplementary}}{#1}{}%
+}
+
 \newif\ifaddcomments
 \addcommentstrue % Uncomment this line to remove the user comments
 
@@ -519,13 +530,14 @@ Based on this, we define the following predicted action effect metrics for some 
     % \yarin{I think it should be $|(a_M(s)\setminus s)\setminus (a_\realm(s)\setminus s)|$ (effect minus effect and not effect minus state) and if so also FN accordingly}\gregor{For all sets it holds that $(X \setminus Y) \setminus Z = X \setminus (Y \cup Z) = X \setminus (Y \cup Z) = X \setminus (Y  \cup (Z\setminus Y)) = (X \setminus Y) \setminus (Z\setminus Y)$. In short: removing $s$ twice does not make a difference. Both formulations are the same.}\yarin{Thank you for the clarification}
     \item TN$_{\eff}(s,a)=|s \cap a_M(s) \cap a_\realm(s)|$
     \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a_\realm(s)|$ \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}\gregor{Yep, but it does -- $a_M(s)$ is the next state. If you take the intersection with the previous one, you get exactly all literals that have not changed.}
-    \leo{should we denote $a_M(s)$ as `$s'$ obtained after executing $a$ in $s$`? I'm not sure currently is formally correct since we used $a$ to denote actions in the previous paragraph.}
+    \leo{should we denote $a_M(s)$ as `$s'$ obtained after executing $a$ in $s$`? I'm not sure currently is formally neat since we used $a$ to denote actions in the previous paragraph.}
 \end{itemize}
 
 
 \roni{Aggregate only over action applicable according to both 
 Rationale: if a model specifies an action does not applicable thne its effects are not defined.
 TODO: Add a discussion about this}
+\leo{maybe it may be useful to mention an action where an effect is learned as a precondition, the predicted effect is correct when the action is applicable in the learned model}
 
 
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
@@ -792,18 +804,27 @@ We validate the proposed metrics by experimenting with some state-of-the-art app
 For each domain, we produced a set of $10$ trajectories from a set of $10$ small-medium size problems as described in the following. Firstly, we randomly generated a problem using existing generators \citep{seipp-et-al-zenodo2022}. Then, we run FastDownward \citep{helmert2006fast} to generate a solution plan, and generated the trajectory by executing the plan starting from the initial state of the problem. 
 %
 % \paragraph{Bias mitigation}
-It is worth noting that problem generators available in the literature can be biased in terms of initial states and goals. For example, in domain \textsf{ferry} the ferry is always empty in the initial state; in domain \textsf{floortile} the goal is always to paint all even tiles white and all odd ones black, leaving an empty extra row to place the robot at the end. 
+It is worth noting that problem generators available in the literature can be biased in terms of initial states and goals. For example, in domain \textsc{ferry} the ferry is always empty in the initial state; in domain \textsc{floortile} the goal is always to paint all even tiles white and all odd ones black, leaving an empty extra row to place the robot at the end. 
 %
 To mitigate such biases, we randomly sample a \emph{subtrajectory} from the original generated one, resulting in a subtrajectory where the initial and final states are also randomized. 
 %
-However, some operators are unlikely to appear in a randomly sampled subtrajectory; for example, in domain \textsf{goldminer}, the operator \textsf{pick-gold} is always executed at the end of a solution plan. Hence, we jointly sample the initial and final states of each subtrajectory such that the initial or final state is the same as the original trajectory with probability $0.33$.   
+However, some operators are unlikely to appear in a randomly sampled subtrajectory; for example, in domain \textsc{goldminer}, the operator \textsc{pick-gold} is always executed at the end of a solution plan. Hence, we jointly sample the initial and final states of each subtrajectory such that the initial or final state is the same as the original trajectory with probability $0.33$.   
 %
-Moreover, some operators are not likely to be executed in an heuristic plan; for example, in domain \textsf{barman}, it is possible to either clean and fill a shot, which requires $2$ actions, or just refill a (possibly dirty) shot. To increase the chance of executing more efficient actions in a plan, we \emph{optimally} solved $30\%$ of the problems.
+Moreover, some operators are not likely to be executed in an heuristic plan; for example, in domain \textsc{barman}, it is possible to either clean and fill a shot, which requires $2$ actions, or just refill a (possibly dirty) shot. To increase the chance of executing more efficient actions in a plan, we \emph{optimally} solved $30\%$ of the problems.
 %
-Finally, to obtain heterogeneous trajectories, we generated problems with all different settings in terms of the number of objects of each type; however, \textsf{npuzzle} and \textsf{blocksworld} does not respect this requirement, since there is only one object type and linearly increase it leads to problem that are too difficult to solve. We also randomized the trajectory length in $[5, 30]$, and the number of objects in $[3, 107]$\footnotemark[1].
--- IN PROGRESS -- 
+Finally, to obtain heterogeneous trajectories, we generated problems with all different settings in terms of the number of objects of each type; however, \textsc{npuzzle} and \textsc{blocksworld} does not respect this requirement, since there is only one object type and linearly increase it leads to problem that are too difficult to solve. We also randomized the trajectory length in $[5, 30]$, and the number of objects in $[3, 107]$\footnotemark[1].
 \subsection{Evaluation paradigm?}
+\begin{itemize}
+    \item needs of a set of states for evaluation
+    \item random sampling can lead to: inconsistent states, is affected by state space being `unbalanced` 
+    \item a practical approach: use trajectory states
+    \item discuss limitations
+\end{itemize}
 \subsection{Experimental analysis}
+\begin{itemize}
+    \item baselines: sam, offlam, nolam
+    \item evaluation of all metrics and comments
+\end{itemize}
 }
 
 \section{Discussion}
@@ -826,6 +847,7 @@ Note that in all of these variants and generalizations, the encoder-decoder mech
 
 % Online metrics 
 \todo{Maybe talk about metrics for online learning}
+\leo{For the online case we could mention a measure of informativeness of the generated trajectories, or a measure of efficiency (e.g. action costs) for generating the trace}
 The metrics and evaluation paradigm outlined in this paper are for \emph{offline} learning of action models, where the learning algorithm is given a set of trajectories and is required to output a domain model. \emph{Online learning} of action models have also been studied in the literature~\citep{lamanna2021online, sreedharan2023optimistic, benyamin2025integratingreinforcementlearningaction, ng2019incremental, chitnis2021glib, verma2023autonomous, karia2023epistemic, jin2022creativity}\todo{More citations?}\yarin{added, to many?}, where the learning algorithm is required to learn a domain model by actively interacting with the environment. Similar to other online tasks, one may distinguish between the \emph{cumulative regret} of the learning process, which can be the number of actions performed for learning or the number of problems failed to solve while collecting observations. 
 Specific metrics and evaluation for online learning of action models, however, is beyond the scope of this work. 
 
@@ -853,6 +875,8 @@ model learning algorithms across different representations. In this paradigm, ea
 
 \bibliographystyle{kr}
 \bibliography{library} 
+
+\input{supplementary}
 
 
 \end{document}
