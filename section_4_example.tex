@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+Consider the the same delivery scenario as before, where we focus on the action \textsc{unload} with the parameters $\ell,t,p$ in both the reference model $\realm$ and a learned model $\model$. In $\realm$, the preconditions are $\mathit{at}(\ell,t)$ and $\mathit{in}(p,t)$ and the effects are $\neg\mathit{in}(p,t)$, $\neg\mathit{contains}(t,p)$ and $\mathit{at}(p,\ell)$. The learned model $\model$ instead acquires the preconditions $\mathit{at}(\ell,t)$ and $\mathit{contains}(t,p)$, while its effects coincide with the reference. Let the test set be $\stest=\{s_1,s_2,s_3,s_4\}$, where in state $s_1$ only $\mathit{at}(\ell,t)$, $\mathit{in}(p,t)$, and $\mathit{contains}(t,p)$ hold; in $s_2$ only $\mathit{at}(\ell,t)$ and $\mathit{in}(p,t)$ hold; in $s_3$ only $\mathit{at}(\ell,t)$ and $\mathit{contains}(t,p)$ hold; and in $s_4$ neither precondition holds. 
+
+Then the reference applicability is $\app(a,\stest)=\{s_1,s_2\}$, while the learned applicability is $\app_M(a,\stest)=\{s_1,s_3\}$. It follows that $\mathrm{TP}_{\text{app}}(a) =|\{s_1,s_3\}\cap\{s_1,s_2\}|=1$, $\mathrm{FP}_{\text{app}}(a) =|\{s_1,s_3\}\setminus\{s_1,s_2\}|=1$, $\mathrm{FN}_{\text{app}}(a) =|\{s_1,s_2\}\setminus\{s_1,s_3\}|=1$, and $ \text{TN}_{\text{app}}(a) = \left| \{s_1, s_2, s_3, s_4\} \setminus \left( \{s_1, s_2\} \cup \{s_1, s_3\} \right) \right| = \left| \{s_1, s_2, s_3, s_4\} \setminus \{s_1, s_2, s_3\} \right| = |\{s_4\}| = 1 $. 
+
+Consequently, the predicted applicability precision and recall are 
+\[
+\mathrm{Precision}_{\app}
+=\frac{\mathrm{TP}_{\app}}{\mathrm{TP}_{\app}+\mathrm{FP}_{\app}}
+=\frac{1}{1+1}=0.5,
+\]
+\[
+\mathrm{Recall}_{\app}
+=\frac{\mathrm{TP}_{\app}}{\mathrm{TP}_{\app}+\mathrm{FN}_{\app}}
+=\frac{1}{1+1}=0.5.
+\]
+
+While for the perfect predicted effects precision and recall are
+\[
+\mathrm{Precision}_{\app}
+=\frac{\mathrm{TP}_{\app}}{\mathrm{TP}_{\app}+\mathrm{FP}_{\app}}
+=\frac{1}{1+0}=1,
+\]
+\[
+\mathrm{Recall}_{\app}
+=\frac{\mathrm{TP}_{\app}}{\mathrm{TP}_{\app}+\mathrm{FN}_{\app}}
+=\frac{1}{1+0}=1.
+\]
+
+\end{document}

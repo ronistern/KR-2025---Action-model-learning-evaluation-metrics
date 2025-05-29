@@ -302,7 +302,7 @@ Several specific evaluation metrics are defined for this type of evaluation base
 In addition, we describe a benchmark suite  based on domain models from the International Planning Competition (IPC), 
 and suggest an evaluation process for 
 computing the proposed evaluation metrics on this benchmark.  
-We implemented this evaluation process and executed it on several domain model learning algorithms, including \sam \citep{juba2021safe}, Offline Learning of Action Models (OffLAM) \citep{LAMANNA2025104256}, and Noisy Offline Learning of Action Models (NOLAM) \citep{Lamanna24}, providing reference results and implementation for future research. The code, dataset, and evaluation process described in this work is intended to be publicly available.\footnote{A link to this is omitted to preserve anonymity.} 
+We implemented this evaluation process and executed it on several domain model learning algorithms, including \sam \citep{juba2021safe}, Offline Learning of Action Models (OffLAM) \citep{LAMANNA2025104256}, and Noisy Offline Learning of Action Models (NOLAM) \citep{Lamanna24}, providing reference results and implementation for future research. The code, dataset, and evaluation process described in this work is intended to be publicly available.\footnote{A link to this is omitted to preserve anonymity. However, the code is available in the supplementary material.} 
 
 
 % \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
@@ -430,7 +430,7 @@ The typically adopted metric is
 the number of changes to be made to align the models on the made plan observations, with the goal of minimizing modifications.
 Model repair is the task of modifying an initial model according to new types of constraints or observations. Domain model learning can be viewed as an extreme case of model repair where the initial model is empty\yarin{, but, the objectives differ. Therefore, assessing model repair requires evaluation measures specifically designed to capture its unique objectives and constraints.}\roni{I'm not sure the objective fully differ, so...}. The nature of the repair task is different, however, and thus metrics and evaluation for model repair are expected to be different as well. 
 \roni{I'm not super happy with my last 2 sentences.}  
-\leo{maybe we could mention model le}
+\leo{maybe there is some relation between model repair and model learning from an input (possibly flawed) model?}
 % Constraints can come under different forms, such as the request to include/exclude some given plans in the solution space of a model, to ensure that a given plan is optimal for the model, or to constraint the solution space. 
 
 % This relationship also extends to approaches such as model reconciliation~\citep[inter alia]{ChakrabortiSZK17,SreedharanHMK19}, where one model needs to be aligned with another model to ``explain'' the optimality of generated plans. In reconciliation approaches, the usual metric considered is the number of changes to be made to align the models on the made plan observations, with the goal of minimizing modifications.
@@ -456,7 +456,7 @@ These assumptions are reasonable when evaluating domain model learning algorithm
 Under these assumptions, several metrics have been proposed to quantify the \emph{syntactic similarity} between the learned domain model and the reference domain model~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
 % \roni{Others who have used, please add citations}
 These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
-Let $M$ be the evaluated domain models and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
+Let $M$ be the evaluated domain model and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
 % Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.[roni: I don't think this is a good fit for here, following CM's comment]
 
 % \cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
@@ -485,8 +485,8 @@ The same metrics can be defined for the effects of actions, with the only differ
 % \roni{Not sure about this. It is just an example, not a "corner case".}
 % \roni{We need to split this example. The first part just explains how to compute the precision and recall. The second part shows why this is a bad metric. The second part should be moved to the be under the ``Drawbacks in Syntactic Similarity'' subsection later.}
 As an example, consider a delivery scenario.
-The reference domain model has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck, and a truck contains a package.
-The action \textsc{unload} has three parameters $\ell, t,$ and $p$ (location, truck, and package).
+The reference domain model has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck, and a truck contains a package, respectively.
+The action \textsc{unload} has three parameters $\ell, t,$ and $p$ (i.e., location, truck, and package).
 In $\realm$, its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$, and its effects are $\neg \textit{in}(p,t), \neg \textit{contains}(t,p),$ and $\textit{at}(p,t)$.
 A learned model could conceivably have the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{contains}(t,p)$.
 Then, it would have syntactic recall and precision for the effects of $1$, but for the preconditions it would be $\frac 1 2$.
@@ -756,8 +756,7 @@ Which of the two is better depends on your concrete application --- in critical 
 
 
 \roni{Add a concrete example of how to compute these metrics}
-\yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
-
+\yarin{I added example in section\_4\_example.tex, I don't think it's that good}
 
 
 \paragraph{Aggregated Precision and Recall}
