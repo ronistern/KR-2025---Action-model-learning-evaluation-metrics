@@ -1,13 +1,13 @@
-\begin{table*}[ht]
+\begin{table}[ht]
 \centering
-\resizebox{0.8\columnwidth}{!}{
+\resizebox{\columnwidth}{!}{
 \addtolength{\tabcolsep}{-0.2em}
     \centering
-    \begin{tabular}{l|c|c|c|c|c|c|c|c|c|c}
+    \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|}
     % \toprule
     \hline
-    Domain & Operators & Predicates & Types & Const. & \multicolumn{2}{c|}{Operators arity} & \multicolumn{2}{c|}{Predicates arity} & Neg. pre. & Inj. ass.\\ 
-     &  &  & & & $min$ & $max$ & $min$ & $max$ & & \\ \hline
+    Domain & $|A|$ & $|P|$ & Types & Const. & \multicolumn{2}{c|}{$A$ arity} & \multicolumn{2}{c|}{$P$ arity} & Neg. & Inj. \\ 
+     &  &  & & & $min$ & $max$ & $min$ & $max$ & pre.  & ass. \\ \hline
     % \midrule
 barman & 12 & 15 & 9 & no & 2 & 6 & 1 & 2 & no & yes \\ %
 blocksworld & 4 & 5 & 1 & no & 1 & 2 & 0 & 2 & no & yes \\ %
@@ -16,7 +16,7 @@ depots & 5 & 6 & 9 & no & 3 & 4 & 1 & 2 & no & yes \\ %
 elevators & 6 & 8 & 5 & no & 3 & 5 & 2 & 2 & no & yes \\ %
 ferry & 3 & 5 & 2 & no & 2 & 2 & 0 & 2 & no & yes \\ % 
 floortile & 7 & 10 & 3 & no & 3 & 4 & 1 & 2 & no & yes \\ %
-goldminer & 7 & 12 & 1 & no & 1 & 2 & 0 & 2 & yes & yes \\ %
+goldminer & 7 & 12 & 1 & no & 1 & 2 & 0 & 2 & yes & no \\ %
 grippers & 3 & 4 & 4 & no & 3 & 4 & 2 & 3 & no & yes \\ %
 matchingbw & 10 & 10 & 2 & no & 2 & 3 & 1 & 2 & yes & yes \\ %
 miconic & 4 & 6 & 2 & no & 2 & 2 & 1 & 2 & no & yes \\ %
@@ -29,10 +29,13 @@ sokoban & 2 & 4 & 3 & no & 3 & 5 & 1 & 3 & no & yes \\ %
 spanner & 3 & 6 & 5 & no & 3 & 4 & 1 & 2 & no & yes \\ %
 tpp & 4 & 7 & 7 & no & 3 & 7 & 2 & 3 & no & no \\ %
 transport & 3 & 5 & 6 & no & 3 & 5 & 2 & 2 & no & yes \\ %
+\hline
 
     % \hline
     \end{tabular}
     }
-    \caption{Details about the domains available in the proposed benchmark.}
+    \caption{Details about the benchmark domains that are relevant to domain model learning algorithms. The columns from left to right correspond to the name of the domain; the number of lifted actions, lifted predicates, and types; if there are constants; the min. and max. arity of the actions; the min. and max. arity of the predicates; if a literal can be a delete effects without being a preconditions; and if the 
+    injective binding assumption holds~\citep{juba2021safe}, i.e., 
+    whether a grounded action may map the same object to multiple parameters.}
     \label{tab:domains}
-\end{table*}
+\end{table}
