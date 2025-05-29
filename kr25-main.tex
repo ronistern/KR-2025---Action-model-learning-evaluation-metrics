@@ -158,7 +158,7 @@
 }
 
 \newif\ifaddcomments
-% \addcommentstrue % Uncomment this line to remove the user comments
+\addcommentstrue % Uncomment this line to remove the user comments
 
 
 \usepackage{subcaption}
@@ -384,15 +384,15 @@ While this area of research is very active~\citep{juba2021safe,mordoch2023safe,x
 \begin{table}[bt]
 \centering
 \resizebox{\columnwidth}{!}{
-\begin{tabular}{p{3.7cm}|c|c|c|c|c}
+\begin{tabular}{|p{3.7cm}|c|c|c|c|c|}
 % \hline
-\toprule
+\hline % toprule
 \multirow{2}{*}{\textbf{Algorithm}} & \multirow{2}{*}{\textbf{\makecell{Syn.\\Sim.}}} 
 & \multicolumn{2}{c|}{\textbf{Predict. Pow.}} 
-& \multicolumn{2}{c}{\textbf{Prob. Solv.}} \\
+& \multicolumn{2}{c|}{\textbf{Prob. Solv.}} \\
 \cline{3-6}
 \textbf{} & \textbf{} & \textbf{App.} & \textbf{Eff.} & \textbf{Solv.} & \textbf{Failed} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
-\midrule
+\hline  % midrule
 
 % \multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{\textbf{Syntactic}} & \multicolumn{2}{c|}{\textbf{Predictive Power}} & \multicolumn{2}{c|}{\textbf{Problem Solving}}\\
 % \hline
@@ -401,25 +401,25 @@ While this area of research is very active~\citep{juba2021safe,mordoch2023safe,x
 
 % ARMS\footnote{\cite{yang2007learning}} & V & X & X & X & X  \\
 ARMS \smallcite{yang2007learning} & \cmark & \xmark & \xmark & \xmark & \xmark  \\
-\midrule
+\hline
 SLAF 
 \smallcite{amir2008learning}$^{(*)}$& \xmark & \xmark & \xmark & \xmark & \xmark  \\
-\midrule
+\hline
 FAMA 
 \smallcite{aineto2019learning} & \cmark & \cmark & \cmark & \xmark & \xmark  \\
-\midrule
+\hline
 LOCM \smallcite{cresswell2013acquiring}$^{(**)}$ & \xmark & ? & ? & \xmark & \xmark  \\
-\midrule
+\hline
 OffLAM \smallcite{LAMANNA2025104256} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
-\midrule
+\hline
 NOLAM \smallcite{Lamanna24} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
-\midrule
+\hline
 % Framer \smallcite{lindsay2017framer} & \cmark\footnotemark[\value{footnote}] & \xmark & \xmark & \xmark & \xmark  \\ RONI: THIS ONE LEARNS FROM NL, NOT FROM SYMBOLIC TRAJECTORIES.
 % \hline
 \sam \smallcite{juba2021safe}$^{(***)}$ & \cmark & \xmark & \xmark & \xmark & \xmark  \\
-\midrule
+\hline
 Cond-SAM \smallcite{mordoch2024safe} & \cmark & \xmark & \xmark & \cmark & \xmark  \\ % Conditional-SAM
-\bottomrule
+\hline % \bottomrule
 % \textbf{Stochastic SAM~\citep{juba2022learning}} &  &  &  &  &  &  \\ % none of them ? theoretic only ?
 % \hline
 % \textbf{LATPLAN~\citep{asai2018classical}} &  &  &  &  &  &  \\
@@ -428,7 +428,7 @@ Cond-SAM \smallcite{mordoch2024safe} & \cmark & \xmark & \xmark & \cmark & \xmar
 % \hline
 \end{tabular}
 }
-\caption{Evaluation methods used in prior works on domain model learning. 
+\caption{Evaluation metrics used in prior works on domain model learning. These metrics are defined Sections~\ref{sec:problem-setting} and~\ref{sec:metrics}. 
 (*) Only reported runtime results. (**) Measured how many instances were required to ``converged'', i.e., reached where more data is not helpful, and whether the domain is isomorphic to a reference domain model. (***) Measured the number of trajectories needed until the reference domain model is learned.}
 \label{tab:metric-using-comparison}
 \end{table}
@@ -773,9 +773,9 @@ Based on this, we define the following predicted action effect metrics for every
     \item FN$_{\eff}(s,a)=|(a_M(s)\cap s)\setminus a(s)|$ 
 \end{itemize}
 
-\gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}\gregor{Yep, but it does -- $a_M(s)$ is the next state. If you take the intersection with the previous one, you get exactly all literals that have not changed.}
-    \leo{should we denote $a_M(s)$ as `$s'$ obtained after executing $a$ in $s$`? I'm not sure currently is formally neat since we used $a$ to denote actions in the previous paragraph.}
-    \roni{I think it's Ok and I've seen planning paper use action also as a function (e.g,. $a_i(a_{i-1},\cdots a_1(s_0)/cdots)$ to denote applying a sequence of actions. But, if anyone feels strongly about this we can change to $apply(a,s)$ or something like that. But I think the current form is clean and well-defined.}
+% \gregor{there is a start too many (this is always $\emptyset$) I assume it should be $(a_M(s)\cap s)\setminus (a_\realm(s) \cap s)$ -- the facts that are not changed by $a_M$, but not counting the ones changes by $M_\realm$}\roni{Good catch! I fixed it in a slightly different way, let me know if you agree or not.}\cm{The TN and FN aren't looking correct...but after spending some minutes with it, I think it is ;). Should state that a "negative" here indicates a literal that remains unchanged.}\gregor{Yep, but it does -- $a_M(s)$ is the next state. If you take the intersection with the previous one, you get exactly all literals that have not changed.}
+%     \leo{should we denote $a_M(s)$ as `$s'$ obtained after executing $a$ in $s$`? I'm not sure currently is formally neat since we used $a$ to denote actions in the previous paragraph.}
+%     \roni{I think it's Ok and I've seen planning paper use action also as a function (e.g,. $a_i(a_{i-1},\cdots a_1(s_0)/cdots)$ to denote applying a sequence of actions. But, if anyone feels strongly about this we can change to $apply(a,s)$ or something like that. But I think the current form is clean and well-defined.}
 For the purpose of the above computation, a state includes all the literals true in it, i.e., both positive propositions and negative ones. 
 Importantly, we consider above only state-action pairs $s$ and $a$ where $a$ is applicable in $s$ in the real environment and the learned domain. 
 Otherwise, the outcome of applying $a$ in $s$ is not defined. 
@@ -820,11 +820,11 @@ Which of the two is better depends on your concrete application --- in critical 
 \roni{Add a concrete example of how to compute these metrics}
 \yarin{I can add an example after we verify the different formulas, example for each or only for Predicted effects ?}
 
-\gregor{I wanted to add one more point that I got from Pascal Bercher:\\
-If we view domain model learning as an algorithmic problem, we are supposed to only judge the output of the learner based on the inferences that can be drawn explicit from the given trajectories.
-If we do anything else we implicitly evaluate the bias of the learners towards the type domain models we ``usually'' have in the input domains.
-}
-\roni{I do not fully understand the last comment.}
+% \gregor{I wanted to add one more point that I got from Pascal Bercher:\\
+% If we view domain model learning as an algorithmic problem, we are supposed to only judge the output of the learner based on the inferences that can be drawn explicit from the given trajectories.
+% If we do anything else we implicitly evaluate the bias of the learners towards the type domain models we ``usually'' have in the input domains.
+% }
+% \roni{I do not fully understand the last comment.}\roni{Got it now}
  
 \subsection{Problem-Solving Metrics}
 %\mauro{add here disclaimer}\roni{Added the disclaimer below. Let me know what you think}
@@ -1340,10 +1340,10 @@ The proposed encoder-decoder evaluation paradigm is designed to be flexible and 
 We list several such directions and outline how our evaluation paradigm can be modified to support them. 
 
 \miniparagraph{Non-symbolic input representation}
-Some domain model learning algorithms are designed to learn a classical planning domain model from trajectories in which the states are images or given in some other non-symbolic representation, which may be images~\citep{asai2020learning,asai2022classical,xi2024neuro} or even natural language description of the domain~\cite{lindsay2017framer}.\roni{Maybe some recent LLM-based approach?} 
+Some domain model learning algorithms are designed to learn a classical planning domain model from trajectories in which the states are images or given in some other non-symbolic representation, which may be images~\citep{asai2020learning,asai2022classical,xi2024neuro} or even natural language description of the domain~\citep{lindsay2017framer,liu2023llm+, guan2023leveraging}.\roni{Maybe some recent LLM-based approach?}\yarin{I added LLM+P and LLM+PDDL} 
 Using a domain simulator, an encoder for the initial state, and a decoder for the resulting plans' actions, one can still compute all problem solving and predicted applicability metrics. 
 Computing predicted effects would also require a decoder to translate a PDDL state to an image, which may be more challenging to implement. 
-Similar
+Similar\yarin{the word left in by mistake?}
 
 
 \miniparagraph{Learning non-classical planning domain models}
@@ -1439,7 +1439,7 @@ The benchmark and evaluation process we proposed are publicly available, facilit
 \bibliographystyle{kr}
 \bibliography{library} 
 
-% \input{supplementary}
+\input{supplementary}
 
 
 \end{document}
