@@ -1,0 +1,39 @@
+
+\begin{table}[h]
+\centering
+\resizebox{1\columnwidth}{!}{
+\begin{tabular}{l|c|c|c|c|c|c|c|c}
+% \toprule
+\hline
+% Domain & Syn. P $\uparrow$ & Syn. R $\uparrow$ & App. P $\uparrow$ & App. R $\uparrow$ & Pred. effs. P $\uparrow$ & Pred. effs. R $\uparrow$ & Solving ratio $\uparrow$ & False plans ratio $\downarrow$ \\
+Domain & \multicolumn{2}{c|}{Syntactic} & \multicolumn{2}{c|}{Applicability} & \multicolumn{2}{c|}{Predicted effects} & Solvability \% $\uparrow$ & False plans \% $\downarrow$ \\
+ & \makecell[c]{P$\uparrow$} & \makecell[c]{R$\uparrow$} & \makecell[c]{P$\uparrow$} & \makecell[c] {R$\uparrow$} &  \makecell[c]{P$\uparrow$} & \makecell[c] {R$\uparrow$} & & \\
+% \midrule
+\hline
+barman  & 0.8 $^{3}$ & 0.8 $^{2}$ & 1.0 $^{1,2}$ & 0.99 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+blocksworld  & 1.0 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+childsnack  & 0.93 $^{2}$ & 0.86 $^{2}$ & 1.0 $^{1}$ & 0.91 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+depots & 0.9 $^{3}$ & 0.69 $^{2}$ & 1.0 $^{1,2}$ & 0.96 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+elevators  & 0.54 $^{2}$ & 0.87 $^{2}$ & 1.0 $^{1,2}$ & 0.63 $^{3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+ferry  & 0.93 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+floortile & 0.72 $^{2}$ & 0.92 $^{2}$ & 1.0 $^{1,2}$ & 0.93 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.5 $^{1}$ & 0 $^{1,2,3}$ \\
+goldminer  & 0.58 $^{2}$ & 0.86 $^{2}$ & 1.0 $^{1,2}$ & 0.78 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+grippers  & 1.0 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+matchingbw  & 0.71 $^{2}$ & 0.83 $^{2}$ & 1.0 $^{1,2}$ & 0.92 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.3 $^{1}$ & 0 $^{1,2,3}$ \\
+miconic  & 0.88 $^{2}$ & 0.9 $^{2}$ & 1.0 $^{1,2}$ & 0.83 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+nomystery  & 0.94 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{2}$ & 0 $^{1,2,3}$ \\
+npuzzle  & 0.88 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+parking  & 0.89 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{2}$ & 0 $^{1,2,3}$ \\
+rovers  & 0.78 $^{3}$ & 0.73 $^{2}$ & 1.0 $^{1,2}$ & 0.73 $^{3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+satellite  & 0.83 $^{3}$ & 0.83 $^{2}$ & 1.0 $^{1,2}$ & 0.85 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+sokoban  & 0.88 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+spanner & 0.81 $^{2}$ & 0.88 $^{2}$ & 1.0 $^{1,2}$ & 1.0 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1,2}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+tpp  & 0.56 $^{3}$ & 0.78 $^{2}$ & 1.0 $^{1,2}$ & 0.75 $^{3}$ & 1.0 $^{1,2}$ & 1.0 $^{1}$ & 0.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+transport  & 0.93 $^{2}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 1.0 $^{1,2,3}$ & 0 $^{1,2,3}$ \\
+% \bottomrule
+\hline
+\end{tabular}
+}
+% \caption{Best metric values for every domain obtained among \sam, \offlam, \nolam, respectively denoted by 1,2, and 3; P indicates the precision and R the recall, $\uparrow$ (resp. $\downarrow$) denotes the higher (resp. lower) the better.}
+\caption{Best metric values for every domain obtained among \sam, \offlam, \nolam, respectively denoted by 1,2, and 3; P indicates the precision and R the recall, $\uparrow$ (resp. $\downarrow$) denotes the higher (resp. lower) the better. The training set $\hat{T}_{train}$ includes $2$ trajectories for every domain.}
+\end{table}

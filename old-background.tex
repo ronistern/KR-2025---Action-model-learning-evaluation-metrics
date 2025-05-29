@@ -1,0 +1,34 @@
+
+The ARMS algorithm~\citep{yang2007learning} requires as observations the initial and final state of each of the provided trajectories, with optional use of intermediate states if available. For each observed action, ARMS lifts the action and constructs a set of constraints on the fluents involved in its preconditions and effects. These constraints are then resolved using a weighted MAX-SAT solver to generate the action model with the highest weight.
+The Simultaneous Learning and Filtering (SLAF)~\citep{amir2008learning} learns lifted action models from trajectories even if some of the states in them are not observed. 
+SLAF uses logical inference to filter inconsistent action models and requires observing all actions in the trajectory.  
+FAMA~\citep{aineto2019learning} can also handle missing observations and outputs a lifted planning domain model. 
+It frames the task of learning an action model as a planning problem, ensuring that the returned action model is consistent with the provided observations.
+% \leo{ Roni: added to the main text. Bear it mind I will probably shrink this paragraphs following Christian's suggestion.
+Another prominent approach that cope with partial observations and actions is OffLAM~\citep{LAMANNA2025104256}, which provides the notion of minimal models for a set of trajectories, and correct and complete rules to compute them.
+NOLAM~\citep{Lamanna24} can learn lifted action models even from noisy trajectories. 
+LOCM~\citep{cresswell2011generalised} and LOCM2~\citep{cresswell2013acquiring}, and its extension to learn action costs \citep{gregory2016domain} analyze only the sequences of actions in the given trajectories, ignoring any information about the states between them. 
+Based on less structured input knowledge, Framer \citep{lindsay2017framer} is an approach for learning planning domain models from natural language descriptions of activity sequences.
+
+
+
+% None of the presented algorithms provide execution soundness guarantees, i.e., that plans created with the learned action model are applicable in the real action model. 
+The \sam learning algorithms~\citep{stern2017efficient,mordoch2023learning,juba2021safe,juba2022learning,le2024learning,mordoch2024safe} are a family of action model learning algorithms that return action models that guarantee that plans generated with them are applicable in the actual action model. 
+An action model having this property is referred to as \emph{safe action model}.
+% This property is commonly referred to as a \emph{safety} guarantee.
+The \sam family of algorithms addresses learning safe action models under different settings: 
+the action models are lifted~\citep{juba2021safe}, with stochastic~\citep{juba2022learning} or conditional effects~\citep{mordoch2024safe}, and even action models containing numeric preconditions and effects~\citep{mordoch2023learning}.
+\citet{le2024learning} extended their approach to support learning safe action models in a partially observable environment. 
+ESAM~\citep{juba2021safe} is an extension of the \sam algorithm that learns action models from domains in which there is ambiguity regarding the mapping of objects to parameters. To resolve this ambiguity, ESAM outputs a model with additional \emph{proxy actions} that impose additional preconditions and parameter changes on actions in which such ambiguity cannot be resolved. 
+
+
+
+LatPlan~\citep{asai2022classical} and ROSAME-I~\citep{xi2024neuro} are conceptually different since they learn propositional action models from trajectories where the states in the given trajectories are given as images, as opposed to a conjunction of fluents. 
+% \yarin{Rewrote and added part on LatPlan here:}\roni{Great! tnx}
+% LatPlan uses a variational autoencoder with the Gumbel-Softmax trick~\citep{jang2017categorical} to convert image states into discrete propositional symbols, enabling classical planning in latent space.
+LatPlan is a fully unsupervised system that uses a variational autoencoder as a differentiable approximation to convert image states into discrete propositional symbols, enabling classical planning in a learned latent space.
+% ROSAME-I~\citep{xi2024neuro} is a recent algorithm that learns action models from trajectories where the states are given as images.
+% ROSAME-I, in contrast, propose a neural network architecture that learns the action model in a lifted representation in tandem with a neural network that learns to map images to a given symbolic representation. 
+ROSAME-I, in contrast, assumes a predefined set of propositions and action signatures. It simultaneously trains a classifier to identify propositions from images and learns a lifted, first-order action model over the given symbolic vocabulary.
+% While both approaches learn from image-based trajectories, LatPlan is fully unsupervised, whereas ROSAME-I incorporates prior symbolic knowledge to learn structured models.
+

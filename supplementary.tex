@@ -1,8 +1,47 @@
 \supplementary{
 \clearpage
 \onecolumn
-\leo{there is a command in the preamble to hide supplementary material}
-\section*{Supplementary Material}
+% \leo{there is a command in the preamble to hide supplementary material}
+\section*{Supplementary Material: Submission \#316}
+%
+\subsection{IPC Domains Statistics}
 \input{tables/domains}
-\input{figures/exp}
+%
+\subsection{Training Set $\Ttrain$ Statistics}
+\input{tables/trainset_10}
+\input{figures/trainset_10}
+\vspace{4cm}
+\subsection{Detailed Experimental Results}
+\input{tables/bests}
+\input{figures/exp_10traces}
+% \clearpage
+
+
+\clearpage
+\subsection{Additional Experimental Results}
+We also conducted an additional experiments where we generated a training set $\hat{T}_{train}$ with only $2$ trajectories with $10$ states for every domain. To generate this dataset, we produced heuristic plan by considering the $2$ most complex problem settings (in terms of number of objects) adopted for generating the training set with $10$ trajectories for every domain.
 }
+
+\subsection{Training Set $\hat{T}_{train}$ Statistics}
+\input{tables/trainset_2}
+\input{figures/trainset_2}
+\input{figures/exp_2traces}
+
+\input{tables/bests_2traces}
+
+% RONI: I HOPE YOU ALSO SLEEP SOMETIME ;)
+
+% Yes soon I think.. But you too
+
+% I'm close to converging also, but I want to submit a first version before. Close to it. 
+% One thing if we're "talking" to note: I changed the flow a bit in the experimental results so its something like: (1) here's a general way to evaluate model learningn using our metrics, (2) and here's how we impelmented it ( putting here all the details like the planner configuration and all that). I already did this change, just writing so  you're not surprised or annoyed when you read it (after sleeping of course). Hope that's Ok?
+
+% Awesome sure, thanks for saying it (but I think I would not realized it), so I am also converging with the supplementary material (and additional exp with 2 traces), tomorrow morning will polish the code so that we can submit also that
+
+% SOUNDS Great (need to figure out how to anonymize it, but I know there are ways to do it)
+
+% Yes i usually upload the git repo zip by removing the ".git" folder (whichh stores e.g. commit with username etc.)
+
+% Super! TNX
+
+% you too and good night :)

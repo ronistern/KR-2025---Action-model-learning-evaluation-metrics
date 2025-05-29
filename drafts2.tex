@@ -1,0 +1,125 @@
+
+
+{
+% \renewcommand{\citep}[1]{[\citenum{#1}]} % citeyear
+\begin{table}[bt]
+\centering
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+
+\multirow{2}{*}{\textbf{Alg + Ref.}} & \multirow{2}{*}{\textbf{\makecell{Syntactic\\Similarity}}} 
+& \multicolumn{2}{c|}{\textbf{Predictive Power}} 
+& \multicolumn{2}{c|}{\textbf{Problem Solving (ratio)}} \\
+\cline{3-6}
+\textbf{} & \textbf{} & \textbf{Applicability} & \textbf{Effects} & \textbf{Solving} & \textbf{Plan failed} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
+\hline
+
+% \multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{\textbf{Syntactic}} & \multicolumn{2}{c|}{\textbf{Predictive Power}} & \multicolumn{2}{c|}{\textbf{Problem Solving}}\\
+% \hline
+% \textbf{Alg + Ref.} & \textbf{Similarity} & \textbf{Applicability} & \textbf{Effects} & \textbf{Solving ratio} & \textbf{Failed ratio} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
+% \hline
+
+\textbf{ARMS~\citep{yang2007learning}} & V & X & X & X & X  \\
+\hline
+\textbf{SLAF~\citep{amir2008learning}} & V\footnote{Manually checked, with a custom hypothesis to evaluate learning efficiency as well.} & X & X & X & X  \\
+\hline
+\textbf{FAMA~\citep{aineto2019learning}} & V & V & V & X & X  \\
+\hline
+\textbf{LOCM~\citep{cresswell2013acquiring}} & V\footnotemark[\value{footnote}] & X & X & X & X  \\
+\hline
+\textbf{OffLAM~\citep{LAMANNA2025104256}} & V & X & X & V & V  \\
+\hline
+\textbf{NOLAM~\citep{Lamanna24}} & V & X & X & V & V  \\
+\hline
+\textbf{Framer~\citep{lindsay2017framer}} & V\footnotemark[\value{footnote}] & X & X & X & X  \\
+\hline
+\textbf{SAM~\citep{juba2021safe}} & V\footnote{Learning stop when fully learn the given domain} & X & X & X & X  \\
+\hline
+\textbf{C-SAM~\citep{mordoch2024safe}} & V & X & X & V & X  \\ % Conditional-SAM
+\hline
+% \textbf{Stochastic SAM~\citep{juba2022learning}} &  &  &  &  &  &  \\ % none of them ? theoretic only ?
+% \hline
+% \textbf{LATPLAN~\citep{asai2018classical}} &  &  &  &  &  &  \\
+% \hline
+% \textbf{ROSAME-I~\citep{xi2024neuro}} &  &  &  &  &  &  \\
+% \hline
+\end{tabular}
+}
+\caption{Comparison of various action model learning algorithms by the evaluation methods used in each approach}
+\label{tab:metric-using-comparison}
+\end{table}
+}
+\yarin{I think the footnotes are not necessary for the table}\leo{I would also remove the footnotes}\yarin{LATPLAN and ROSAME-I are not classic model learning and not mentioned much in the paper so I didn't added them}\yarin{I did few passes on each paper, if there is any mistake please do comment}\leo{I am not sure to show this table here because we have not yet explained the predictive and solving metrics }\roni{I'm going to push this to the intro, to strengthen our motivation. This will show: see, everyone is doing a different thing, we need to standardize. Oh, and BTW, the metric most people use is really not good. Hopefully this will provide a nice motivation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+In our evaluation process, we generated these training trajectories as follows. 
+First, we generated feasible problems using existing generators \citep{seipp-et-al-zenodo2022}. 
+Then we solve
+
+For each domain, we produced a \emph{training} set $\Ttrain$ of $10$ trajectories from a set of $10$ small-medium sized problems. 
+To obtain every trajectory in $\T_{train}$, we first randomly generated a feasible problem using existing generators \citep{seipp-et-al-zenodo2022}. 
+Then, we ran FastDownward \citep{helmert2006fast} to produce a heuristic solution plan using the IPC domain model, and generated the trajectory by interleaving plan and random actions (with $20\%$ probability) starting from the initial state of the problem. 
+\leo{After executing a random action, a new solution plan is computed from the resulting state. Note that a random action is executed only if it does not make the problem unsolvable.} 
+\roni{Not clear: do you mean that after having a plan we execute it and with 20\% do a random action instead of the planned action? if so, do we then replan from the resulting state}\leo{yes, I tried to clarify it}
+For planning, we adopted a lazy greedy best-first search with the
+FF heuristic \citep{hoffmann2001ff} and the context-enhanced additive heuristic \citep{helmert2008unifying}.
+%
+% It is worth noting that problem generators available in the literature can be biased in terms of initial states and goals. For example, in the \textsc{ferry} domain, the ferry is always empty in the initial state; in the \textsc{floortile} domain the goal of every planning problems is to paint all even tiles white and all odd ones black, leaving an empty extra row to place the robot at the end. 
+% %
+% To mitigate such biases, we create random trajectories from the original ones as follows: Given a trajectory $T=\tuple{s_0,a_0,s_1,a_1,s2,...,a_{n-1},s_n}$ we create a new trajectory $T'$ by shuffling and excluding some of the transitions in $T$. Notice, the initial and the final states in $T'$ are also randomized. 
+% \argaman{This might not be what we were aiming for...}
+% % \emph{subtrajectory} from the original generated one, resulting in a subtrajectory where the initial and final states are also randomized. 
+% %
+% However, some operators are unlikely to appear in a randomly sampled trajectories. 
+% For example, in the \textsc{goldminer} domain, the operator \textsc{pick-gold} is always executed at the end of a solution plan. Hence, we jointly sample the initial and final states of each random trajectory such that the initial or final state are the same as the original trajectory, with a probability $0.33$.   
+%
+\leo{However, some lifted actions are not necessarily executed in a heuristic plan. For example, in domain \textsc{barman}, an agent can either \textsc{clean} a previously used shot and then \textsc{fill} it (which requires $2$ actions), or just \textsc{refill} a used shot (which requires only $1$ action); while both alternatives are possible in an heuristic plan, the \textsc{refill} action must be executed in an optimal one. To increase the chance of including not strictly necessary lifted actions in the set of trajectories of every domain, we \emph{optimally} solved $30\%$ of the problems.}
+\roni{Was this done only for this domain or for all domains?}
+\leo{for all domains, I tried to state it more explicitly}
+%
+Finally, to produce heterogeneous trajectories, in all domains but \textsc{npuzzle}, we generated the trajectories from problems with different numbers of objects of each type; in \textsc{npuzzle} there is a single object type and linearly increasing it leads to problems that are too difficult to be solved. 
+% We also randomized the trajectory lengths in $[5, 30]$, and the number of objects in $[3, 107]$\footnotemark[1].
+%
+The obtained set $\Ttrain$ of trajectories is such that every lifted action execution is observed at least once, and every trajectory includes a number of objects in $[3, 107]$ and states in $[5, 45]$\footnotemark[3].
+
+
+
+\paragraph{Generating test states and problems}
+The next step in our evaluation process is to generate a set of test states ($\stest$) and a set of test problems ($\ptest$). The former is needed for the predictive power metrics and the latter for the problem solving metrics. 
+% se setes are needed to compute the predictive power and the problem solving metrics.  (i.e., predicted applicability and predicted effects), 
+To generate the set of test state, we create a set of trajectories denoted $T_{test}$ and collected all the states in these trajectories. 
+To create these set of trajectories, we solved optimally 100 problems in the environment using the reference domain model. Then we created trajectories by alternating between performing actions in the optimal plan and random actions. \roni{Not clear: does this mean after every random action you replanned to update the plan?}
+
+% we 
+% generated a \emph{test} set $\stest$ composed by states in a \emph{test} set $\T_{test}$ of $100$ trajectories. The trajectories in $\Ttest$ were produced by optimally solving $100$ small-sized problems, and interleaving plan and random actions as for $\Ttrain$. Note $\Ttest$ differ from $\Ttrain$.\roni{I am confused. Is this what was written above?}
+% \leo{I rephrased/restructured this, now should be clearer}
+%
+To generate the set of test problems for the problem-solving metrics, we generated a test set \ptest of $10$ problems for every domain. Since the \emph{solving} and \emph{false plan} ratios are evaluated using a limited amount of resources (e.g.\ a CPU time limit set to $60$ seconds), we considered problems that FastDownward could solve with the IPC domain model within the same resource limitations.
+
+
+For the evaluation of learned domain models $M$ using the syntactic similarity metric, we adopted the IPC domain definition as a reference model. \roni{I couldn't parse this sentence}
+Note that the models learned by SAM, \offlam{} and \nolam{} use the input representation ($R_E$), so the proposed encoder-decoder mechanism was not needed.
+%
+%\subsection{Evaluation Paradigm}
