@@ -36,6 +36,7 @@
 \newcommand{\smallcite}[1]{\begingroup\scriptsize\citep{#1}\endgroup}  
 
 \newcommand{\miniparagraph}[1]{\textbf{#1.}}  
+% \newcommand{\miniparagraph}[1]{\paragraph{#1}}  
 
 % the following package is optional:
 %\usepackage{latexsym}
@@ -110,11 +111,16 @@
 \newcommand{\rsempre}{\ensuremath{App}\xspace}
 \newcommand{\rsemeff}{\ensuremath{R^{sem}_\eff}\xspace}
 
-\newcommand{\encodea}{\textit{EncA}\xspace}
-\newcommand{\encodes}{\textit{EncS}\xspace}
-\newcommand{\decodea}{\textit{DecA}\xspace}
-\newcommand{\decodes}{\textit{DecS}\xspace}
+% \newcommand{\encodea}{\textit{EncA}\xspace}
+% \newcommand{\encodes}{\textit{EncS}\xspace}
+% \newcommand{\decodea}{\textit{DecA}\xspace}
+% \newcommand{\decodes}{\textit{DecS}\xspace}
 
+
+\newcommand{\encodea}{\textit{EncodeA}\xspace}
+\newcommand{\encodes}{\textit{EncodeS}\xspace}
+\newcommand{\decodea}{\textit{DecodeA}\xspace}
+\newcommand{\decodes}{\textit{DecodeS}\xspace}
 
 \acrodef{NO-OP}{No Operation}
 \acrodef{CMAP-BB}{CMAP with Black-Box Agents}
@@ -158,7 +164,7 @@
 }
 
 \newif\ifaddcomments
-\addcommentstrue % Uncomment this line to remove the user comments
+% \addcommentstrue % Uncomment this line to remove the user comments
 
 
 \usepackage{subcaption}
@@ -247,10 +253,10 @@
 
 \begin{abstract}
 % Automated planning is a prominent approach to sequential decision-making. A crucial aspect of domain-independent planning is the domain model, which provides a planning engine with the application knowledge needed to synthesize solution plans. A domain model typically includes a state representation and an action model, which defines the set of possible actions and the preconditions and effects of each action. [[Roni: hopefully the above is not needed. I am not sure]]
-Formulating domain models for model-based planning  is a challenging, time consuming, and error-prone task. A number of approaches have been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches. Currently, there are no standard evaluation metrics or benchmarks. 
+Formulating domain models for model-based planning is a challenging, time consuming, and error-prone task. A number of approaches have been proposed to automatically learn complete (or partial) domain models from a set of provided observations. This raises the question of how to compare models learned by different approaches. Currently, there are no standard evaluation metrics or benchmarks. 
 In this paper, we describe such a set of domain model metrics, designed to assess different characteristics of a learned domain model. We then present a benchmark suite based on domain models from the International Planning Competition (IPC) and an evaluation process for using it.
 Then, we propose an encoder-decoder mechanism for comparing two domain models even if they rely on different representations of states and actions. 
-We demonstrate how this encoding mechanism can be leveraged to systematically compare models accross different representations using the proposed metrics. 
+We demonstrate how this encoding mechanism can be leveraged to systematically compare models across different representations using the proposed metrics. 
 
 % To foster the use of domain model learning approaches, 
 % Further, to bridge the potential representation gap between different learned models, we propose a mechanism that enables comparing two models regardless of their encoding, and we demonstrate how this encoding mechanism can be leveraged to systematically compare models using the proposed metrics. Finally, we suggest a benchmark suite based on domain models from the International Planning Competition (IPC) and assess the performance of state-of-the-art approaches on the proposed benchmark using the proposed metrics. 
@@ -302,7 +308,7 @@ Several specific evaluation metrics are defined for this type of evaluation base
 In addition, we describe a benchmark suite  based on domain models from the International Planning Competition (IPC), 
 and suggest an evaluation process for 
 computing the proposed evaluation metrics on this benchmark.  
-We implemented this evaluation process and executed it on several domain model learning algorithms, including \sam \citep{juba2021safe}, Offline Learning of Action Models (OffLAM) \citep{LAMANNA2025104256}, and Noisy Offline Learning of Action Models (NOLAM) \citep{Lamanna24}, providing reference results and implementation for future research. The code, dataset, and evaluation process described in this work is intended to be publicly available.\footnote{A link to this is omitted to preserve anonymity. However, the code is available in the supplementary material.} 
+We implemented this evaluation process and executed it on several domain model learning algorithms, including \sam \citep{juba2021safe}, Offline Learning of Action Models (OffLAM) \citep{LAMANNA2025104256}, and Noisy Offline Learning of Action Models (NOLAM) \citep{Lamanna24}, providing reference results and implementation for future research. The code, dataset, and evaluation process described in this work are intended to be publicly available.\footnote{A link to this is omitted to preserve anonymity. However, the code is available in the supplementary material.} 
 
 
 % \roni{TODO: Examples: grounded vs. lifted, different action names, different object types, paramter ordering, etc.}
@@ -361,11 +367,11 @@ and the learning methodology they apply.
 % \cm{I'm actually not sure any of this is needed. We're probably pushing over 50 related works in the area (cf. MACQ or similar surveys), and there's no way we'll cover the full space of approaches. A few exemplary ones, and then a pointer to a survey should be fine. Unless we need the background of how some of these work, it's about half-a-page of space we could save. Now the \textit{metrics} used in those papers, is something related.}
 % \roni{I agree this needs to be shortened. TODO for me. Would be very good to have a list of the metrics used in each paper. Great idea. TODO by someone? a table or so with metric and list of papers using it?}\yarin{I'm on it}
 
-In this work, we focus on arguably the most common type of domain model learning algorithms for planning, in which the domain model being learned is a classical planning domain and the input trajectories are also given in a symbolic representation. 
+In this work, we focus on arguably the most common type of domain model learning algorithms for planning, in which the domain model being learned is a classical planning domain, and the input trajectories are also given in a symbolic representation. 
 % We refer to this setting as the \emph{classical} domain model learning problem. 
 Examples of such learning algorithms include ARMS~\citep{yang2007learning}, which models the learning problem as a MAX-SAT problem; Simultaneous Learning and Filtering (SLAF)~\citep{amir2008learning}, which applies logical inference to filter inconsistent action models; FAMA~\citep{aineto2019learning}, which models the learning problem as a planning problem; 
 and LOCM~\citep{cresswell2011generalised} and its extensions~\citep{cresswell2013acquiring,gregory2016domain}, which constructs state machines for the objects in the problem. 
-While this area of research is very active~\citep{juba2021safe,mordoch2023safe,xi2024neuro,Lamanna24,LAMANNA2025104256} there is no established benchmark or standardized metrics, as can be seen in Table~\ref{tab:metric-using-comparison}. We discuss later what are these metrics and how they are computed. 
+While this area of research is very active~\citep{juba2021safe,mordoch2023safe,xi2024neuro,Lamanna24,LAMANNA2025104256} there is no established benchmark or standardized metrics, as can be seen in Table~\ref{tab:metric-using-comparison}. We will discuss later what these metrics are and how they are computed. 
 
 
 
@@ -423,14 +429,16 @@ The core question we consider is: \textbf{How good is the model learned by the d
 
 
 % No great place to add this but I do want to "neutralize" a reviewer from being confused about the difference
-Note that learning a domain model from observations is different from related tasks such as \emph{model reconciliation}~\citep[inter alia]{ChakrabortiSZK17,SreedharanHMK19}\yarin{what is inter alia ?} and \emph{model repair}~\citep{bercher2025aSurvey}. 
+Note that learning a domain model from observations is different from related tasks such as \emph{model reconciliation}~\citep[inter alia]{ChakrabortiSZK17,SreedharanHMK19} and \emph{model repair}~\citep{bercher2025aSurvey}. 
 Model reconciliation is the task of aligning one model with another model to ``explain'' the optimality of generated plans. 
 % The usual metric considered there is usually 
 The typically adopted metric is 
-the number of changes to be made to align the models on the made plan observations, with the goal of minimizing modifications.
-Model repair is the task of modifying an initial model according to new types of constraints or observations. Domain model learning can be viewed as an extreme case of model repair where the initial model is empty\yarin{, but, the objectives differ. Therefore, assessing model repair requires evaluation measures specifically designed to capture its unique objectives and constraints.}\roni{I'm not sure the objective fully differ, so...}. The nature of the repair task is different, however, and thus metrics and evaluation for model repair are expected to be different as well. 
-\roni{I'm not super happy with my last 2 sentences.}  
-\leo{maybe there is some relation between model repair and model learning from an input (possibly flawed) model?}
+the number of changes to be made to align the models with the made plan observations, with the goal of minimizing modifications.
+Model repair is the task of modifying an initial model according to new types of constraints or observations. Domain model learning can be viewed as an extreme case of model repair where the initial model is empty. 
+% \yarin{, but, the objectives differ. Therefore, assessing model repair requires evaluation measures specifically designed to capture its unique objectives and constraints.}\roni{I'm not sure the objective fully differ, so...}
+The nature of the repair task is different, however, and thus metrics and evaluation for model repair are expected to be different as well. 
+% \roni{I'm not super happy with my last 2 sentences.}  
+% \leo{maybe there is some relation between model repair and model learning from an input (possibly flawed) model?} I think I'll stay with these sentences despite their suboptimality :)
 % Constraints can come under different forms, such as the request to include/exclude some given plans in the solution space of a model, to ensure that a given plan is optimal for the model, or to constraint the solution space. 
 
 % This relationship also extends to approaches such as model reconciliation~\citep[inter alia]{ChakrabortiSZK17,SreedharanHMK19}, where one model needs to be aligned with another model to ``explain'' the optimality of generated plans. In reconciliation approaches, the usual metric considered is the number of changes to be made to align the models on the made plan observations, with the goal of minimizing modifications.
@@ -456,7 +464,7 @@ These assumptions are reasonable when evaluating domain model learning algorithm
 Under these assumptions, several metrics have been proposed to quantify the \emph{syntactic similarity} between the learned domain model and the reference domain model~\citep{aineto2019learning,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
 % \roni{Others who have used, please add citations}
 These syntactic similarity metrics typically compare the intersection or difference of the predicates in the actions' preconditions and effects between the learned and reference domain models. We define these common metrics below. 
-Let $M$ be the evaluated domain model and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
+Let $M$ be the evaluated domain model, and let $a$ be an action. We denote by $\pre_M(a)$ the preconditions of action $a$ according to domain $M$.
 % Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.[roni: I don't think this is a good fit for here, following CM's comment]
 
 % \cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
@@ -491,7 +499,7 @@ In $\realm$, its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$
 A learned model could conceivably have the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{contains}(t,p)$.
 Then, it would have syntactic recall and precision for the effects of $1$, but for the preconditions it would be $\frac 1 2$.
 
-A finer-grained variant of the syntactic similarity metric, proposed by \cite{chrpa2023comparing}, is to assess the \emph{edit distance} of the learned domain model from to the reference domain model. Low distance values indicate models that are syntactically close to each other, and if two models are syntactically identical (i.e., edit distance of zero), then they are said to be \textit{strongly equivalent}.
+A finer-grained variant of the syntactic similarity metric, proposed by \cite{chrpa2023comparing}, is to assess the \emph{edit distance} of the learned domain model from the reference domain model. Low distance values indicate models that are syntactically close to each other, and if two models are syntactically identical (i.e., edit distance of zero), then they are said to be \textit{strongly equivalent}.
 
 
 
@@ -502,14 +510,15 @@ A finer-grained variant of the syntactic similarity metric, proposed by \cite{ch
 
 %\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
 \subsection{Drawbacks in Syntactic Similarity}
-The above metrics for evaluating domain models has several limitations. 
-First, they require the existence of a domain reference model $\realm$ (Assumption A1 above). Such a model is rarely available when applying automated planning technology in real-world applications, where the environment is not given in PDDL. 
+The above metrics for evaluating domain models have several limitations. 
+First, they require the existence of a domain reference model $\realm$ (Assumption A1). Such a model is rarely available when applying automated planning technology in real-world applications, where a PDDL specification of the environment is not given. 
 This was also the setup in the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}. 
 Second, comparing to a reference model implies there is a single best model for the environment. 
 What constitutes a \emph{best model} for an environment is not well-defined, and assessing the quality of a model is very challenging \citep{DBLP:conf/kcap/McCluskeyVV17}. 
-In fact, one may say that any domain model that is consistent with the observations is equally likely to be the ``real one'', as the learning algorithm is not given any incentive to prefer one over the other. \roni{@Pascal and Gregor: is this sentence capturing what you wrote about in the comment below?}
-Lastly, there may be multiple domain models for a given environment that are identical for all practical purposes yet different syntactically. 
-Thus, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. 
+In fact, one may say that any domain model that is consistent with the observations is equally likely to be the ``real one'', as the learning algorithm is not given any incentive to prefer one over the other. 
+% \roni{@Pascal and Gregor: is this sentence capturing what you wrote about in the comment below?}
+Lastly, there may be multiple domain models for a given environment that are identical for all practical purposes, yet different syntactically. 
+Thus, it is not clear whether the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. 
 % This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
 Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
 
@@ -559,14 +568,14 @@ We consider two main dimensions when evaluating the ``usefulness'' of a learned 
 \end{itemize}
 %\mauro{reshape discussion below -- align problems-solving ability to operationality notion.}
 
-Observe that these dimensions are not necessarily aligned with the syntactic similarity metrics defined above, even if a reference model exists that enables computing it.  
+Observe that these dimensions are not necessarily aligned with the syntactic similarity metrics defined above, even if there exists a reference model that enables computing them.  
 A domain model may accurately predict when actions are applicable and what the effects of applying them will be, while still being very different from a given reference model. 
-This can happen, for example, if the domain maintains logical invariants on its states such as mutex (mutual exclusion) conditions, that the reference model does not explicitly define. The learned model may include these invariants as additional preconditions that only rule out the action in environment states that are unreachable in actual trajectories.
+This can happen, for example, if the domain maintains logical invariants on its states, such as mutex (mutual exclusion) conditions, that the reference model does not explicitly define. The learned model may include these invariants as additional preconditions that only rule out the action in environment states that are unreachable in actual trajectories.
 % since it encodes mutex conditions that the reference model did not bother to define. \roni{Is this clear?}\yarin{Yes but, how is this instead: A domain model can be highly \emph{predictive} of an agent's behavior in the reference domain, even if it differs significantly from the reference model. This can happen when the learned model encodes mutex (mutual exclusion) conditions that the reference model does not explicitly define.
 % }Roni: pluged this in above. 
 % \gregor{maybe: ``does only define implicitly''?}\roni{Editted. Is it clearer?} \gregor{I've also put this issue already in the example above. Is this more illustrative?}\roni{Yes, thanks!}
 Similarly, a learned domain model may be very \emph{similar syntactically} to a reference domain model but not effective in solving problems from the corresponding real-world environment. 
-For example, the learned domain may miss a single crucial effect or include an extra precondition that cannot be met in a key state, that prevents it from solving many problems correctly. 
+For example, the learned domain may miss a single crucial effect or include an extra precondition that cannot be met in a key state, which prevents it from solving many problems correctly. 
 % adding redundant preconditions or missing a crucial effect \citep{DBLP:conf/kcap/VallatiC19}. \gregor{or missing a crucial precondition: e.g.\ can only open a door if I have key.} [Roni: added it]
 In contrast, a domain model may be very different from a reference domain model, e.g., adding many extraneous preconditions to some actions, yet very \emph{effective} in solving problems in the application domain since these extraneous preconditions are often true in the real world. 
 
@@ -606,10 +615,10 @@ In addition, computing these metrics requires that it is possible to attempt to 
 %The \emph{predictive power} metrics described next are designed to address this issue. 
 The predictive power metrics, referred to sometimes as \emph{semantic} domain model metrics~\citep{aineto2019learning,mordoch2024safe,le2024learning}, are based on the idea that a learned model should be able to predict the applicability of actions and their effects in the environment. 
 
-\cm{Up until this point, I thought it was headed towards the predictive power of explaining the trajectory data. Given that it's about action applicability, this needs to be clarified much earlier on (e.g., intro). Also means that we don't have a notion of how well the learned model predicts the trajectories?}
-\roni{Hmm. I assumed all models are consistent with the given trajectories, so to evaluate it we must have other states and the ability to evaluate with the environment. TODO: clarify this.}
-\cm{I think just stating that assumption, and maybe moving the citations in the above text to the end of the sentence, would do.}
-\roni{I'm not sure. One could conceivably choose an algorithm that is not consistent. I need to think about this more.}
+% \cm{Up until this point, I thought it was headed towards the predictive power of explaining the trajectory data. Given that it's about action applicability, this needs to be clarified much earlier on (e.g., intro). Also means that we don't have a notion of how well the learned model predicts the trajectories?}
+% \roni{Hmm. I assumed all models are consistent with the given trajectories, so to evaluate it we must have other states and the ability to evaluate with the environment. TODO: clarify this.}
+% \cm{I think just stating that assumption, and maybe moving the citations in the above text to the end of the sentence, would do.}
+% \roni{I'm not sure. One could conceivably choose an algorithm that is not consistent. I need to think about this more.}
 
 
 We define two types of predictive power metrics: \emph{action applicability} metrics and \emph{predicted effects} metrics. 
@@ -617,7 +626,7 @@ The former measures the ability of the learned model to predict whether an actio
 Unlike the syntactic similarity metrics, which are computed based on the action model itself, the predictive power metrics require a dataset of states that we denote by $\stest$. 
 This dataset is intended to represent the distribution of states of interest in the domain. 
 Thus, using \stest may actually be beneficial over using all the possible states, as planning domains can have many ``unnatural'' states~\cite{grundke2024frepr} which may bias the evaluation. 
-E.g., in Blockworld we can theoretically define that two block can be on top of each other, i.e., $\operatorname{on}(a, b) \wedge \operatorname{on}(b, a)$ but such a state does not make sense. Thus, if the learned model is inaccurate in such states it may not be important. 
+E.g., in Blockworld we can theoretically define that two blocks can be on top of each other, i.e., $\operatorname{on}(a, b) \wedge \operatorname{on}(b, a)$, but such a state does not make sense. Thus, if the learned model is inaccurate in such states, it may not be important. 
 % Even if a 
 % A good reference pointing this out is \cite{grundke2024frepr}.
 % $S$ contains all these ``idiotic" states that might bias the evaluation, whereas \stest does not bias it in this way.
@@ -716,14 +725,14 @@ For the purpose of the above computation, a state includes all the literals true
 Importantly, we consider above only state-action pairs $s$ and $a$ where $a$ is applicable in $s$ in the real environment and the learned domain. 
 Otherwise, the outcome of applying $a$ in $s$ is not defined. 
 % Aggergating
-To obtain the predicted effects metrics per action, we simply average over all the states in $\stest$. 
+To obtain the predicted effects metrics per action, we simply average over all the states in $\stest$. Similar to the predicted applicability metric, when $TP_{\eff}(a)=FP_{\eff}(a)=0$, we define $P_{\eff}(a)$ and $R_{\eff}(a)$ to be one and zero, respectively.
 % As discussed above, one can then aggregate over all actions to compute either the average or the cumulative precision and recall values. 
 % or the cumulativeby either averaging over actions
 % Then, the precision and recall of the predicted effects for each action can be computed as shown above for predicted applicability. 
 % \leo{The following sentence may be a repetition of what we wrote in the previous paragraph?}
 % Alternatively, we compute the \emph{cumulative precision and recall} by summing each metric separately. 
-\argaman{Notice, similar to the predicted applicability metric, when $TP_{\eff}(a)=FP_{\eff}(a)=0$, we define $P_{\eff}(a)$ and $R_{\eff}(a)$ to be one and zero, respectively. This reflects there were no states in which the action was applicable, resulting in it not changing any of the states in which it was 'applied' on.}
-\leo{I am not sure, for example when an action is never applicable then is not considered by the predicted effects metric, i.e. there is no TP and FP}\roni{I think we converged yesterday to Argaman's text above?}
+% \argaman{Notice, similar to the predicted applicability metric, when $TP_{\eff}(a)=FP_{\eff}(a)=0$, we define $P_{\eff}(a)$ and $R_{\eff}(a)$ to be one and zero, respectively. This reflects there were no states in which the action was applicable, resulting in it not changing any of the states in which it was 'applied' on.}
+% \leo{I am not sure, for example when an action is never applicable then is not considered by the predicted effects metric, i.e. there is no TP and FP}\roni{I think we converged yesterday to Argaman's text above?}
 % \roni{Ensure this makes sense} \gregor{Checked.}TNX!
 % \roni{Aggregate only over action applicable according to both 
 % Rationale: if a model specifies an action does not applicable thne its effects are not defined.
@@ -750,13 +759,13 @@ To obtain the predicted effects metrics per action, we simply average over all t
 
 
 
-\gregor{One more argument for these predictive power metrics overall: They allow us to differentiate between ``cautious'' or ``safe'' learning (e.g. \cite{juba2021safe}) and optimistic approaches (e.g. \cite{Bachor24learning}; that is don't add a precondition until proven it must exist). Safe model learning will always have $FP_{app}(a) = 0$ at the cost of high $FN_{app}(a)$, while optimistic learning will have $FN_{app}(a) = 0$, but high $FP_{app}(a)$.\\
-Which of the two is better depends on your concrete application --- in critical domains (air traffic, medicine) you want safe model, but in cases where you want to only get some plan that might work and you can always backtrack if it actually does not (transport? travelling?) you are ok with this.}
-\roni{This is a nice discussion. Can you add it in?}
+% \gregor{One more argument for these predictive power metrics overall: They allow us to differentiate between ``cautious'' or ``safe'' learning (e.g. \cite{juba2021safe}) and optimistic approaches (e.g. \cite{Bachor24learning}; that is don't add a precondition until proven it must exist). Safe model learning will always have $FP_{app}(a) = 0$ at the cost of high $FN_{app}(a)$, while optimistic learning will have $FN_{app}(a) = 0$, but high $FP_{app}(a)$.\\
+% Which of the two is better depends on your concrete application --- in critical domains (air traffic, medicine) you want safe model, but in cases where you want to only get some plan that might work and you can always backtrack if it actually does not (transport? travelling?) you are ok with this.}
+% \roni{This is a nice discussion. Can you add it in?}\roni{Wish we had an optimistic model learning algorithm implemented so we can run it on the benchmark.}
 
 
-\roni{Add a concrete example of how to compute these metrics}
-\yarin{I added example in section\_4\_example.tex, I don't think it's that good}
+% \roni{Add a concrete example of how to compute these metrics}
+% \yarin{I added example in section\_4\_example.tex, I don't think it's that good}\roni{Ok, removing this. }
 
 
 \paragraph{Aggregated Precision and Recall}
@@ -777,8 +786,8 @@ We refer to the result of the second aggregation method as the \emph{cumulative 
 Both are reasonable options. 
 In our evaluation framework described below, we used the average aggregation method. 
 %\roni{@Leonardo, which one we used?}
-\leo{For syntactic precision the `simple` one, this is because e.g. if there are 2 actions with 1 and 10 precs/effs resp., then the precision averaged over the two actions weights 1 mistake in the first action differently from 1 mistake in the second one, I am not sure we want this. For the predictive power metrics we aggregated using the `equal-action` method, this is because the number of samples can be very unbalanced (e.g. 1 vs 100). I do not think there is a `right` one, so I stored both metrics during the experiments and we can choose}
-\roni{In the syntactic metrics this is not an issue because we measure based on the model, not the states in the test set. }
+% \leo{For syntactic precision the `simple` one, this is because e.g. if there are 2 actions with 1 and 10 precs/effs resp., then the precision averaged over the two actions weights 1 mistake in the first action differently from 1 mistake in the second one, I am not sure we want this. For the predictive power metrics we aggregated using the `equal-action` method, this is because the number of samples can be very unbalanced (e.g. 1 vs 100). I do not think there is a `right` one, so I stored both metrics during the experiments and we can choose}
+% \roni{In the syntactic metrics this is not an issue because we measure based on the model, not the states in the test set. }
 
 
 
@@ -801,9 +810,9 @@ The false-plan-ratio metric is defined as the fraction of problems in \ptest tha
 Additional problem-solving metrics can also be considered that quantify the runtime and solution quality of returned solutions. 
 
 % Limitations
-The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner.
-\gregor{Theorem provers and proof assistants, e.g., Lean, sometimes use ``heartbearts'' (\url{https://florisvandoorn.com/carleson/docs/Lean/Util/Heartbeats.html}) instead of time. They measure elementary orations and bound their number. This ensures reproducibility across different machines. For us this could e.g.\ be number of expanded states. Or the number of times an effect is applied -- this would also include computation effort for heuristics.}
-\roni{I am not sure I fully understand. I know that in search people often count nodes expanded instead (or in addition to) time because expanded nodes is less affected by what the OS is doing. But doing something similar here is not trivial, I think?}
+The straightforward nature of the above metrics is not without limitations. The ability to solve a problem with a given domain depends on external factors such as the set of test problems, the planner used, the runtime and memory budget allowed for it to run, and the computer and OS that executed the planner. 
+% \gregor{Theorem provers and proof assistants, e.g., Lean, sometimes use ``heartbearts'' (\url{https://florisvandoorn.com/carleson/docs/Lean/Util/Heartbeats.html}) instead of time. They measure elementary orations and bound their number. This ensures reproducibility across different machines. For us this could e.g.\ be number of expanded states. Or the number of times an effect is applied -- this would also include computation effort for heuristics.}
+% \roni{I am not sure I fully understand. I know that in search people often count nodes expanded instead (or in addition to) time because expanded nodes is less affected by what the OS is doing. But doing something similar here is not trivial, I think?}
 Ideally, the above metrics would be run on a diverse set of test problems, planners, resource limits, and computing machines. In practice, this might be difficult to implement, but one is advised to at least run all evaluated domains on the same setup and provide an appropriate disclaimer to the concluded result. 
 
 % \commentout{I THINK THIS DISCUSSION THREAD IS DONE?
@@ -883,9 +892,9 @@ and computing the metrics defined above. % and propose a corresponding set of do
 As a standard benchmark, we propose to use the set of $20$ classical planning domains used in all previous IPC learning tracks \citep{fern2011first, vallati20152014, taitler20242023}. 
 These domains serve as both the environment and a reference domain model (for metrics that require one). 
 We chose these domains for simplicity, as they are well known in the planning community. 
-The number of lifted actions, predicates, and object types in these domains vary in 
+The number of lifted actions, predicates, and object types in these domains varies in 
 $[1, 12]$, $[3,25]$, and $[1, 9]$, respectively.
-Further details about the benchmarks domains are provided in Table~\ref{tab:domains}. 
+Further details about the benchmark domains are provided in Table~\ref{tab:domains}. 
 
 % \footnote{\label{foot:supplementary} Further details about the benchmarks are provided in the supplementary material.\roni{If space permits, let move these details back in, as the benchmark is part of our contributions}}
 %
@@ -902,8 +911,8 @@ To generate diverse goal-oriented behavior, we use a greedy planner configuratio
 Let $p_{opt}$ be the ratio of problems in which the optimal configuration is used. 
 To emphasize the importance of using both optimal and suboptimal planners to generate trajectories, consider the \textsc{barman} domain. 
 There, the agent can either \textsc{clean} a previously used shot and then \textsc{fill} it (which requires $2$ actions), or just \textsc{refill} a used shot (which requires only $1$ action); while both alternatives are possible in an heuristic plan, the \textsc{refill} action must be executed in an optimal one. 
-Thus, generating both optimal and suboptimal plans increase the likelihood of ``sampling'' more diverse set of actions. 
-Finally, to produce heterogeneous trajectories, we also generated trajectories from problems with different numbers of objects of each type.\footnote{An exception to this in our benchmark is the \textsc{npuzzle} domain, where there is a single object type and linearly increasing it leads to problems that are too difficult to be solved.} 
+Thus, generating both optimal and suboptimal plans increases the likelihood of ``sampling'' more diverse set of actions. 
+Finally, to produce heterogeneous trajectories, we also generated trajectories from problems with different numbers of objects of each type.\footnote{An exception to this in our benchmark is the \textsc{npuzzle} domain, where there is a single object type, and linearly increasing it leads to problems that are too difficult to be solved.} 
 
 
 % We also randomized the trajectory lengths in $[5, 30]$, and the number of objects in $[3, 107]$\footnotemark[1].
@@ -915,7 +924,7 @@ setting $p_{rnd}=0.2$ and $p_{opt}=0.3$.
 The obtained set $\Ttrain$ of trajectories includes every lifted action at least once, and every trajectory includes a number of objects in $[3, 107]$ and states in $[5, 45]$. %\footnotemark[3].
 % In our experiments, the optimal configuration was used in 30\% of the problems. 
 For the greedy configuration, we used the FastDownward planner \citep{helmert2006fast} with lazy greedy best-first search, the
-FF heuristic \citep{hoffmann2001ff}, and the context-enhanced additive heuristic \citep{helmert2008unifying}. For the optimal configuration we used $A^*$ with the LM cut heuristic. % \roni{@Leonardo: what was the optimal configuration?} \leo{Astar with landmark optimal cut heuristic}
+FF heuristic \citep{hoffmann2001ff}, and the context-enhanced additive heuristic \citep{helmert2008unifying}. For the optimal configuration, we used $A^*$ with the LM cut heuristic. % \roni{@Leonardo: what was the optimal configuration?} \leo{Astar with landmark optimal cut heuristic}
 
 
 % To increase the chance of including not strictly necessary lifted actions in the set of trajectories of every domain, we \emph{optimally} solved $30\%$ of the problems.}
@@ -957,9 +966,10 @@ While these metrics have their inherent limitations as described above, they are
 \paragraph{Generating test states and problems}
 The next step in our evaluation process is to generate a set of test states ($\stest$) and a set of test problems ($\ptest$). The former is needed for the predictive power metrics and the latter for the problem solving metrics. 
 % se setes are needed to compute the predictive power and the problem solving metrics.  (i.e., predicted applicability and predicted effects), 
-To generate the set of test states, we create a set of trajectories denoted $\Ttest$ and collected all the states in these trajectories. 
-The process of generating $\Ttest$ is similar that of $\Ttrain$. 
-We generate problems in the environment and solve them optimally using a planner and the reference domain model. \roni{Why did we choose optimally here and not like we did for generating $\Ttrain$?} \leo{to better balance the samples for actions that are not necessarily executed in heuristic plans. The similarity with the previous barman example is to obtain a number of samples of \textsc{refill} closer to other actions}\roni{I didn't fully understand (sorry)}
+To generate the set of test states, we create a set of trajectories denoted $\Ttest$ and collect all the states in these trajectories. 
+The process of generating $\Ttest$ is similar to that of $\Ttrain$. 
+We generate problems in the environment and solve them optimally using a planner and the reference domain model. 
+% \roni{Why did we choose optimally here and not like we did for generating $\Ttrain$?} \leo{to better balance the samples for actions that are not necessarily executed in heuristic plans. The similarity with the previous barman example is to obtain a number of samples of \textsc{refill} closer to other actions}\roni{I didn't fully understand (sorry)}
 Then, we create trajectories by simulating an agent that alternates between performing actions in the optimal plan and random actions. 
 In our experiments, we generated 100 such trajectories. 
 % \roni{Not clear: does this mean after every random action you replanned to update the plan?}
@@ -983,8 +993,8 @@ In our experiments, we generated 100 such trajectories.
 % \leo{I rephrased/restructured this, now should be clearer}
 %
 To compute the problem-solving metrics, we generate a test set \ptest in the evaluated domain and run a planner with the learned domain model. 
-While not mandatory, we suggest to limit \ptest to only include problems that are solved by the reference domain in the allotted computational resources. 
-In our experiments, we generated 10 problems for every domain and only considered problems that FastDownward could solve with the reference domain model within a 60 sec. time limit and 16GB of RAM. %the same resource limitations.\roni{What were our time/memory limitations?}\leo{60 secs time limit, then my PC has 16GB of RAM (which were not fully used), I can measure MB ram usage if necessary}
+While not mandatory, we suggest limiting \ptest to only include problems that are solved by the reference domain in the allotted computational resources. 
+In our experiments, we generated 10 problems for every domain and only considered problems that FastDownward could solve with the reference domain model within a time limit of 60 seconds and 16GB of RAM. %the same resource limitations.\roni{What were our time/memory limitations?}\leo{60 secs time limit, then my PC has 16GB of RAM (which were not fully used), I can measure MB ram usage if necessary}
 
 % We limited \ptest to only include problems that even 
 
@@ -1002,7 +1012,7 @@ In our experiments, we generated 10 problems for every domain and only considere
 
 % \roni{Writing standard: we show here 3 concrete algorithms, not 3 approaches.}
 
-To demonstrate our evaluation process, we used it to evaluate three state-of-the-art domain model learning algorithms, namely \samshort~\citep{juba2021safe}, \offlam~\citep{LAMANNA2025104256}, and \nolam~\citep{Lamanna24}. The results of our evaluation  are described below. Due to space constraints only a subset of the results are shown in Figure~\ref{fig:exp-mini}. All the experiments were run on a CPU Apple M1 Pro with 16 GB of RAM.
+To demonstrate our evaluation process, we used it to evaluate three state-of-the-art domain model learning algorithms, namely \samshort~\citep{juba2021safe}, \offlam~\citep{LAMANNA2025104256}, and \nolam~\citep{Lamanna24}. The results of our evaluation are described below. Due to space constraints, only a subset of the results are shown in Figure~\ref{fig:exp-mini}. All the experiments were run on a CPU Apple M1 Pro with 16 GB of RAM.
 %We evaluated the learning algorithms on standard benchmark domains using the proposed metrics. 
 
 
@@ -1016,7 +1026,7 @@ In contrast, \offlam{} assumes that domains do not include negative precondition
 In terms of precondition recall, \samshort{}'s low values stemmed from its inability to learn some actions entirely, i.e., the actions have all the preconditions and no effects, while \offlam{} and \nolam{} struggled to learn specific predicates due to domain inconsistencies (e.g., in \textsc{rovers}) or the presence of constants not bound to action parameters (e.g., in \textsc{childsnack}).
 % \roni{All this discusses preconditions. What about the syntactic similarity of effects?}
 % \leo{
-In terms of effects, both \offlam{} and \nolam obtained syntactic precision and recall of $1$ in all domains except \textsc{rovers} (because of inconsistent effects), \textsc{goldminer} (because of an unobserved negative effect) and \textsc{childsnack} (for an unobserved positive effect). \samshort{} achieved effects the same results except for \textsc{tpp}, where it only achieved 50\% recall.
+In terms of effects, both \offlam{} and \nolam obtained syntactic precision and recall of $1$ in all domains except \textsc{rovers} (because of inconsistent effects), \textsc{goldminer} (because of an unobserved negative effect), and \textsc{childsnack} (for an unobserved positive effect). \samshort{} achieved effects the same results except for \textsc{tpp}, where it only achieved 50\% recall.
 % for both positive and negative effects.} do we separate the two types in our evaluation?
 % However, the domains used in the experiments do not include negative preconditions. 
 % This is due to additional preconditions, as both algorithms include negative preconditions in the learned domains, which are always absent in the reference domains. For instance, in the \textsc{blocksworld} domain, the lifted action \textsc{pick\_up}$(x)$ for a block $x$ has the precondition $\textit{handempty}()$, which implies $\textit{holding}(x)$ is false. 
@@ -1034,7 +1044,7 @@ In terms of effects, both \offlam{} and \nolam obtained syntactic precision and 
 
 
 \miniparagraph{Predicted applicability} 
-By design, \samshort{} and \offlam{} initially assume the preconditions of each lifted action to be the set of all possible preconditions, and remove unnecessary preconditions that are not consistent with the input trajectories, resulting in perfect applicability precision. Notably, \nolam{} achieves perfect applicability precision even without such assumption.
+By design, \samshort{} and \offlam{} initially assume the preconditions of each lifted action to be the set of all possible preconditions, and remove unnecessary preconditions that are not consistent with the input trajectories, resulting in perfect applicability precision. Notably, \nolam{} achieves perfect applicability precision even without such an assumption.
 The only outlier is the \textsc{childsnack} domain, where both \nolam{} and \offlam{} have a slight decrease in the precision due to the constant in the domains (which is not supported by these algorithms).
 % in the precision due to $put\_on\_tray$'s precondition involving $kitchen$.
 % This results from the domain including a constant -- $kitchen$ -- in a predicate of the action $put\_on\_tray$'s preconditions. 
@@ -1049,8 +1059,8 @@ Notably, the unnecessary negative preconditions learned by \samshort{} and \nola
 \miniparagraph{Predicted effects} 
 % Across all domains, all algorithms achieved perfect precision and recall. This is attributed to the fact that each action in the trace dataset was observed at least once, ensuring that all effects present in the training trajectories were successfully learned.\roni{Not convincing. Observing once is not enough.}
 All algorithms achieved perfect precision and recall across all domains. 
-By design, \samshort{} and \offlam{} provides effects syntactic precision equal to $1$ (this also holds for \nolam{} as the trajectories are un-noisy and fully observable), since an action's effect is learned only when a literal becomes true/false after observing such action execution in some trajectory transition. This prevents \samshort{} and \offlam{} from learning unnecessary effects, hence makes the false positives for the predicted effects equal to $0$, and the precision equal to $1$. 
-Furthermore, the predicted effects only consider actions applicable according to the learned domain and real environment, and every lifted action execution is observed at least once in the set of trajectories. Therefore, evaluating the actions is only performed when the actions are applicable according to the learned domain. Thus resulting in states that were already observed in the train trajectories.
+By design, \samshort{} and \offlam{} provides effects syntactic precision equal to $1$ (this also holds for \nolam{} as the trajectories are un-noisy and fully observable), since an action's effect is learned only when a literal becomes true/false after observing such action execution in some trajectory transition. This prevents \samshort{} and \offlam{} from learning unnecessary effects, hence making the false positives for the predicted effects equal to $0$, and the precision equal to $1$. 
+Furthermore, the predicted effects only consider actions applicable according to the learned domain and real environment, and every lifted action execution is observed at least once in the set of trajectories. Therefore, evaluating the actions is only performed when the actions are applicable according to the learned domain. Thus, resulting in states that were already observed in the train trajectories.
 % Other approaches that are less conservative than our tested algorithms might perform a different approach to learning the effects, resulting in different predictive values. 
 Other, less conservative approaches may follow different effect-learning strategies, potentially leading to different precision and recall outcomes.
 
@@ -1064,7 +1074,7 @@ Other, less conservative approaches may follow different effect-learning strateg
 \offlam{} achieved the highest problem-solving ratio across all domains except for \textsc{childsnack} and \textsc{goldminer}. Notably, in the \textsc{nomystery} and \textsc{tpp} domains, it is the only algorithm to produce a model capable of solving the entire test set.
 In the \textsc{elevators} and \textsc{rovers} domains it highly outperforms both \samshort{} and \nolam{} with 85\% and 70\% increase in the 
 solving rates respectively.
-The difficulty in solving problems for \samshort{} and \nolam{}, is mainly due to the learned domains having unnecessary negative preconditions. 
+The difficulty in solving problems for \samshort{} and \nolam{} is mainly due to the learned domains having unnecessary negative preconditions. 
 % Specifically, in these domains, the actions had high arity which resulted in many negative preconditions that were created for them (see Table~\ref{tab:domains} for reference). 
 In \textsc{childsnack}, both \offlam{} and \nolam{} produced inapplicable plans due to the missing precondition involving the unsupported constant.
 % of $put\_on\_tray$ involving the unsupported constant $kitchen$. 
@@ -1072,11 +1082,11 @@ In \textsc{childsnack}, both \offlam{} and \nolam{} produced inapplicable plans 
 % An exception is the \textsc{childsnack} domain, which includes a constant unsupported by both NOLAM and OffLAM. 
 % \roni{Repetition of the sentence above?}\leo{yes, removed}
 % Although plans were generated, they were deemed inapplicable, as shown in Figure~\ref{fig:false-positive-plans}.
-Similarly, the plans produced with the models learned by \offlam{} are inapplicable due to a missing negative effect which affects the precondition of subsequent plan actions.
+Similarly, the plans produced with the models learned by \offlam{} are inapplicable due to a missing negative effect, which affects the precondition of subsequent plan actions.
 % $(not\; (gold\_at\; ?y))$ of action $fire\_laser$, which affects the precondition of subsequent plan actions.
 % We also observed that in the \textsc{goldminer} all of the plans generated using the domains \offlam learned were deemed inapplicable. This resulted from \offlam not learning the effect $(not\; (gold\_at\; ?y))$ which was crucial to the consistency of the resulting plans. 
 % Because 
-Such effect was never observed in the input trajectories. Interestingly, \sam and \nolam, learned the unobserved negative effect as a negative precondition, which allows to compute valid plans.
+Such an effect was never observed in the input trajectories. Interestingly, \sam and \nolam, learned the unobserved negative effect as a negative precondition, which allows computing valid plans.
 
 \input{tables/bests_mini}
 
@@ -1117,7 +1127,7 @@ In some cases, these representation differences are minimal, e.g., using a diffe
 In other cases, the differences are more significant. 
 For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with additional \emph{proxy actions}. 
 These proxy actions do not exist in the environment and are used to resolve ambiguities in the mapping of objects to parameters.
-In a related manner, \cite{Hankui2013RefiningModels} also create additional macro actions alongside refining the model to turn the input sequences into solutions. 
+In a related manner, \cite{Hankui2013RefiningModels} also creates additional macro actions alongside refining the model to turn the input sequences into solutions. 
 % \roni{@Pascal: you mentioned a related paper that learned macro actions. Can you add here a citation about it and maybe a sentence on how it relates?}\pascalSr{done, kind-of -- I don't think the authors did a good job explaining what their macro actions are actually required for; I found that weird... So, I can't say much about the relation.}
 % \roni{I think it's good enough -TNX!}
 % \yarin{added LOCM:}
@@ -1127,10 +1137,10 @@ Similarly, the LOCM algorithm~\citep{cresswell2013acquiring} creates a state rep
 % (e.g., \texttt{object\_state0}, \texttt{object\_state1(agent)}). 
 % These proxy predicates are not part of the original domain but are introduced as a mechanism to infer the semantics of the original predicates. 
 % For example, a learned transition from \texttt{object\_state1} to \texttt{object\_state0} may represent an object being put down, corresponding to a change in the original predicate \texttt{holding(agent, object)}.
-\roni{@All: More examples?}
-\mauro{OpMaker2 generates classical planning models in OCL language \cite{mccluskey2010action}}
-\roni{@Mauro: I read briefly the OpMaker2 and didn't fully understand. Can you write a sentence or two on this. It was not clear to me if OpMaker2 outputs a PDDL or something else.}
-\leo{I did not understand what are the assumptions about the input trajectories representation, if any. For example, do we consider visual trajectories? If yes, what about adding latplan? it uses visual trajectories and learns a classical planning model}\roni{For now I clarified above that we focus on symbolic input representation, so we can discuss this in the next subsection.}
+% \roni{@All: More examples?}
+% \mauro{OpMaker2 generates classical planning models in OCL language \cite{mccluskey2010action}}
+% \roni{@Mauro: I read briefly the OpMaker2 and didn't fully understand. Can you write a sentence or two on this. It was not clear to me if OpMaker2 outputs a PDDL or something else.}
+% \leo{I did not understand what are the assumptions about the input trajectories representation, if any. For example, do we consider visual trajectories? If yes, what about adding latplan? it uses visual trajectories and learns a classical planning model}\roni{For now I clarified above that we focus on symbolic input representation, so we can discuss this in the next subsection.}
 
 % Using each of the previously proposed metrics in such cases, where the input representation is different from the learned domain model representation, is different. 
 
@@ -1150,7 +1160,7 @@ The \emph{decoder} performs the reverse transformation, mapping states and actio
 Formally, let $A_E$ and $A_M$ be the set of actions in the environment and in the learned domain models, respectively, and let $S_E$ and $S_M$ be the set of states in the real and learned domain models, respectively. The power set is denoted by $P(X)$, which is the set of all subsets of $X$. 
 The encoder is required to implement the following set of functions:
 \begin{itemize}
-    \item $\encodea: S_E\times A_E\rightarrow P(A_M)$, returns the actions in $A_M$ representing the application of $a\in A_E$ in a given state $s \in S$.\footnote{This definition implicitly assumes a single action in the learned domain is mapped to a single action in the environment. This assumption is reasonable, but one may produce an domain model in which a sequence of actions corresponds to a single action in the environment. For such cases, the above definition should be revised such that encoding an action return a set of sequences of actions. We avoid this for simplicity.}
+    \item $\encodea: S_E\times A_E\rightarrow P(A_M)$, returns the actions in $A_M$ representing the application of $a\in A_E$ in a given state $s \in S$.\footnote{This definition implicitly assumes a single action in the learned domain is mapped to a single action in the environment. This assumption is reasonable, but one may produce a domain model in which a sequence of actions corresponds to a single action in the environment. For such cases, the above definition should be revised such that encoding an action returns a set of sequences of actions. We avoid this for simplicity.}
     % \roni{Incorporating a great comment by Christian. Is it clear?} \cm{Yep, reads good to me!}} tnx!
     \item ${\encodes: S_E\rightarrow S_M}$, returns the state in $S_M$ that represents the state $s\in S_E$. 
     % \yarin{returns the state $s \in S$ as its representation in $S_M$}
@@ -1190,19 +1200,36 @@ Next, we describe how to use these encoder/decoder methods to compute the predic
 \miniparagraph{Predictive power metrics}
 To adapt the predicted applicability metric, we only modify the way $\app_M(a,\stest)$ is computed to consider different state encodings and the possibility that multiple actions in $M$ may decode to $a$. 
 Formally, let $\app_M(a,s)$ be true if $a$ is applicable in $s$ according to $M$. Then $\app_M(a,\stest)$ is redefined as follows:
-\begin{equation}
-    \large\{s \mid s\in\stest  \wedge 
-        \exists a': \decodea(a')=a  
-        \wedge \app_M(a',\encodes(s))\large\}        
-\end{equation}
+\begin{multline}
+    \{s \mid s\in\stest  \wedge 
+        \exists a': \decodea(a') = a 
+        \\ \wedge \app_M(a',\encodes(s))\}        
+\end{multline}
 That is, we consider an action $a\in A$ to be applicable in a state $s\in\stest$ according to the learned model $M$ if there exists an action $a'\in A_M$ that is decoded to $a$ and is applicable in $\encodes(s)$ according to $M$. 
 The predicted effects metrics are adapted 
-by replacing $a_M(s)$ with $a^E_M(s)$, which is defined as follows. 
-First, we find an action $a'\in A_m$ that satisfies $\decodea(a')=a$ and 
+by replacing $a_M(s)$ with 
+$a'_M(\encodes(s))$ 
+for some action $a'\in A_M$ that satisfies $\decodea(a')=a$ and 
 $\app_M(a',\encodes(s))$.\footnote{If none such exists, we cannot compare predicted effects. If more than one such action exists, we choose arbitrarily one of them.} 
-Then, we compute $a^E_m(s)=a'_M(\encodes(s))$
 
+% the following computation. 
+% First, find an action $a'\in A_m$ that satisfies $\decodea(a')=a$ and 
+% $\app_M(a',\encodes(s))$.\footnote{If none such exists, we cannot compare predicted effects. If more than one such action exists, we choose arbitrarily one of them.} 
+% Then, return $a'_M(\encodes(s))$.
+
+\commentout{
 \roni{Would be great if someone would add an example of this.}
+\yarin{
+Consider the same delivery scenario as before, where we have the action \textsc{unload} ($a\in A_E$) with the parameters ($\ell,t,p$).  In the reference model $R_E$, the action $a$ applies whenever both “at($\ell,t$)” and “in($p,t$)” are true, and its effects are to remove those two facts and add “at($p,\ell$)”.
+The learned model $R_M$, whose internal action set $A_M$ contains two actions $a'_1$ and $a'_2$, each of which decodes back to $a$.
+We test on a single state $s\in S_E$ where “at($\ell,t$)” and “in($p,t$)” hold.  If one of the actions of $R_M$, $a'_1$ or $a'_2$ is applicable in that encoding state \encodes(s), then we conclude $a$ is applicable in $s$ under $R_M$.  
+To compare effects, we pick $a'_1$ (the one that is applicable), and apply it in the encoded state, then decode those back into the original predicates.  
+If $a'_1$ removes “in($p,t$)” and “contains($t,p$)” and adds “at($p,\ell$)”, then it perfectly matches the reference.  
+We can then count true/false positives and negatives on those removals and additions exactly as before.
+}
+\roni{Thought about it more, decided at this point to drop the example (no time to edit it and I'm not sure how strongly it is needed. For the camera ready version we should have something (if we get accepted)}
+}
+
 
 \miniparagraph{Problem-solving metrics} 
 Adapting the problem-solving metrics to use the encoder-decoder mechanism is straightforward. 
@@ -1222,7 +1249,7 @@ In cases where a plan was returned by the planner, we then validate its correctn
 
 
 \subsection{Examples of Encoder-Decoder Methods}
-Next, we show how to implement the encoder-decoder mechanism several domain model learning algorithms. 
+Next, we show how to implement the encoder-decoder mechanism for several domain model learning algorithms. 
 % that use representations different from the input representation. 
 
 \miniparagraph{ESAM~\citep{juba2021safe}}
@@ -1235,7 +1262,7 @@ This algorithm deals with grounded domain representations.
 Thus, we require an encoder to move from lifted to grounded representations and then a decoder to map back to a lifted representation.
 
 \miniparagraph{LOCM~\citep{cresswell2013acquiring}} 
-The states in the learned domain model are based on the hidden FSM states induced from the traces and while the actions are reuse the original names. Thus, \encodea and \decodea are identity functions, \encodes maps a concrete state $s$ to the unique abstract state $s_M$ whose conjunction of LOCM fluents (each FSM-state predicate with its parameter bindings) matches $s$, and \decodes reconstructs the concrete state by inverting the fluent encoding, assigning each object the attributes implied by its FSM-state predicates.
+The states in the learned domain model are based on the hidden FSM states induced from the traces, and while the actions are reuse the original names. Thus, \encodea and \decodea are identity functions, \encodes maps a concrete state $s$ to the unique abstract state $s_M$ whose conjunction of LOCM fluents (each FSM-state predicate with its parameter bindings) matches $s$, and \decodes reconstructs the concrete state by inverting the fluent encoding, assigning each object the attributes implied by its FSM-state predicates.
 
 
 % . 
@@ -1310,14 +1337,15 @@ The proposed encoder-decoder evaluation paradigm is designed to be flexible and 
 We list several such directions and outline how our evaluation paradigm can be modified to support them. 
 
 \miniparagraph{Non-symbolic input representation}
-Some domain model learning algorithms are designed to learn  from trajectories in which the states are images or given in some other non-symbolic representation, which may be images~\citep{asai2020learning,asai2022classical,xi2024neuro} or even natural language description of the domain~\citep{lindsay2017framer,liu2023llm+, guan2023leveraging}.%\roni{Maybe some recent LLM-based approach?}\yarin{I added LLM+P and LLM+PDDL} GREAT!
+Some domain model learning algorithms are designed to learn from trajectories in which the states are images or given in some other non-symbolic representation, which may be images~\citep{asai2020learning,asai2022classical,xi2024neuro} or even natural language description of the domain~\citep{lindsay2017framer,liu2023llm+, guan2023leveraging}.%\roni{Maybe some recent LLM-based approach?}\yarin{I added LLM+P and LLM+PDDL} GREAT!
 Using a domain simulator, an encoder for the initial state, and a decoder for the resulting plans' actions, one can still compute all problem solving and predicted applicability metrics. 
 Computing predicted effects would also require a decoder to translate a PDDL state to an image, which may be more challenging to implement. 
 % Similar\yarin{the word left in by mistake?}TNX
 
 
 \miniparagraph{Learning non-classical planning domain models}
-Some domain model learning algorithms accept symbolic trajectories as input but still output non-classical domain models. For example, PI-SAM~\citep{le2024learning} outputs a conformant planning domain model and ROSAME~\citep{xi2024neuro} outputs a Probabilistic PDDL model. \roni{I vaguely remember some other work that does this, maybe}
+Some domain model learning algorithms accept symbolic trajectories as input but still output non-classical domain models. For example, PI-SAM~\citep{le2024learning} outputs a conformant planning domain model, and ROSAME~\citep{xi2024neuro} outputs a Probabilistic PDDL model. 
+% \roni{I vaguely remember some other work that does this, maybe}
 Adapting the predictive power metrics to such cases may not be trivial, but the problem-solving metrics can be adapted in a straightforward manner. 
 
 
@@ -1363,9 +1391,9 @@ More involved is the predicted effects metric, which may require defining some l
 % \roni{This is super. I'll incorporate it in.}
 
 \section{Discussion}
-We explored three family of metrics: syntactic similarity, predictive power, and problem-solving ability. 
+We explored three families of metrics: syntactic similarity, predictive power, and problem-solving ability. 
 There is an interesting trade-off between these families of metrics. 
-The syntactic similarity are the easiest to compute, as it only requires comparing the learned domain with a reference domain. However, they are arguably the least useful, and computing them requires many assumptions (Assumptions A1 and A2 above). 
+The syntactic similarity is the easiest to compute, as it only requires comparing the learned domain with a reference domain. However, they are arguably the least useful, and computing them requires many assumptions (Assumptions A1 and A2 above). 
 The predictive power metrics characterize well a desirable property of a domain model, and are still relatively easy to compute. 
 The downside of these metrics is that in contrast to classical machine learning settings, the ``data distribution'' in planning is highly \emph{non-stationary} (not ``i.i.d.''):  Although the states in the benchmarks were selected to be representative of those visited on trajectories collected using the reference model, this may change. Indeed, the states encountered on a trajectory generated by a planner using a given learned domain-model representation depend on the model. Planners can exploit deficiencies in the learned representation to systematically visit states that are erroneously modeled, if those errors make goals easier to achieve. Thus, the predictive power metrics can be a poor proxy for the utility of the learned model for planning. The problem-based metrics fill in this gap, but, of course, they are the hardest to compute as they require running a planner to compute them. 
 
@@ -1383,7 +1411,7 @@ The downside of these metrics is that in contrast to classical machine learning 
 
 \section{Conclusion and Future Work}
 We proposed a comprehensive evaluation process and a suite of metrics for assessing domain model learning algorithms. Our framework includes three complementary families of metrics: syntactic similarity, predictive power, and problem-solving ability. We analyzed the strengths and limitations of each metric family and how they jointly capture different aspects of model quality.
-We also describe our implementation of an evaluation process that computes these metrics, along with a benchmark of domain model learning problems that builds on domains from International Planning Competition (IPC) learning track.
+We also describe our implementation of an evaluation process that computes these metrics, along with a benchmark of domain model learning problems that builds on domains from the International Planning Competition (IPC) learning track.
 Empirical evaluation of three state-of-the-art domain model learning algorithms on this benchmark reveals that each algorithm exhibits distinct strengths and weaknesses.
 To address the challenge of comparing learned domain models expressed in different representations, we further proposed an encoder-decoder mechanism that enables meaningful comparison and metrics across heterogeneous outputs.
 The proposed benchmark and evaluation framework are publicly available, providing a foundation for systematic and reproducible research in this area.
@@ -1394,9 +1422,9 @@ Future work may extend the benchmark to include domains beyond the IPC and adapt
 \miniparagraph{Online learning of domain models}
 Here, the learning algorithm is required to learn a domain model by actively interacting with the environment~\citep{lamanna2021online, sreedharan2023optimistic, benyamin2025integratingreinforcementlearningaction, ng2019incremental, chitnis2021glib, jin2022creativity, verma2023autonomous, karia2023epistemic}. 
 All the proposed metrics can be computed as-is, after a predefined number of iterations, for the online learning setting. 
-However, an additional perspective that may be of interest in online learning of domain models are \emph{cumulative} metrics of the learning process, such as the number of actions performed for learning or the number of problems failed to solve while collecting observations.
+However, an additional perspective that may be of interest in online learning of domain models is \emph{cumulative} metrics of the learning process, such as the number of actions performed for learning or the number of problems failed to solve while collecting observations.
 % \brendan{Changed terminology. This has little to do with ``regret,'' which refers to fixing, e.g., a single best policy from a class in hindsight as a baseline for comparison.}  Sounds good.
-Specific metrics and evaluation for online learning of domain models, however, is beyond the scope of this work. 
+Specific metrics and evaluation for online learning of domain models, however, are beyond the scope of this work. 
 }
 
 

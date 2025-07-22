@@ -1,0 +1,294 @@
+
+\section{Bridging Representation Gaps}
+\label{sec:bridging-gap}
+\roni{All this should be shortened to 1 column. TODO Roni}
+% \roni{Moved this section to after the results, as currently the results do not have any aspect of this so it looks wierd.}
+% Motivation: representation may be different learning
+So far, we assumed the input trajectories and the learned domain model use the same representation (Assumption A2). Next, we relax this assumption and propose a paradigm for comparing domain model learning algorithms across different representations. 
+We limit the discussion to the case where input representation and the learned domain still follow a classical planning representation, as opposed to an image-based or other, more-involved types of representations. 
+Nevertheless, existing domain model learning algorithms may output domain models that use a different representation than the input representation.
+% \leo{It was not immediately clear to me that `existing domain model learning algorithms` refer to classical planning domains learning algorithms , the second sentence seems to me more general, maybe it can be swapped with the previous one, for example: indeed, existing domain model learning algorithms may output domain models that use a different representation than the input representation [add cit?]. We limit the discussion to the case where the learned domain is still a classical planning domain, as opposed to an images-based or other more involved types of representations. }
+
+% Concrete examples
+In some cases, these representation differences are minimal, e.g., using a different ordering of the parameters or object types~\cite{xi2024neuro}. % \leo{can we add a cit?}. \roni{this is not a perfect cite. If we have a better one that would be good.}
+In other cases, the differences are more significant. 
+For example, the ESAM algorithm~\citep{juba2021safe} outputs a domain model with additional \emph{proxy actions}. 
+These proxy actions do not exist in the environment and are used to resolve ambiguities in the mapping of objects to parameters.
+In a related manner, \cite{Hankui2013RefiningModels} also creates additional macro actions alongside refining the model to turn the input sequences into solutions. 
+% \roni{@Pascal: you mentioned a related paper that learned macro actions. Can you add here a citation about it and maybe a sentence on how it relates?}\pascalSr{done, kind-of -- I don't think the authors did a good job explaining what their macro actions are actually required for; I found that weird... So, I can't say much about the relation.}
+% \roni{I think it's good enough -TNX!}
+% \yarin{added LOCM:}
+Similarly, the LOCM algorithm~\citep{cresswell2013acquiring} creates a state representation that is significantly different from the input representation, based on the states of finite-state machines it creates from the given action sequences in the trajectory. 
+%-with no access to intermediate state information or predicate names-and outputs action schemas using \emph{proxy predicates}. 
+% induces finite-state machines solely from action sequences-with no access to intermediate state information or predicate names-and outputs action schemas using \emph{proxy predicates}. 
+% (e.g., \texttt{object\_state0}, \texttt{object\_state1(agent)}). 
+% These proxy predicates are not part of the original domain but are introduced as a mechanism to infer the semantics of the original predicates. 
+% For example, a learned transition from \texttt{object\_state1} to \texttt{object\_state0} may represent an object being put down, corresponding to a change in the original predicate \texttt{holding(agent, object)}.
+% \roni{@All: More examples?}
+% \mauro{OpMaker2 generates classical planning models in OCL language \cite{mccluskey2010action}}
+% \roni{@Mauro: I read briefly the OpMaker2 and didn't fully understand. Can you write a sentence or two on this. It was not clear to me if OpMaker2 outputs a PDDL or something else.}
+% \leo{I did not understand what are the assumptions about the input trajectories representation, if any. For example, do we consider visual trajectories? If yes, what about adding latplan? it uses visual trajectories and learns a classical planning model}\roni{For now I clarified above that we focus on symbolic input representation, so we can discuss this in the next subsection.}
+
+% Using each of the previously proposed metrics in such cases, where the input representation is different from the learned domain model representation, is different. 
+
+
+
+\subsection{The Encoder-Decoder Mechanism}
+Let $R_E$ denote the input representation and let $R_M$ denote the representation of the learned domain model. 
+% The input trajectories are given in $R_E$, while the output of a planner that uses the learned domain model is in $R_M$. 
+% To allow the comparison of the learned domain model with the reference domain model, we need 
+To bridge the gap between these two representations, we require every domain model learning algorithm to output 
+a \emph{representation encoder} and a \emph{representation decoder} in addition to the learned model. 
+% We describe these two components below.  
+The \emph{encoder} transforms states and actions in $R_E$ to corresponding states and actions in the learned domain representation $R_M$. 
+The \emph{decoder} performs the reverse transformation, mapping states and actions in $R_M$ to corresponding states and actions in $R_E$.
+
+
+Formally, let $A_E$ and $A_M$ be the set of actions in the environment and in the learned domain models, respectively, and let $S_E$ and $S_M$ be the set of states in the real and learned domain models, respectively. The power set is denoted by $P(X)$, which is the set of all subsets of $X$. 
+The encoder is required to implement the following set of functions:
+\begin{itemize}
+    \item $\encodea: S_E\times A_E\rightarrow P(A_M)$, returns the actions in $A_M$ representing the application of $a\in A_E$ in a given state $s \in S$.\footnote{This definition implicitly assumes a single action in the learned domain is mapped to a single action in the environment. This assumption is reasonable, but one may produce a domain model in which a sequence of actions corresponds to a single action in the environment. For such cases, the above definition should be revised such that encoding an action returns a set of sequences of actions. We avoid this for simplicity.}
+    % \roni{Incorporating a great comment by Christian. Is it clear?} \cm{Yep, reads good to me!}} tnx!
+    \item ${\encodes: S_E\rightarrow S_M}$, returns the state in $S_M$ that represents the state $s\in S_E$. 
+    % \yarin{returns the state $s \in S$ as its representation in $S_M$}
+\end{itemize}
+The decoder must implement the following functions:
+\begin{itemize}
+    \item ${\decodea: A_M\rightarrow A_E}$, returns the action in $E$ corresponding to the action in $M$. 
+    % \yarin{returns the action $a \in A_M$ as its representation in $A$}roni: not sure: what is "as its representation" part?}
+    \item ${\decodes: S_M\rightarrow S_E}$, returns the state in the input representation that represents a given state in $S_M$. 
+    % \yarin{returns the state $s \in S_M$ as its representation in $S$}\roni{I do not understand. Let's talk about this.}
+\end{itemize}
+Next, we describe how to use these encoder/decoder methods to compute the predictive power and problem-solving metrics across even when the input representation is different from the one returned by the evaluated domain model learning algorithm.
+
+
+
+
+% \end{itemize}
+    
+%     are a proxy of the action $a$.
+    
+%     $\text{ and} \\ encodeAction(s,a,m^*,m)$=
+% ${\{a'\in m| a'\ is\ a\ proxy\ action\ of\ a\}}$
+%     \item ${\mathit{decodeAction}: A_{m}\rightarrow  A_{m^*} }$ $\text{ and } {\mathit{decodeAction}(s,a',m^*,m)}$$  a^*\in A_{m^*}$ s.t. $a^*$ is a proxy of $a$. 
+
+
+
+% \begin{itemize}
+%     \item $encodePlan: \{\pi_{m^*}\in \pi(A_{m^*})\}\rightarrow P(\pi_{m}\in \pi(A_{m}))$
+%     \item $\mathit{decodePlan}:\{\pi_{m}\in \pi(A_{m})\} \rightarrow  \{\pi_{m^*}\in \pi(A_{m^*})\}$
+% \end{itemize}
+
+% \begin{itemize}
+%     \item $encodePredicates:P( P_{m^*}) \rightarrow  P(P_m) \\$  and $encode{Predicates}(P'\subseteq P^*,m^*,m) = P''\subseteq P_m$
+%     \item $\mathit{decodePredicates}: P( P_{m}) \rightarrow  P(P_{m^*}) $  and $\mathit{decodePredicates}(P'\subseteq P_{m^*},m^*,m) = P''\subseteq P_m$. 
+% \end{itemize}
+
+\miniparagraph{Predictive power metrics}
+To adapt the predicted applicability metric, we only modify the way $\app_M(a,\stest)$ is computed to consider different state encodings and the possibility that multiple actions in $M$ may decode to $a$. 
+Formally, let $\app_M(a,s)$ be true if $a$ is applicable in $s$ according to $M$. Then $\app_M(a,\stest)$ is redefined as follows:
+\begin{multline}
+    \{s \mid s\in\stest  \wedge 
+        \exists a': \decodea(a') = a 
+        \\ \wedge \app_M(a',\encodes(s))\}        
+\end{multline}
+That is, we consider an action $a\in A$ to be applicable in a state $s\in\stest$ according to the learned model $M$ if there exists an action $a'\in A_M$ that is decoded to $a$ and is applicable in $\encodes(s)$ according to $M$. 
+The predicted effects metrics are adapted 
+by replacing $a_M(s)$ with 
+$a'_M(\encodes(s))$ 
+for some action $a'\in A_M$ that satisfies $\decodea(a')=a$ and 
+$\app_M(a',\encodes(s))$.\footnote{If none such exists, we cannot compare predicted effects. If more than one such action exists, we choose arbitrarily one of them.} 
+
+% the following computation. 
+% First, find an action $a'\in A_m$ that satisfies $\decodea(a')=a$ and 
+% $\app_M(a',\encodes(s))$.\footnote{If none such exists, we cannot compare predicted effects. If more than one such action exists, we choose arbitrarily one of them.} 
+% Then, return $a'_M(\encodes(s))$.
+
+\commentout{
+\roni{Would be great if someone would add an example of this.}
+\yarin{
+Consider the same delivery scenario as before, where we have the action \textsc{unload} ($a\in A_E$) with the parameters ($\ell,t,p$).  In the reference model $R_E$, the action $a$ applies whenever both “at($\ell,t$)” and “in($p,t$)” are true, and its effects are to remove those two facts and add “at($p,\ell$)”.
+The learned model $R_M$, whose internal action set $A_M$ contains two actions $a'_1$ and $a'_2$, each of which decodes back to $a$.
+We test on a single state $s\in S_E$ where “at($\ell,t$)” and “in($p,t$)” hold.  If one of the actions of $R_M$, $a'_1$ or $a'_2$ is applicable in that encoding state \encodes(s), then we conclude $a$ is applicable in $s$ under $R_M$.  
+To compare effects, we pick $a'_1$ (the one that is applicable), and apply it in the encoded state, then decode those back into the original predicates.  
+If $a'_1$ removes “in($p,t$)” and “contains($t,p$)” and adds “at($p,\ell$)”, then it perfectly matches the reference.  
+We can then count true/false positives and negatives on those removals and additions exactly as before.
+}
+\roni{Thought about it more, decided at this point to drop the example (no time to edit it and I'm not sure how strongly it is needed. For the camera ready version we should have something (if we get accepted)}
+}
+
+
+\miniparagraph{Problem-solving metrics} 
+Adapting the problem-solving metrics to use the encoder-decoder mechanism is straightforward. 
+For every problem in \ptest we encode the initial state, obtaining a set of problems that can be given to a planner with the learned domain model ($M$). 
+Then, the planner is run on each of these problems to attempt to solve them.
+In cases where a plan was returned by the planner, we then validate its correctness by decoding the actions in the returned plan and trying to run it in the environment. 
+
+% the encoded problem with the learned model. 
+
+% and apply a planner with the learned domain model to attempt to generate a plan. 
+% To validate this plan, we use the \decodea function on all the actions in the plan 
+% and simulate them in the environment. 
+
+
+% Finally, the decoder uses \decodea to decode the solution plan from the learned model representation to the input representation. 
+% This allows checking if a plan has been found and if it is valid according to the reference domain model. 
+
+
+\subsection{Examples of Encoder-Decoder Methods}
+Next, we show how to implement the encoder-decoder mechanism for several domain model learning algorithms. 
+% that use representations different from the input representation. 
+
+\miniparagraph{ESAM~\citep{juba2021safe}}
+This algorithm may add proxy actions to the learned domain. 
+Each of these proxy actions is mapped to a single action in the input representation. 
+Thus, for ESAM the \encodea, \encodes, \decodes functions are the identity functions, but the \decodea function maps a proxy action to its action in the environment. 
+
+\miniparagraph{OBSERVER~\citep{wang1996learning}}
+This algorithm deals with grounded domain representations. 
+Thus, we require an encoder to move from lifted to grounded representations and then a decoder to map back to a lifted representation.
+
+\miniparagraph{LOCM~\citep{cresswell2013acquiring}} 
+The states in the learned domain model are based on the hidden FSM states induced from the traces, and while the actions are reuse the original names. Thus, \encodea and \decodea are identity functions, \encodes maps a concrete state $s$ to the unique abstract state $s_M$ whose conjunction of LOCM fluents (each FSM-state predicate with its parameter bindings) matches $s$, and \decodes reconstructs the concrete state by inverting the fluent encoding, assigning each object the attributes implied by its FSM-state predicates.
+
+
+% . 
+% Encoding and decoding states is needed as the states in LOCM model are, as noted above, related to the finite state machine they construct. 
+
+% \cm{Not sure there's enough detail here on LOCM to make it worth it for inclusion.}
+% \yarin{maybe something like this: LOCM~\citep{cresswell2013acquiring} produces it's state space from the hidden FSM states induced from the traces and while the actions are reuse the original names. Thus, \encodea and \decodea are identity functions, \encodes maps a concrete state $s$ to the unique abstract state $s_M$ whose conjunction of LOCM fluents (each FSM-state predicate with its parameter bindings) matches $s$, and \decodes reconstructs the concrete state by inverting the fluent encoding, assigning each object the attributes implied by its FSM-state predicates.}
+% Decoding is relatively 
+% How to encode which is:\yarin{I will complete this}
+% Encoder: identity for both state and actions
+% % action name and proxy for state predicates
+% Decoder: translate proxy predicates to original predicates
+
+% ROSAME-I~\citep{xi2024neuro}: \roni{Maybe Yarin or Argaman can help with this one}
+% Encoder: encode to a numeric vector of ones and zeros
+% Decoder: map action parameters
+
+% OBSERVER\citep{wang1996learning}: \roni{Anyone can help here?}
+% Encoder: from binding to grounded
+% Decoder: from grounded predicates and actions to the binding they represent
+
+
+
+
+
+% : \roni{Either me or someone from my group will write this one}
+% Encoder: identity for both state and actions     
+% Decoder: translate proxy actions to original actions
+
+
+% . \yarin{Some action model learning algorithms operate directly in the original input representation $R_{\realm}$, without transforming the state or action spaces. For these algorithms, the learned model uses the same symbols and structure as the input data. As such, there is no need for additional encoding or decoding: the identity function suffices for both.}
+
+% SAM~\citep{juba2021safe}\yarin{or is ut juba2021safe ?}: \roni{Either me or someone from my group will write this one}
+% Encoder: identity
+% Decoder: identity
+
+% NOLAM~\citep{Lamanna24}:
+% Encoder: \leo{identity}
+% Decoder: \leo{identity}
+
+% OFFLAM\citep{lamanna2021online}:
+% Encoder: \leo{identity}
+% Decoder: \leo{identity}
+
+% FAMA~\citep{aineto2019learning}:
+% Encoder: identity
+% Decoder: identity - maybe change to parameter names?
+
+% ESAM~\citep{juba2021safe}: \roni{Either me or someone from my group will write this one}
+% Encoder: identity for both state and actions     
+% Decoder: translate proxy actions to original actions
+
+% ROSAME-I~\citep{xi2024neuro}: \roni{Maybe Yarin or Argaman can help with this one}
+% Encoder: encode to a numeric vector of ones and zeros
+% Decoder: map action parameters
+
+% OBSERVER\citep{wang1996learning}: \roni{Anyone can help here?}
+% Encoder: from binding to grounded
+% Decoder: from grounded predicates and actions to the binding they represent
+
+% LOCM~\citep{cresswell2013acquiring}:\yarin{I will complete this}
+% Encoder: identity for both state and actions
+% % action name and proxy for state predicates
+% Decoder: translate proxy predicates to original predicates
+
+% \roni{Most important: anyone can help here?}
+
+\subsection{Non-Classical Domain Model Learning}
+% \roni{For all: please read and let me know what you think by adding comments in the text (e.g., add text like this ``[[YourName: bla bla bla'']]) or editting.}
+% Different input representations
+The proposed encoder-decoder evaluation paradigm is designed to be flexible and extensible. 
+We list several such directions and outline how our evaluation paradigm can be modified to support them. 
+
+\miniparagraph{Non-symbolic input representation}
+Some domain model learning algorithms are designed to learn from trajectories in which the states are images or given in some other non-symbolic representation, which may be images~\citep{asai2020learning,asai2022classical,xi2024neuro} or even natural language description of the domain~\citep{lindsay2017framer,liu2023llm+, guan2023leveraging}.%\roni{Maybe some recent LLM-based approach?}\yarin{I added LLM+P and LLM+PDDL} GREAT!
+Using a domain simulator, an encoder for the initial state, and a decoder for the resulting plans' actions, one can still compute all problem solving and predicted applicability metrics. 
+Computing predicted effects would also require a decoder to translate a PDDL state to an image, which may be more challenging to implement. 
+% Similar\yarin{the word left in by mistake?}TNX
+
+
+\miniparagraph{Learning non-classical planning domain models}
+Some domain model learning algorithms accept symbolic trajectories as input but still output non-classical domain models. For example, PI-SAM~\citep{le2024learning} outputs a conformant planning domain model, and ROSAME~\citep{xi2024neuro} outputs a Probabilistic PDDL model. 
+% \roni{I vaguely remember some other work that does this, maybe}
+Adapting the predictive power metrics to such cases may not be trivial, but the problem-solving metrics can be adapted in a straightforward manner. 
+
+
+% Beyond discrete
+Some prior work also considered learning domain models that include mixed discrete and continuous state variables~\citep{segura2021discovering,mordoch2023learning}. 
+Adapting our evaluation paradigm to such setups is also possible. 
+The predicted applicability metrics can be computed as-is, considering both numeric and discrete preconditions.
+Problem-solving metrics are easily adaptable, but will require a tolerance of some sort to account for numeric precision issues. 
+More involved is the predicted effects metric, which may require defining some loss function for the numeric effects, as learning exactly the same numeric effects as in the reference domain model is unrealistically challenging. 
+
+
+% Note that in all of these variants and generalizations, the encoder-decoder mechanism allows seamless use of the problem-solving metrics. 
+
+
+
+
+
+% % Beyond input
+% In particular, it can be extended to support input trajectories that are given in representations that are different from classical planning, such as images or other types of data. 
+% Another possible extension is to allow the action model learning algorithm to output a domain model that uses a more general type of planning. 
+% For example, the action model learning algorithm may output a domain model that uses a probabilistic~\citep{xi2024neuro} or partially observable representation~\citep{le2024learning}. 
+
+
+
+
+% \yarin{We can add a section on trajectories with not successful actions too @Argaman}
+% \argaman{I think the paper is already too packed to add this to the discussion...}
+% % Online metrics 
+% \todo{Maybe talk about metrics for online learning}
+
+
+
+
+%\subsection{Relation to Model Reconciliation}
+%\roni{Pascal and Mauro: maybe put here is a discussion on what is model reconciliation and how it relates to our work, and existing model reconciliation metrics?}
+
+
+%\roni{Pascal and Mauro: same for model repair?}
+
+% \subsection{Trade-Offs and Limitations}
+% \brendan{There is a lot of discussion earlier about the motivation for the metrics, but we should recap and include some other bits that did not make it in earlier in this section. I added the above subsection header, and I propose as a start something like the following:\\
+% We have proposed two families of metrics with complementary strengths and weaknesses, state-based and problem-based. The state-based metrics are easy to compute and thus provide a clear, well-defined benchmark for estimating the predictive power of methods. This is in contrast to the problem-based metrics that rely on the use of planners that are compute-intensive and, depending on the resources available, may have rather different success rates for the same model representation. The downside of state-based metrics is that in contrast to classical machine learning settings, the ``data distribution'' in planning is highly \emph{non-stationary} (not ``i.i.d.''):  Although the states in the benchmarks were selected to be representative of those visited on trajectories collected using the reference model, this may change. Indeed, the states encountered on a trajectory generated by a planner using a given learned domain-model representation depend on the model. Planners can exploit deficiencies in the learned representation to systematically visit states that are erroneously modeled, if those errors make goals easier to achieve. Thus, the state-based metrics may sometimes be a poor proxy for the utility of the learned model for planning, and here, the problem-based metrics are crucial.}
+% \roni{This is super. I'll incorporate it in.}
+
+\section{Discussion}
+We explored three families of metrics: syntactic similarity, predictive power, and problem-solving ability. 
+There is an interesting trade-off between these families of metrics. 
+The syntactic similarity is the easiest to compute, as it only requires comparing the learned domain with a reference domain. However, they are arguably the least useful, and computing them requires many assumptions (Assumptions A1 and A2 above). 
+The predictive power metrics characterize well a desirable property of a domain model, and are still relatively easy to compute. 
+The downside of these metrics is that in contrast to classical machine learning settings, the ``data distribution'' in planning is highly \emph{non-stationary} (not ``i.i.d.''):  Although the states in the benchmarks were selected to be representative of those visited on trajectories collected using the reference model, this may change. Indeed, the states encountered on a trajectory generated by a planner using a given learned domain-model representation depend on the model. Planners can exploit deficiencies in the learned representation to systematically visit states that are erroneously modeled, if those errors make goals easier to achieve. Thus, the predictive power metrics can be a poor proxy for the utility of the learned model for planning. The problem-based metrics fill in this gap, but, of course, they are the hardest to compute as they require running a planner to compute them. 
+
+
+
+% providing a clear, well-defined benchmark for estimating the predictive power of method
+
+
+% and are still 
+% easy to compute and thus provide a clear, well-defined benchmark for estimating the predictive power of methods. This is in contrast to the problem-based metrics that rely on the use of planners that are compute-intensive and, depending on the resources available, may have rather different success rates for the same model representation. The downside of state-based metrics is that in contrast to classical machine learning settings, the ``data distribution'' in planning is highly \emph{non-stationary} (not ``i.i.d.''):  Although the states in the benchmarks were selected to be representative of those visited on trajectories collected using the reference model, this may change. Indeed, the states encountered on a trajectory generated by a planner using a given learned domain-model representation depend on the model. Planners can exploit deficiencies in the learned representation to systematically visit states that are erroneously modeled, if those errors make goals easier to achieve. Thus, the state-based metrics may sometimes be a poor proxy for the utility of the learned model for planning, and here, the problem-based metrics are crucial.}
+% \roni{This is super. I'll incorporate it in.}

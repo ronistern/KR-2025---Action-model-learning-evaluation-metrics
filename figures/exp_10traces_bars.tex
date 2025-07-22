@@ -1,51 +1,53 @@
 
-\begin{figure}[ht]
+\begin{figure*}[ht]
 % \label{fix:exp-results}
   \centering
 
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/syn_precision.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/syn_precision.png}
     \caption{Syntactic precision}
+    \label{fig:syn-precision}
   \end{subfigure}
-  \hfill
+  % \hfill
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/syn_recall.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/syn_recall.png}
     \caption{Syntactic recall}
   \end{subfigure}
 
   \vspace{1em}
 
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/app_precision.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/app_precision.png}
     \caption{Applicability precision}
   \end{subfigure}
-  \hfill
+  % \hfill
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/app_recall.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/app_recall.png}
     \caption{Applicability recall}
   \end{subfigure}
 
   \vspace{1em}
 
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/predeffs_precision.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/predeffs_precision.png}
     \caption{Predicted effects precision}
   \end{subfigure}
-  \hfill
+  % \hfill
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/predeffs_recall.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/predeffs_recall.png}
     \caption{Predicted effects recall}
   \end{subfigure}
 
   \vspace{1em}
 
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/solving.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/solving.png}
     \caption{Problem solving ratio}
+    \label{fig:solving-ratio}
   \end{subfigure}
-  \hfill
+  % \hfill
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{figures/10_traces/false_plans.png}
+    \includegraphics[width=\textwidth]{figures/10_traces/barplots/false_plans.png}
     \caption{False plans ratio}
     \label{fig:false-positive-plans}
   \end{subfigure}
@@ -54,4 +56,4 @@
   % \caption{Evaluation metrics when learning from a training set $\Ttrain$ with $10$ traces for every domain.}
 \caption{Evaluation metric values for the models learned by \sam, \offlam, \nolam in every benchmark domain. The training set $\Ttrain$ includes $10$ trajectories for every domain.}
   % \label{fig:exp}
-\end{figure} 
+\end{figure*} 
