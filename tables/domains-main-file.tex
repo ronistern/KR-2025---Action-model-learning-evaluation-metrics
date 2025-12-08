@@ -6,7 +6,7 @@
     \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|}
     % \toprule
     \hline
-    Domain & $|A|$ & $|P|$ & Types & Const. & \multicolumn{2}{c|}{$A$ arity} & \multicolumn{2}{c|}{$P$ arity} & Neg. & Inj. \\ 
+    Domain & $|A|$ & $|P|$ & Types & Const. & \multicolumn{2}{c|}{$A$ arity} & \multicolumn{2}{c|}{$P$ arity} & Del. & Inj. \\ 
      &  &  & & & $min$ & $max$ & $min$ & $max$ & pre.  & ass. \\ \hline
     % \midrule
 barman & 12 & 15 & 9 & no & 2 & 6 & 1 & 2 & no & yes \\ %
@@ -34,8 +34,10 @@ transport & 3 & 5 & 6 & no & 3 & 5 & 2 & 2 & no & yes \\ %
     % \hline
     \end{tabular}
     }
-    \caption{Details about the benchmark domains that are relevant to domain model learning algorithms. The columns from left to right correspond to the name of the domain; the number of lifted actions, lifted predicates , and types; if there are constants; the min. and max. arity of the actions; the min. and max. arity of the predicates; if a literal can be a delete effects without being a preconditions; and if the 
-    injective binding assumption holds~\citep{juba2021safe}, i.e., 
-    whether a grounded action may map the same object to multiple parameters.}
+    \caption{\small{Details about the benchmark domains that are relevant to domain model learning algorithms. Columns from left to right: domain name; number of lifted actions, lifted predicates , and types; if there are constants; the min. and max. arity of the actions; the min. and max. arity of the predicates; if a literal can be a delete effects without being a preconditions; and if the 
+    injective binding assumption holds, i.e., whether there is a unique mapping from grounded action parameters to objects~\citep{juba2021safe}.\roni{Change above to explain what injective binding is}}}    
+    % \roni{IMPORTANT: I am not sure the column Neg. pre. means what it says in the caption. Doesn't it mean the domain has a negative fluent as a precondition? Perhaps we need an additional column for having negative preconditions and for having delete effects that are not preconditions? not sure. Thoughts?}
+    % \leo{I am not sure either, I think the column Neg. pre. described in the caption currently have a misleading name, should we rename it (e.g. $\mathit{eff}^-\subseteq \mathit{pre}$)? I think we can add a column for the existence of negative preconditions, though in the benchmark there is no domain with negative precs}}
+    % , i.e.,     whether a grounded action may map the same object to multiple parameters.}} FOR SPACE
     \label{tab:domains}
 \end{table}

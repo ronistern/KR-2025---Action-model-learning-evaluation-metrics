@@ -1,14 +1,15 @@
 \begin{table}[bt]
 \centering
 \resizebox{\columnwidth}{!}{
-\begin{tabular}{|p{3.7cm}|c|c|c|c|c|}
+\begin{tabular}{|p{5cm}|c|c|c|c|c|c|}
 % \hline
 \hline % toprule
-\multirow{2}{*}{\textbf{Algorithm}} & \multirow{2}{*}{\textbf{\makecell{Syn.\\Sim.}}} 
+\multirow{2}{*}{\textbf{Algorithm}} & \multirow{2}{*}{\textbf{\makecell{Syn.\\Sim.}}}
+& \multirow{2}{*}{\textbf{\makecell{HDE}}}
 & \multicolumn{2}{c|}{\textbf{Predict. Pow.}} 
 & \multicolumn{2}{c|}{\textbf{Prob. Solv.}} \\
-\cline{3-6}
-\textbf{} & \textbf{} & \textbf{App.} & \textbf{Eff.} & \textbf{Solv.} & \textbf{Failed} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
+\cline{4-7}
+\textbf{} & \textbf{} &\textbf{} & \textbf{App.} & \textbf{Eff.} & \textbf{Solv.} & \textbf{Fail} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
 \hline  % midrule
 
 % \multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{\textbf{Syntactic}} & \multicolumn{2}{c|}{\textbf{Predictive Power}} & \multicolumn{2}{c|}{\textbf{Problem Solving}}\\
@@ -17,35 +18,96 @@
 % \hline
 
 % ARMS\footnote{\cite{yang2007learning}} & V & X & X & X & X  \\
-ARMS \smallcite{yang2007learning} & \cmark & \xmark & \xmark & \xmark & \xmark  \\
+ARMS \smallcite{yang2007learning} & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark  \\
 \hline
 SLAF 
-\smallcite{amir2008learning}$^{(*)}$& \xmark & \xmark & \xmark & \xmark & \xmark  \\
+\smallcite{amir2008learning}$^{(*)}$& \xmark & \xmark & \xmark & \xmark & \xmark & \xmark  \\
 \hline
 FAMA 
-\smallcite{aineto2019learning} & \cmark & \cmark & \cmark & \xmark & \xmark  \\
+\smallcite{aineto2019learning} & \cmark & \xmark & \cmark & \cmark & \xmark & \xmark  \\
 \hline
-LOCM \smallcite{cresswell2013acquiring} & \xmark & (**) & (**) & \xmark & \xmark  \\
+LOCM \smallcite{cresswell2013acquiring} & \xmark & \xmark & (**) & (**) & \xmark & \xmark  \\
 \hline
-OffLAM \smallcite{LAMANNA2025104256} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
+OffLAM \smallcite{LAMANNA2025104256} & \cmark & \xmark & \xmark & \xmark & \cmark & \cmark  \\
 \hline
-NOLAM \smallcite{Lamanna24} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
+NOLAM \smallcite{Lamanna24} & \cmark & \xmark & \xmark & \xmark & \cmark & \cmark  \\
 \hline
 % Framer \smallcite{lindsay2017framer} & \cmark\footnotemark[\value{footnote}] & \xmark & \xmark & \xmark & \xmark  \\ RONI: THIS ONE LEARNS FROM NL, NOT FROM SYMBOLIC TRAJECTORIES.
 % \hline
-\sam \smallcite{juba2021safe} & (***) & \xmark & \xmark & \xmark & \xmark  \\
+SAM \smallcite{juba2021safe} & (***) & \xmark & \xmark & \xmark & \xmark & \xmark  \\
 \hline
-Cond-SAM \smallcite{mordoch2024safe} & \cmark & \xmark & \xmark & \cmark & \xmark  \\ % Conditional-SAM
+Cond-SAM \smallcite{mordoch2024safe} & \cmark & \xmark & \xmark & \xmark & \cmark & \xmark  \\ % Conditional-SAM
 \hline % \bottomrule
 % \textbf{Stochastic SAM~\citep{juba2022learning}} &  &  &  &  &  &  \\ % none of them ? theoretic only ?
 % \hline
 % \textbf{LATPLAN~\citep{asai2018classical}} &  &  &  &  &  &  \\
 % \hline
-ROSAME \smallcite{xi2024neuro} & \cmark & \xmark & \xmark & \xmark & \xmark   \\
+ROSAME \smallcite{xi2024neuro} & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark   \\
 \hline
+NL2PDDL\smallcite{Oswald2024DLLMDomainModeling}$^{(****)}$& \cmark & \cmark & \xmark & \xmark & \xmark & \xmark    \\
+\hline
+
 \end{tabular}
 }
-\caption{Evaluation metrics used in prior works on domain model learning. These metrics are defined later in this paper. %Sections~\ref{sec:problem-setting} and~\ref{sec:metrics} \yarin{blank ref}. 
-(*) Only reported runtime results. (**) Measured how many instances were required to ``converged'', i.e., reached where more data is not helpful, and whether the domain is isomorphic to a reference domain model. (***) Measured the number of trajectories needed until the reference domain model is learned.}
+\caption{\small{Evaluation metrics used in prior works on domain model learning. These metrics are defined later in this paper. %Sections~\ref{sec:problem-setting} and~\ref{sec:metrics} \yarin{blank ref}. 
+(*) Only reported runtime results. 
+(**) Measured how many instances were required to ``converge'', i.e., reached where more data is not helpful, and whether the domain is isomorphic to a reference domain model. (***) Measured the number of trajectories needed until the reference domain model is learned. \roni{Added this "footnote":} (****) They used a Large Language Model (LLM) to learned a domain without knowing the actions' signatures, so they also measured syntactic errors.}}
 \label{tab:metric-using-comparison}
 \end{table}
+
+
+% \begin{table}[bt]
+% \centering
+% \resizebox{\columnwidth}{!}{
+% \begin{tabular}{|p{5cm}|c|c|c|c|c|}
+% % \hline
+% \hline % toprule
+% \multirow{2}{*}{\textbf{Algorithm}} & \multirow{2}{*}{\textbf{\makecell{Syn.\\Sim.}}} 
+% & \multicolumn{2}{c|}{\textbf{Predict. Pow.}} 
+% & \multicolumn{2}{c|}{\textbf{Prob. Solv.}} \\
+% \cline{3-6}
+% \textbf{} & \textbf{} & \textbf{App.} & \textbf{Eff.} & \textbf{Solv.} & \textbf{Fail} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
+% \hline  % midrule
+
+% % \multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{\textbf{Syntactic}} & \multicolumn{2}{c|}{\textbf{Predictive Power}} & \multicolumn{2}{c|}{\textbf{Problem Solving}}\\
+% % \hline
+% % \textbf{Alg + Ref.} & \textbf{Similarity} & \textbf{Applicability} & \textbf{Effects} & \textbf{Solving ratio} & \textbf{Failed ratio} \\ % \textbf{Syntactic Similarity} \textbf{Predicted applicability} & \textbf{Predicted effects} \textbf{Plan failed ratio}
+% % \hline
+
+% % ARMS\footnote{\cite{yang2007learning}} & V & X & X & X & X  \\
+% ARMS \smallcite{yang2007learning} & \cmark & \xmark & \xmark & \xmark & \xmark  \\
+% \hline
+% SLAF 
+% \smallcite{amir2008learning}$^{(*)}$& \xmark & \xmark & \xmark & \xmark & \xmark  \\
+% \hline
+% FAMA 
+% \smallcite{aineto2019learning} & \cmark & \cmark & \cmark & \xmark & \xmark  \\
+% \hline
+% LOCM \smallcite{cresswell2013acquiring} & \xmark & (**) & (**) & \xmark & \xmark  \\
+% \hline
+% OffLAM \smallcite{LAMANNA2025104256} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
+% \hline
+% NOLAM \smallcite{Lamanna24} & \cmark & \xmark & \xmark & \cmark & \cmark  \\
+% \hline
+% % Framer \smallcite{lindsay2017framer} & \cmark\footnotemark[\value{footnote}] & \xmark & \xmark & \xmark & \xmark  \\ RONI: THIS ONE LEARNS FROM NL, NOT FROM SYMBOLIC TRAJECTORIES.
+% % \hline
+% SAM \smallcite{juba2021safe} & (***) & \xmark & \xmark & \xmark & \xmark  \\
+% \hline
+% Cond-SAM \smallcite{mordoch2024safe} & \cmark & \xmark & \xmark & \cmark & \xmark  \\ % Conditional-SAM
+% \hline % \bottomrule
+% % \textbf{Stochastic SAM~\citep{juba2022learning}} &  &  &  &  &  &  \\ % none of them ? theoretic only ?
+% % \hline
+% % \textbf{LATPLAN~\citep{asai2018classical}} &  &  &  &  &  &  \\
+% % \hline
+% ROSAME \smallcite{xi2024neuro} & \cmark & \xmark & \xmark & \xmark & \xmark   \\
+% \hline
+% NL2PDDL \smallcite{Oswald2024DLLMDomainModeling} & \cmark & \cmark & \cmark & (****) & (****)   \\
+% \hline
+
+% \end{tabular}
+% }
+% \caption{\small{Evaluation metrics used in prior works on domain model learning. These metrics are defined later in this paper. %Sections~\ref{sec:problem-setting} and~\ref{sec:metrics} \yarin{blank ref}. 
+% (*) Only reported runtime results. 
+% (**) Measured how many instances were required to ``converge'', i.e., reached where more data is not helpful, and whether the domain is isomorphic to a reference domain model. (***) Measured the number of trajectories needed until the reference domain model is learned. (****) They using a different metric }}
+% \label{tab:metric-using-comparison}
+% \end{table}

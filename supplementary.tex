@@ -1,36 +1,163 @@
-\supplementary{
+% \supplementary{
 \clearpage
-\onecolumn
-% \leo{there is a command in the preamble to hide supplementary material}
-\section*{Supplementary Material: Submission \#316}
+% \onecolumn
+
+\section*{Supplementary Material: Submission \#12855}
+
 %
 % \subsection{IPC Domains Statistics} roni: moved to the main tex
 % \input{tables/domains}
 %
-\vspace{0.8cm}
-\subsection{Training Set $\Ttrain$ Statistics}
+
+We provide additional details on the proposed benchmark and experimental results. Table \ref{tab:traj-stats-10} shows the average number of states, objects and actions in the set $\Ttrain$ of $10$ trajectories for every domain.
+%
 \input{tables/trainset_10}
-\vspace{1cm}
+%
+
+Figure \ref{fig:obj-states-trajs-10} reports the number of objects and states in each trajectory averaged over all domains. Notice that the trajectories are sorted by the number of objects. 
 \input{figures/trainset_10}
-\vspace{4cm}
-\subsection{Detailed Experimental Results}
-\input{tables/bests}
-\input{figures/exp_10traces}
-% \clearpage
 
 
-\clearpage
-\subsection{Additional Experimental Results}
-We also conducted an additional experiments where we generated a training set $\hat{T}_{train}$ with only $2$ trajectories with $10$ states for every domain. To generate this dataset, we produced heuristic plan by considering the $2$ most complex problem settings (in terms of number of objects) adopted for generating the training set with $10$ trajectories for every domain.
+In the following, we report additional detailed comments on the experimental results.
 
-\subsection{Training Set $\hat{T}_{train}$ Statistics}
+\miniparagraph{Syntactic similarity} 
+% Both \samshort{} and \nolam{} exhibited relatively low precondition precision ($<0.8$) across all domains, as they assume the presence of negative preconditions and include them in the learned domains. 
+% In contrast, \offlam{} assumes that domains do not include negative preconditions, which is a correct assumption for our benchmarks, leading to higher precision values.
+In terms of preconditions recall, \offlam{} and \nolam{} struggled to learn specific predicates due to domain inconsistencies (e.g., in \textsc{rovers}) or the presence of constants not bound to action parameters (e.g., in \textsc{childsnack}), while \samshort{}'s low values stemmed from its inability to learn some actions entirely, i.e., such actions have all the preconditions and no effects.
+% \roni{All this discusses preconditions. What about the syntactic similarity of effects?}
+% \leo{
+In terms of effects recall, both \offlam{} and \nolam obtained syntactic precision and recall of $1$ in all domains except \textsc{rovers} (because of inconsistent effects), \textsc{goldminer} (because of an unobserved negative effect), and \textsc{childsnack} (for an unobserved positive effect). \samshort{} achieved the same results except for \textsc{tpp}, where it only achieved 50\% recall for both positive and negative effects.
+% do we separate the two types in our evaluation?
+% However, the domains used in the experiments do not include negative preconditions. 
+% This is due to additional preconditions, as both algorithms include negative preconditions in the learned domains, which are always absent in the reference domains. For instance, in the \textsc{blocksworld} domain, the lifted action \textsc{pick\_up}$(x)$ for a block $x$ has the precondition $\textit{handempty}()$, which implies $\textit{holding}(x)$ is false. 
+% % However, the domains learned by \samshort{} and \nolam{} include such negative preconditions, which lowers their syntactic precision. 
+% In contrast, \offlam{} assumes domains do not include negative preconditions, resulting in more concise domains and higher precision. However, this metric's sensitivity to such additions is a limitation, as it can penalize the inclusion of predicates that implicitly hold true in the domain. 
+% Regarding the aggragated recall \roni{recall of preconditions or effects?} \argaman{The metric is calculated as a combination of the two.}, all algorithms performed similarly, with perfect recall in all but four domains -- \textsc{tpp}, \textsc{childsnack}, \textsc{goldminer} and \textsc{rovers}.
+% The lower recall in those domains mainly stem from missing effects.
+% A prominent example is \textsc{tpp} domain, with \samshort{} having the lowest recall (i.e., $0.5$). 
+% This is due to its assumption that actions cannot be executed with the same object bound to multiple parameters—an assumption that does not hold in this domain.\footnote{This is referred to as the \textit{injective binding assumption} in the \sam learning paper.} 
+% The ESAM algorithm remedies this limitation~\citep{juba2021safe}.
+% % In \textsc{childsnack} domain, \offlam and \nolam both 
+% \roni{This explains why SAM did not work well, but what about the other algorithms? what is unique in these domains. If we do not know, that is also Ok, this is not a paper that is intended to explain the algorithms just show the benchmark}
+% \leo{In \textsc{childsnack}, both \offlam{} and \nolam{} misses a positive precondition of action $put\_on\_tray$ involving a constant $kitchen$, since they do not support constants. On the opposite, \samshort{} do support constants. In \textsc{rovers}, all approaches cannot learn some positive and negative effects; indeed the IPC version of \textsc{rover} contains some inconsistent effects. In \textsc{gold-miner}, all approaches do not learn a negative effect because it is never observed in the trajectories.}
+
+
+
+\miniparagraph{Predicted applicability} 
+By design, \samshort{} and \offlam{} initially assume the preconditions of each lifted action to be the set of all possible preconditions, and remove unnecessary preconditions that are not consistent with the input trajectories, resulting in perfect applicability precision. Notably, \nolam{} achieves perfect applicability precision even without such an assumption.
+The only outlier is the \textsc{childsnack} domain, where both \nolam{} and \offlam{} have a slight decrease in the precision due to the constant in the domains (which is not supported by these algorithms).
+% in the precision due to $put\_on\_tray$'s precondition involving $kitchen$.
+% This results from the domain including a constant -- $kitchen$ -- in a predicate of the action $put\_on\_tray$'s preconditions. 
+% Indeed, this constant is not part of the action's parameters, which causes it not to be learned.
+% \roni{Not clear. Do you mean NOLAM and Offlam do not support constants and SAM does?}\leo{Yes, I added a comment about this in the previous paragraph}
+\offlam{} achieved the best performance in terms of applicability recall with perfect recall values in all domains except \textsc{barman}, which had a slight decrease in recall due to a single literal being misclassified as a precondition. 
+% \leo{with only a slight decrease in its recall value due to a false positive precondition for action $empty\_shot$. This results from \offlam{} assuming no negative preconditions, which prevents it from learning unnecessary ones.}
+% allows to remove redundant ones with less observations than \samshort{} and \nolam{} that assume the existence of negative preconditions as well. 
+Notably, the unnecessary negative preconditions learned by \samshort{} and \nolam{} only significantly impacted the recall for the \textsc{tpp} domain; indeed, all other domains had applicability recall values exceeding $0.6$. 
+
+
+\miniparagraph{Predicted effects} 
+While \offlam, \samshort, and \nolam achieved $1$ predicted effects precision and recall, we found that, if the predicted effects recall (resp. precision) of \rosame is lower than $1$ in some learned domain, then the syntactic recall (resp. precision) of the domain is always lower than $1$ for positive or negative effects. 
+% Across all domains, all algorithms achieved perfect precision and recall. This is attributed to the fact that each action in the trace dataset was observed at least once, ensuring that all effects present in the training trajectories were successfully learned.\roni{Not convincing. Observing once is not enough.}
+% All algorithms achieved perfect precision and recall across all domains. 
+% By design, \samshort{} and \offlam{} provides effects syntactic precision equal to $1$ (this also holds for \nolam{} as the trajectories are un-noisy and fully observable), since an action's effect is learned only when a literal becomes true/false after observing such action execution in some trajectory transition. This prevents \samshort{} and \offlam{} from learning unnecessary effects, hence making the false positives for the predicted effects equal to $0$, and the precision equal to $1$. 
+% Furthermore, the predicted effects only consider actions applicable according to the learned domain and real environment, and every lifted action execution is observed at least once in the set of trajectories. Therefore, evaluating the actions is only performed when the actions are applicable according to the learned domain. Thus, resulting in states that were already observed in the train trajectories.
+% % Other approaches that are less conservative than our tested algorithms might perform a different approach to learning the effects, resulting in different predictive values. 
+% Other, less conservative approaches may follow different effect-learning strategies, potentially leading to different precision and recall outcomes.
+
+% when evaluating the predicted effects of an action
+% $a$ in a state $s$, there is a trajectory state which satisfies the precondition of $a$ as $s$ does (otherwise $a$ would not be applicable in $s$), and thus if a literal does not change after executing $a$ in such trajectory state, then either the literal is not an effect of $a$ or it is both an effect and a precondition of $a$, which already holds in $s$ (e.g. a positive effect which is already true in $s$). Hence FN equals $0$ and the predicted effects recall equals $1$.
+% precision equals 1 because of the effects syntactic precision being equal to 1 and the preconditions being a superset of the real preconditions: no false effects implies no `false changes` in the destination state reached after executing an applicable action. 
+
+
+
+\miniparagraph{Problem-solving} 
+% SAM [Problem solving]
+% elevators: low syntactic precision for negative preconditions, effects syntactic precision and precs pos recall are 1, while precs pos precision is 0.7
+% nomystery: low syntactic precision for negative preconditions
+% rovers: low syntactic precision for negative preconditions
+% tpp: low syntactic precision for negative preconditions and low recall for positive/negative effects
+In \textsc{elevators, nomystery,} and \textsc{rovers}, \samshort problem solving $\le 0.2$, i.e., for almost all problems no plan is found because of unnecessary negative preconditions; similarly in \textsc{tpp}, where the domain learned by \samshort also lacks both negative and positive effects for $2$ out of $4$ lifted actions.  
+%
+% ROSAME [Problem solving]
+% childsnack: all false plans
+% matchingbw: almost no plan is computed
+% rovers: almost no plan is computed, 90% unsolvable
+% barman
+% elevators
+% floortile
+% goldminer
+% tpp
+% parking
+%
+% NOLAM [Problem solving]
+% elevators: 90% unsolvable
+% nomystery: 90% unsolvable, 10% timed out
+% childsnack: 100% false plans
+% tpp: 100% unsolvable
+%
+%
+With the domains learned by \rosame and \nolam, in \textsc{childsnack} a solution plan is always found, however, the plan is never valid. 
+Additionally, in \textsc{elevators, nomystery} and \textsc{tpp}, almost all problems are deemed unsolvable when planning with \nolam domains; similarly for \rosame in \textsc{matchingbw} and \textsc{rovers}.
+
+% \offlam{} achieved the highest problem-solving ratio across all domains except for \textsc{childsnack} and \textsc{goldminer}. Notably, in the \textsc{nomystery} and \textsc{tpp} domains, it is the only algorithm to produce a model capable of solving the entire test set.
+% In the \textsc{elevators} and \textsc{rovers} domains \offlam highly outperforms both \samshort{}, \rosame and \nolam{} with 85\%, 95\% and 80\% average increase in the 
+% solving rates respectively.
+%
+% 
+%
+%
+%
+%
+% The difficulty in solving problems for \samshort{} and \nolam{} is mainly due to the learned domains having unnecessary negative preconditions. 
+% Specifically, in these domains, the actions had high arity which resulted in many negative preconditions that were created for them (see Table~\ref{tab:domains} for reference). 
+% In \textsc{childsnack}, both \offlam{} and \nolam{} produced inapplicable plans due to the missing precondition involving the unsupported constant.
+% % of $put\_on\_tray$ involving the unsupported constant $kitchen$. 
+% % This results from the domain having a constant that was not properly learned by these algorithm which was part of the action $put\_on\_tray$'s preconditions.
+% % An exception is the \textsc{childsnack} domain, which includes a constant unsupported by both NOLAM and OffLAM. 
+% % \roni{Repetition of the sentence above?}\leo{yes, removed}
+% % Although plans were generated, they were deemed inapplicable, as shown in Figure~\ref{fig:false-positive-plans}.
+% Similarly, the plans produced with the models learned by \offlam{} are inapplicable due to a missing negative effect, which affects the precondition of subsequent plan actions.
+% % $(not\; (gold\_at\; ?y))$ of action $fire\_laser$, which affects the precondition of subsequent plan actions.
+% % We also observed that in the \textsc{goldminer} all of the plans generated using the domains \offlam learned were deemed inapplicable. This resulted from \offlam not learning the effect $(not\; (gold\_at\; ?y))$ which was crucial to the consistency of the resulting plans. 
+% % Because 
+% Such an effect was never observed in the input trajectories. Interestingly, \sam and \nolam, learned the unobserved negative effect as a negative precondition, which allows computing valid plans.
+
+% \input{tables/bests_mini}
+
+% \roni{Important: Can we add to the domains table the columns: Constants (Const.), Injective binding (Inj. Bind), and Negative preconditions (Neg. Pre.)? this will connect to the reults we observed.}
+% \leo{added. I am not sure about the injective binding assumption since even though an action can take as input objects of the same type, then the fact that it (can) actually involves the same object multiple times depends on the domain and traces. I am not sure this is easily deducible from the action signature only, as I currently did}
+
+
+% \roni{The results are Ok. Perhaps would be good to add a summary paragraph that says something like As the results show, different algorithms work well in different domains and for different metrics. }
+% \leo{I wrote a draft for this }
+
+% \leo{
+\miniparagraph{Results summary} 
+Table \ref{tab:best-10traces} lists the best performance for each metric and domain on the proposed benchmark. The superscripts in each cell indicate which of the evaluated algorithms --- \samshort{}, \offlam{}, \rosame, and \nolam{} --- obtained the best performance in this metric and domain. 
+%
+As the results show, while the evaluated algorithms achieve impressive performance in the proposed benchmark, different algorithms perform better in different domains and for different metrics. 
+% For example, \offlam{} provides better syntactic precision than \samshort{} and \nolam{} in all domains. 
+% However, it fails to solve some test problems in \textsc{goldminer} since it does not learn a negative effect that is never observed in the input trajectories, while \sam and \offlam{} learn such an effect has a negative precondition, which enables them to some the test problems in \textsc{goldminer}. 
+% % are not learned, as in \textsc{goldminer} domain; while this is not the case for \samshort{} and \nolam{}. 
+% Indeed, the syntactic precision performance gap between \offlam{} and other approaches (Figure \ref{fig:syn-precision}) is not reflected in terms of problem-solving (Figure \ref{fig:solving-ratio}) as, e.g., in domain \textsc{matchingbw}. 
+% This provides empirical evidence of the drawbacks in syntactic similarity discussed in Section \ref{sec:problem-setting}.
+% Interestingly, the different approaches to deal with action objects binding can significantly impact the performance in domains where the injective action binding assumption is violated, as in \textsc{elevators} and \textsc{tpp}.  
+
+\input{tables/bests_10traces}
+
+
+\subsection{Additional Experiment}
+We also conducted an additional experiment where we generated a training set $\hat{T}_{train}$ with only $2$ trajectories with $10$ states for every domain. To generate this dataset, we considered the $2$ most complex problem settings (in terms of number of objects, see Figure \ref{fig:obj-states-trajs-10}) used for generating $\Ttrain$ for every domain, and we produced plans with FastDownward and the greedy configuration. Further details on the trajectories in $\hat{T}_{train}$, grouped by domain, are reported in Table \ref{tab:traj-stats-2}. A summary with the best metrics and detailed evaluation results are shown in Table \ref{tab:best-2traces} and \ref{tab:metrics-2traces}, respectively.
+
+% \subsection{Training Set $\hat{T}_{train}$ Statistics}
 \input{tables/trainset_2}
-\vspace{1cm}
-\input{figures/trainset_2}
-\input{figures/exp_2traces}
+
 
 \input{tables/bests_2traces}
-}
+
+\input{tables/all_metrics_2traces}
+% }
 
 % RONI: I HOPE YOU ALSO SLEEP SOMETIME ;)
 

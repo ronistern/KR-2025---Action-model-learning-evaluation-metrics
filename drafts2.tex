@@ -123,3 +123,129 @@ For the evaluation of learned domain models $M$ using the syntactic similarity m
 Note that the models learned by SAM, \offlam{} and \nolam{} use the input representation ($R_E$), so the proposed encoder-decoder mechanism was not needed.
 %
 %\subsection{Evaluation Paradigm}
+
+
+
+
+
+
+
+\section{Older Version}
+
+
+
+
+
+
+
+% Syntactic similarity metrics
+\subsection{Syntactic Similarity Metrics}
+% \paragraph{Assumptions} 
+Many prior works on learning domain models evaluated the learned model by syntactically comparing it to a \emph{reference domain model} (or ground truth model), denoted by $\realm$. This type of evaluation relies on the assumption that a reference domain model 
+is available and that it accurately captures the relevant aspects of the environment. 
+This assumption is reasonable when evaluating domain model learning algorithms in some controlled environment, e.g., for research purposes. 
+Under this assumption, several metrics have been proposed to quantify the \emph{syntactic similarity} between the learned domain model and the reference domain model~\citep{garrido2024challenges,mordoch2023safe,xi2024neuro,Oswald2024DLLMDomainModeling}.
+% \roni{Others who have used, please add citations}
+These syntactic similarity metrics typically compare the intersection or difference of the literals in the actions' preconditions and effects between the learned and reference domain models. 
+We define these common metrics below. 
+Let $M$ be the evaluated domain model, $a$ an action, and $\pre_M(a)$ the preconditions of $a$ according to $M$.
+% Similarly, we denote by $L_a$ the set of all parameter-bound literals associated with action~$a$.[roni: I don't think this is a good fit for here, following CM's comment]
+
+% \cm{"parameter-bound literals" needs to be defined. Also, at this point, it's not clear what the model learner is given. Are we using the same types? Same objects? Same action signatures? What about same fluent names with different number of parameters? I guess all these questions are why we need new metrics beyond the syntactic ones, but some of the assumptions that go into using these (syntactic) metrics would be useful to stipulate.}\roni{Hmm. You're right there's some blunder in the text above. I removed ``parameter-bound literal'' altogether and stayed with simply literals.}
+
+% Let $M$ and $\realm$ be the evaluated and real domains, respectively, and let $a$ be an action. We denote by $\pre_M(a)$ and $\eff_M(a)$ the preconditions and effects, respectively, of action $a$ according to domain $M$.
+ \begin{itemize}
+    \item True Positives: TP$_\pre(a)=|(\pre_M(a)\cap \pre_\realm(a)|$
+    \item False Positives: FP$_\pre(a)=|((\pre_M(a)\setminus \pre_\realm(a)|$
+    \item True Negatives: TN$_\pre(a)=|L \setminus(\pre_M(a)\cup \pre_\realm(a))|$
+    % , where $L_a$ is the set of all parameter-bound literals for an action $a$.
+    \item False Negatives: FN$_\pre(a)=|(\pre_\realm(a)\setminus \pre_M(a))|$
+\end{itemize}
+% \roni{Maybe shorten the next couple of sentences if needed}
+The following standard metrics from statistical analysis can then be computed based on these values for each action:
+\begin{itemize}
+    \item \textbf{Syntactic Precision}: $P_\pre(a)=\frac{TP(a)}{TP(a)+FP(a)}$
+    \item \textbf{Syntactic Recall}: $R_\pre(a)\frac{TP(a)}{TP(a)+FN(a)}$
+\end{itemize}
+Other metrics, such as Accuracy and F1-score, can also be computed based on these values. 
+To obtain an overall precision and recall for preconditions of the entire domain model, one can compute the average of the precision and recall values for all actions:
+$P_\text{avg}=\frac{1}{|A|}\sum_{a\in A} P(a)$ and $R_\text{avg}=\frac{1}{|A|}\sum_{a\in A} R(a)$, where $P(a)$ and $R(a)$ are the precision and recall of action $a$, respectively. 
+The same metrics can be defined for the effects of actions, with the only difference being that the literals in the effects are used instead of those in the preconditions. 
+
+% As discussed above, while the syntactic similarity metrics are easy to compute, they do not accurately reflect functional differences between learned and original models. In addition, these metrics are not well-defined when the learned model and the original model have different action signatures for actions, predicates, or object types. Next, we present our domain model evaluation paradigm, which includes a set of metrics that measure model predictiveness and effectiveness and overcome representation differences between the learned domain model and the real domain model. 
+%\mauro{add here the notion of strong/weak equivalence, and the metrics based on graph similarity}
+% \roni{TODO: Add an eexample}
+% \gregor{Proposed this ``pathological'' example}
+% \roni{Not sure about this. It is just an example, not a "corner case".}
+% \roni{We need to split this example. The first part just explains how to compute the precision and recall. The second part shows why this is a bad metric. The second part should be moved to the be under the ``Drawbacks in Syntactic Similarity'' subsection later.}
+% \begin{example}
+% Consider a delivery scenario. The reference domain model has predicates $at$, $in$, and $contains$ to describe that a truck or package is at a location, a package is in a truck, and a truck contains a package, respectively.
+% The action \textsc{unload} has three parameters $\ell, t,$ and $p$ (i.e., location, truck, and package).
+% In $\realm$, its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$, and its effects are $\neg \textit{in}(p,t), \neg \textit{contains}(t,p),$ and $\textit{at}(p,t)$.
+% A learned model could conceivably have the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{contains}(t,p)$.
+% Then, it would have syntactic recall and precision for the effects of $1$, but for the preconditions it would be $\frac 1 2$. 
+% \end{example}
+\begin{example}
+% Consider an action $\textsc{unload}(\ell, t, p)$. 
+% In the reference model its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$, and its effects are $\neg \textit{in}(p,t), \neg \textit{contains}(t,p),$ and $\textit{at}(p,t)$.
+% In the learned model it has the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{contains}(t,p)$. 
+% Then, its syntactic recall and precision is $1$ for the effects and $\frac 1 2$ for the preconditions. 
+Consider an action $\textsc{unload}(\ell, t, p)$, indicating that the truck $t$ at location $l$ unloads the package $p$. 
+In the reference model, its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$, and its effects are $\neg \textit{in}(p,t)$ and $\textit{at}(\ell,p)$.
+In the learned model it has the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{at}(\ell, p)$. 
+Then, its syntactic recall and precision is $1$ for the effects and $\frac 1 2$ for the preconditions. 
+\end{example}
+% \roni{Simplified the example text. Please verify I didn't miss.}
+% \leo{i did not fully understand the example, I try to slighlty rephrase it below:
+% \begin{example}
+% Consider an action $\textsc{unload}(\ell, t, p)$, indicating that the truck $t$ at location $l$ unloads the package $p$. 
+% In the reference model, its preconditions are $\textit{at}(\ell, t)$ and $\textit{in}(p,t)$, and its effects are $\neg \textit{in}(p,t)$ and $\textit{at}(\ell,p)$.
+% In the learned model it has the same effects, but with the preconditions $\textit{at}(\ell, t)$ and $\textit{at}(\ell, p)$. 
+% Then, its syntactic recall and precision is $1$ for the effects and $\frac 1 2$ for the preconditions. 
+% \end{example}
+% }
+
+A finer-grained variant of the syntactic similarity metric is to assess the \emph{edit distance} of the learned domain model from the reference domain model~\cite{chrpa2023comparing}. Low values indicate models that are syntactically close to each other. If two models are syntactically identical (i.e., edit distance of zero), then they are said to be \textit{strongly equivalent}.
+%and if two models are syntactically identical (i.e., edit distance of zero), then they are said to be \textit{strongly equivalent}.
+
+
+
+
+
+%Similarly, the work done on model reconciliation \citep{} looks into approaches to suggest minimal changes to a model to reconcile it with a reference one.
+
+
+%\roni{Add: discuss the limitation of the syntactic similarity metrics and the reliance on a reference model.}
+% \subsection{Drawbacks in Syntactic Similarity}
+The syntactic similarity metrics have several limitations, which have been pointed out by ~\cite{garrido2024challenges} and others. 
+First, they require the existence of a domain reference model. 
+Such a model is rarely available when applying automated planning technology in real-world applications, where a PDDL specification of the environment is not given. 
+This was also the setup in the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}. 
+Second, comparing to a reference model implies there is a single best model for the environment. 
+What constitutes a \emph{best model} for an environment is not well-defined, and assessing the quality of a model is very challenging \citep{DBLP:conf/kcap/McCluskeyVV17}. 
+In fact, one may say that any domain model that is consistent with the observations is equally likely to be the ``real one'', as the learning algorithm is not given any incentive to prefer one over the other. 
+% \roni{@Pascal and Gregor: is this sentence capturing what you wrote about in the comment below?}
+Lastly, there may be multiple domain models for a given environment that are identical for all practical purposes, yet different syntactically. 
+Thus, it is not clear whether the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. 
+% This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
+Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
+
+% \roni{Tried to compile above the comments from Mauro and Gregor (which are commented out below). Please check if it is ok.}
+
+% First, it relies on the existence of a reference domain model, which may not be available in practice. 
+% In fact, this is usually the case in new applications of automated planning to real-world problems. In such cases, there may be a number of alternative models, but not a specific reference one. This is the setting, for instance, of the International Competition on Knowledge Engineering for Planning and Scheduling (ICKEPS) \citep{DBLP:journals/aim/ChrpaMVV17}.
+% \gregor{One could distinguish two cases here: (1) the practical application case, i.e. where we want to use domain learning in a real environment/industrial setting. Or (2) where we only want to evaluate the methods w.r.t.\ their usability. In the latter case, we could argue that we have ``exhaustively'' studied the setting we want to evaluate the model learner on and could thus have a planning model that models the situation -- but still in this case, the issue of multiple equivalent models remains.}
+
+
+% \gregor{Maybe add a new second reason here to prepare the argumentation for the next one:\\
+% Second, there might be multiple models that are fully identical for all practical purposes.
+% That is, we will be able to find exactly the same set of plans using all of these models.
+% A supposed ground truth model would then be an arbitrary pick out of these equivalent models.
+% In evaluation would reward a learner if it can reproduce the one arbitrarily chosen ground truth model over any other equivalent model.
+% Considering the above transport example, it is equivalent to use $in(p,t)$ or $contains(t,p)$ as a precondition -- but using syntactic similarities forces the learner to have a bias for one of the two option, without being able to infer which bias is correct out of the input trajectories.
+% }\roni{I think this is captured in the paragraph below (probably someone editted it - maybe Gregor or Mauro? anyhow it turned out nicely)}
+
+% Second, the reference model is assumed to be of the best possible quality. This is in itself complicated by the fact that it is very challenging to assess the quality of a model \citep{DBLP:conf/kcap/McCluskeyVV17}. Besides this, the use of a reference model biases the assessment towards a single specific encoding -- while many others of similar quality could potentially exist.
+% Third, it is not clear that the syntactic similarity of the learned model to a reference model is a good indicator of how \emph{useful} a learned domain model is. This limitation has been observed in prior works~\citep{aineto2019learning,juba2021safe,mordoch2024safe}.
+% Next, we discuss what constitutes a useful domain model and how to evaluate it without the need for a reference domain model.
+
